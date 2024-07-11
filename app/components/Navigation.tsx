@@ -31,7 +31,7 @@ export default function Navigation() {
   return (
     <header
       className={clsx(
-        'fixed top-0 z-50 w-full overflow-hidden px-4 py-3 lg:px-5 lg:py-4 xl:px-6 xl:py-5',
+        'fixed top-0 z-50 w-full overflow-hidden border-b-[1px] border-b-cardColor px-4 py-3 lg:px-5 lg:py-4 xl:px-6 xl:py-5',
         isMounted && isMobile ? 'bg-cardColor' : 'bg-mainLightColor',
       )}
     >

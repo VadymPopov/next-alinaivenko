@@ -15,6 +15,7 @@ const config: Config = {
       textColorDarkBg: '#9DA4BD',
       mainLightColor: '#fff',
       mainDarkColor: '#303030',
+      transparent: 'transparent',
     },
   },
   plugins: [],
