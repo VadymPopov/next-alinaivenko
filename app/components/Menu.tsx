@@ -41,11 +41,11 @@ const menu = [
 
 type MenuProps = {
   onClick?: () => void;
-  isMobile: boolean;
 };
 
-export default function Menu({ onClick, isMobile }: MenuProps) {
+export default function Menu({ onClick }: MenuProps) {
   const pathname = usePathname();
+  const isActive = (path: string) => path === pathname;
 
   return (
     <ul className="m-0 flex list-none flex-col items-center p-0 lg:flex-row lg:justify-center xl:mb-5 xl:mr-5">
@@ -59,10 +59,8 @@ export default function Menu({ onClick, isMobile }: MenuProps) {
             <Link
               href={path}
               className={clsx(
-                'block whitespace-nowrap px-2 py-1 text-xl font-semibold tracking-widest text-mainLightColor no-underline transition-colors duration-300 hover:text-accentColor focus:text-accentColor md:text-2xl lg:text-sm lg:text-cardColor xl:text-lg',
-                pathname === path &&
-                  'rounded-lg border-[1px] border-textColorDarkBg bg-bgColor',
-                pathname === path && isMobile && 'text-cardColor',
+                isActive(path) ? 'text-accentColor' : 'text-mainLightColor',
+                'block whitespace-nowrap px-2 py-1 text-xl font-semibold tracking-widest no-underline transition-colors duration-300 hover:text-accentColor focus:text-accentColor md:text-2xl lg:text-sm lg:text-cardColor xl:text-lg',
               )}
             >
               {label}

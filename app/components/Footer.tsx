@@ -29,7 +29,7 @@ export default function Footer() {
         </Link>
       </div>
       <span className="order-1 mb-4 text-base md:order-2 md:mb-0 lg:text-lg">
-        Copyright &copy; 2023-{new Date().getFullYear()}, Alina Ivenko.
+        &copy; 2023-{new Date().getFullYear()}, Alina Ivenko.
       </span>
       <div className="order-2 mb-4 flex md:order-3 md:mb-0">
         <Link
@@ -37,7 +37,7 @@ export default function Footer() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="tiktok-page"
-          className="border-transparent flex h-11 w-11 items-center justify-center rounded-full border bg-bgColor text-mainDarkColor no-underline transition-colors first:mr-7 hover:border-textColorDarkBg hover:bg-mainLightColor hover:text-accentColor"
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-transparent bg-bgColor text-mainDarkColor no-underline transition-colors first:mr-7 hover:border-textColorDarkBg hover:bg-mainLightColor hover:text-accentColor"
         >
           <SiTiktok />
         </Link>
@@ -46,7 +46,7 @@ export default function Footer() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="instagram-page"
-          className="border-transparent flex h-11 w-11 items-center justify-center rounded-full border bg-bgColor text-mainDarkColor no-underline transition-colors first:mr-7 hover:border-textColorDarkBg hover:bg-mainLightColor hover:text-accentColor"
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-transparent bg-bgColor text-mainDarkColor no-underline transition-colors first:mr-7 hover:border-textColorDarkBg hover:bg-mainLightColor hover:text-accentColor"
         >
           <SiInstagram />
         </Link>

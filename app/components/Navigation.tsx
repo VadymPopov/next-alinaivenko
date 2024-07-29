@@ -31,7 +31,7 @@ export default function Navigation() {
   return (
     <header
       className={clsx(
-        'fixed top-0 z-50 w-full overflow-hidden border-b-[1px] border-b-cardColor px-4 py-3 lg:px-5 lg:py-4 xl:px-6 xl:py-5',
+        'fixed top-0 z-[100] w-full overflow-hidden border-b-[1px] border-b-cardColor px-4 py-3 lg:px-5 lg:py-4 xl:px-6 xl:py-5',
         isMounted && isMobile ? 'bg-cardColor' : 'bg-mainLightColor',
       )}
     >
@@ -52,7 +52,7 @@ export default function Navigation() {
         {isMounted && isMobile ? (
           <button
             onClick={toggleMenu}
-            className="bg-transparent text-white h-10 w-10 cursor-pointer border-none outline-none"
+            className="text-white h-10 w-10 cursor-pointer border-none bg-transparent outline-none"
             aria-label="mobile-menu-toggle"
           >
             {isOpen ? (
@@ -62,7 +62,7 @@ export default function Navigation() {
             )}
           </button>
         ) : (
-          <Menu isMobile={isMobile} />
+          <Menu />
         )}
       </nav>
       {isMounted && (
@@ -80,7 +80,7 @@ export default function Navigation() {
               'opacity 1s ease-in-out, transform 1s cubic-bezier(0.075, 0.82, 0.165, 1)',
           }}
         >
-          <Menu onClick={toggleMenu} isMobile={isMobile} />
+          <Menu onClick={toggleMenu} />
         </div>
       )}
     </header>

@@ -7,6 +7,10 @@ const config: Config = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    fontFamily: {
+      raleway: ['Raleway', 'sans-serif'],
+      opensans: ['Open Sans', 'sans-serif'],
+    },
     colors: {
       bgColor: '#f7f7f7',
       accentColor: 'rgba(255, 108, 0, 1)',
