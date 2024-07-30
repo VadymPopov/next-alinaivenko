@@ -1,0 +1,84 @@
+swiper-container {
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  margin-bottom: 100px;
+}
+
+swiper-slide {
+  background-position: center;
+  background-size: cover;
+  max-width: 400px;
+  max-height: 500px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 20px;
+}
+
+@media screen and (max-width: 1023px) {
+  swiper-slide {
+    background-position: center;
+    background-size: cover;
+    max-width: 300px;
+    max-height: 400px;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+}
+
+swiper-container:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 767px) {
+  swiper-container {
+    margin-bottom: 50px;
+  }
+
+  swiper-container:last-child {
+    margin-bottom: 0;
+  }
+}
+
+swiper-container {
+  --swiper-navigation-color: #fff;
+  --swiper-theme-color: #000;
+}
+
+swiper-container::part(bullet-active) {
+  background-color: #ffbb00;
+}
+
+swiper-container::part(button-prev),
+swiper-container::part(button-next) {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 2px solid white;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+swiper-container::part(button-prev):hover,
+swiper-container::part(button-next):hover {
+  background-color: #000;
+}
+
+@media (max-width: 1023px) {
+  swiper-container::part(button-prev),
+  swiper-container::part(button-next) {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  swiper-container::part(button-prev),
+  swiper-container::part(button-next) {
+    width: 16px;
+    height: 16px;
+  }
+}

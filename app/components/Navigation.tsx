@@ -62,7 +62,7 @@ export default function Navigation() {
             )}
           </button>
         ) : (
-          <Menu />
+          <Menu isMobile={isMobile} />
         )}
       </nav>
       {isMounted && (
@@ -80,7 +80,7 @@ export default function Navigation() {
               'opacity 1s ease-in-out, transform 1s cubic-bezier(0.075, 0.82, 0.165, 1)',
           }}
         >
-          <Menu onClick={toggleMenu} />
+          <Menu onClick={toggleMenu} isMobile={isMobile} />
         </div>
       )}
     </header>
