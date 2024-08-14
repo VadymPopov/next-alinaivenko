@@ -53,7 +53,7 @@ export default function Home() {
                 height={270}
               />
             </li>
-            <li className="mr-8 md:hidden lg:inline-block">
+            <li className="md:hidden lg:mr-8 lg:inline-block">
               <Image
                 src="/images/about-me-two.jpg"
                 alt="about-me-two"

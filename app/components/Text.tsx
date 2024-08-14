@@ -11,7 +11,7 @@ export default function Text({ children, primary, main }: TextProps) {
   return (
     <p
       className={clsx(
-        'text-justify indent-3 text-sm sm:indent-5 sm:text-lg lg:indent-8',
+        'text-justify indent-3 text-sm leading-[1.67] tracking-wide sm:indent-5 sm:text-lg lg:indent-8',
         primary ? 'text-textColor' : 'text-mainDarkColor',
         main ? 'mb-5' : 'mb-0',
       )}

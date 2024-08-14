@@ -46,7 +46,7 @@ swiper-container {
 }
 
 swiper-container::part(bullet-active) {
-  background-color: #ffbb00;
+  background-color: rgba(255, 108, 0, 1);
 }
 
 swiper-container::part(button-prev),
