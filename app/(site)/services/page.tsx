@@ -1,11 +1,11 @@
-import React from 'react';
-import { Metadata } from 'next';
-import Image from 'next/image';
-// import { useRouter } from 'next/navigation';
 import Section from '@/app/components/Section';
-import Button from '@/app/components/Button';
-import Title from '@/app/components/Title';
+import ServiceCard from '@/app/components/ServiceCard';
 import Text from '@/app/components/Text';
+import Title from '@/app/components/Title';
+
+import React from 'react';
+
+import { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
@@ -31,36 +31,19 @@ export const metadata: Metadata = {
 };
 
 export default function Services() {
-  // const router = useRouter();
   return (
     <Section>
       <ul>
-        <li className="mb-0 flex flex-col-reverse p-5 lg:mb-7 lg:flex-row">
-          <div className="mr-0 mt-5 block rounded-md border-2 border-accentColor bg-cardColor p-2.5 text-center text-mainLightColor sm:flex lg:mr-12 lg:block">
-            <Image
-              src="/images/small-tattoo.jpg"
-              alt="small tattoo"
-              className="max-w-full rounded-md sm:max-w-[320px]"
-              width={260}
-              height={400}
-            />
-            <div className="flex flex-1 flex-col items-center justify-center lg:block lg:text-center">
-              <p className="mb-2.5 text-center text-2xl font-semibold text-textColorDarkBg">
-                Small Tattoo
-              </p>
-              <p>Price range: CA$120-250</p>
-              <p>Deposit: CA$100</p>
-              <p>Size: up to 10 cm</p>
-              <p>Duration: 1.2h</p>
-            </div>
-            <Button
-              primary={true}
-              // onClick={() => router.push('/booking', { state: 'small-tattoo' })}
-            >
-              Book now
-            </Button>
-          </div>
-
+        <li className="mb-0 flex flex-col-reverse sm:p-5 lg:mb-7 lg:flex-row">
+          <ServiceCard
+            imgURL={'/images/small-tattoo.jpg'}
+            title="Small Tattoo"
+            price="CA$120-250"
+            deposit="CA$100"
+            size="up to 10 cm"
+            duration="1.2h"
+            serviceSlug="small-tattoo"
+          />
           <div>
             <Title>Small Tattoo</Title>
             <Text primary={true}>
@@ -100,31 +83,16 @@ export default function Services() {
           </div>
         </li>
 
-        <li className="mb-0 flex flex-col-reverse p-5 lg:mb-7 lg:flex-row">
-          <div className="mr-0 mt-5 block rounded-md border-2 border-accentColor bg-cardColor p-2.5 text-center text-mainLightColor sm:flex lg:mr-12 lg:block">
-            <Image
-              src="/images/large-tattoo.jpg"
-              alt="large tattoo"
-              className="max-w-full rounded-md sm:max-w-[320px]"
-              width={260}
-              height={400}
-            />
-            <div className="flex flex-1 flex-col items-center justify-center lg:block lg:text-center">
-              <p className="mb-2.5 text-center text-2xl font-semibold text-textColorDarkBg">
-                Large Tattoo
-              </p>
-              <p>Price: from CA$250 </p>
-              <p>Deposit: CA$120</p>
-              <p>Size: more than 10 cm and detailed</p>
-              <p>Duration: 3h</p>
-            </div>
-            <Button
-              primary={true}
-              // onClick={() => router.push('/booking', { state: 'large-tattoo' })}
-            >
-              Book now
-            </Button>
-          </div>
+        <li className="mb-0 flex flex-col-reverse sm:p-5 lg:mb-7 lg:flex-row bg-bgColor">
+          <ServiceCard
+            imgURL={'/images/large-tattoo.jpg'}
+            title="Large Tattoo"
+            price="from CA$250"
+            deposit="CA$120"
+            size="more than 10 cm and detailed"
+            duration="3h"
+            serviceSlug="large-tattoo"
+          />
 
           <div>
             <Title>Large Tattoo</Title>
@@ -160,30 +128,15 @@ export default function Services() {
           </div>
         </li>
 
-        <li className="mb-0 flex flex-col-reverse p-5 lg:mb-7 lg:flex-row">
-          <div className="mr-0 mt-5 block rounded-md border-2 border-accentColor bg-cardColor p-2.5 text-center text-mainLightColor sm:flex lg:mr-12 lg:block">
-            <Image
-              src="/images/touch-up.jpg"
-              alt="Touch-up"
-              className="max-w-full rounded-md sm:max-w-[320px]"
-              width={260}
-              height={400}
-            />
-            <div className="flex flex-1 flex-col items-center justify-center lg:block lg:text-center">
-              <p className="mb-2.5 text-center text-2xl font-semibold text-textColorDarkBg">
-                Touch-up
-              </p>
-              <p>Price: from CA$20 </p>
-              <p>Deposit: CA$20</p>
-              <p>Duration: 30min</p>
-            </div>
-            <Button
-              primary={true}
-              // onClick={() => router.push('/booking', { state: 'touch-up' })}
-            >
-              Book now
-            </Button>
-          </div>
+        <li className="mb-0 flex flex-col-reverse sm:p-5 lg:mb-7 lg:flex-row">
+          <ServiceCard
+            imgURL={'/images/touch-up.jpg'}
+            title="Touch-up"
+            price="from CA$20"
+            deposit="CA$20"
+            duration="30min"
+            serviceSlug="touch-up"
+          />
 
           <div>
             <Title>Consultation/ Touch-up</Title>
@@ -216,30 +169,15 @@ export default function Services() {
           </div>
         </li>
 
-        <li className="mb-0 flex flex-col-reverse p-5 lg:mb-7 lg:flex-row">
-          <div className="mr-0 mt-5 block rounded-md border-2 border-accentColor bg-cardColor p-2.5 text-center text-mainLightColor sm:flex lg:mr-12 lg:block">
-            <Image
-              src="/images/permanent.jpg"
-              alt="Permanent"
-              className="max-w-full rounded-md sm:max-w-[320px]"
-              width={260}
-              height={400}
-            />
-            <div className="flex flex-1 flex-col items-center justify-center lg:block lg:text-center">
-              <p className="mb-2.5 text-center text-2xl font-semibold text-textColorDarkBg">
-                Permanent
-              </p>
-              <p>Deposit: CA$100</p>
-              <p>Price is fixed CA$300</p>
-              <p>Duration: 1h-3h</p>
-            </div>
-            <Button
-              primary={true}
-              // onClick={() => router.push('/booking', { state: 'permanent' })}
-            >
-              Book now
-            </Button>
-          </div>
+        <li className="mb-0 flex flex-col-reverse sm:p-5 lg:mb-7 lg:flex-row bg-bgColor">
+          <ServiceCard
+            imgURL={'/images/permanent.jpg'}
+            title="Permanent"
+            price="fixed CA$300"
+            deposit="CA$100"
+            duration="1h-3h"
+            serviceSlug="permanent"
+          />
 
           <div>
             <Title>Permanent</Title>

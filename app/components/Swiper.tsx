@@ -1,7 +1,10 @@
 'use client';
-import { register } from 'swiper/element/bundle';
-import { ReactNode } from 'react';
+
 import '@/app/swiper.css';
+
+import { ReactNode } from 'react';
+
+import { register } from 'swiper/element/bundle';
 
 register();
 

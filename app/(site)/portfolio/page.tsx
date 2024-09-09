@@ -1,13 +1,14 @@
+import Section from '@/app/components/Section';
+import Title from '@/app/components/Title';
+import { freshArray } from '@/public/images/fresh';
+import { healedArray } from '@/public/images/healed';
+import { permanentArray } from '@/public/images/permanent';
+
 import React from 'react';
+
 import { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
-import Section from '@/app/components/Section';
-import Title from '@/app/components/Title';
-
-import { permanentArray } from '@/public/images/permanent';
-import { freshArray } from '@/public/images/fresh';
-import { healedArray } from '@/public/images/healed';
 
 const Swiper = dynamic(() => import('@/app/components/Swiper'), {
   ssr: false,

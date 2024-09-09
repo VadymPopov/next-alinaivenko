@@ -1,12 +1,14 @@
-import React from 'react';
-import { Metadata } from 'next';
-import Link from 'next/link';
-import { FiMapPin, FiMail } from 'react-icons/fi';
-import { TfiTime } from 'react-icons/tfi';
-import { SiInstagram } from 'react-icons/si';
+import EmbeddedMap from '@/app/components/EmbeddedMap';
 import Section from '@/app/components/Section';
 import Title from '@/app/components/Title';
-import EmbeddedMap from '@/app/components/EmbeddedMap';
+
+import React from 'react';
+import { FiMail, FiMapPin } from 'react-icons/fi';
+import { SiInstagram } from 'react-icons/si';
+import { TfiTime } from 'react-icons/tfi';
+
+import { Metadata } from 'next';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Contact',

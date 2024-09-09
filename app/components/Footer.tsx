@@ -1,7 +1,8 @@
-import Link from 'next/link';
 import { SiInstagram, SiTiktok } from 'react-icons/si';
 import { VscGithub } from 'react-icons/vsc';
 import { VscGithubInverted } from 'react-icons/vsc';
+
+import Link from 'next/link';
 
 export default function Footer() {
   return (

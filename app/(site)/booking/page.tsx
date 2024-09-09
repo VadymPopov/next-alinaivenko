@@ -1,4 +1,7 @@
+import Services from '@/app/components/ServicesPicker';
+
 import React from 'react';
+
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -24,5 +27,9 @@ export const metadata: Metadata = {
 };
 
 export default function Booking() {
-  return <div>Booking</div>;
+  return (
+    <div>
+      <Services />
+    </div>
+  );
 }

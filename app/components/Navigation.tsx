@@ -1,11 +1,14 @@
 'use client';
-import { useState, useEffect } from 'react';
+
+import { useEffect, useState } from 'react';
+import { CgClose, CgMenu } from 'react-icons/cg';
 import { useMedia } from 'react-use';
-import Link from 'next/link';
-import Image from 'next/image';
+
 import clsx from 'clsx';
+import Image from 'next/image';
+import Link from 'next/link';
+
 import Menu from './Menu';
-import { CgMenu, CgClose } from 'react-icons/cg';
 
 export default function Navigation() {
   const [isMounted, setIsMounted] = useState(false);

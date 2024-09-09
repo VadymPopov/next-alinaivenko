@@ -1,10 +1,11 @@
 import { Metadata } from 'next';
-import Suptitle from '../components/Suptitle';
-import Section from '../components/Section';
-import Text from '../components/Text';
-import Button from '../components/Button';
 import Image from 'next/image';
 import Link from 'next/link';
+
+import Button from '../components/Button';
+import Section from '../components/Section';
+import Suptitle from '../components/Suptitle';
+import Text from '../components/Text';
 import Title from '../components/Title';
 
 export const metadata: Metadata = {

@@ -1,10 +1,12 @@
-import React from 'react';
-import { Metadata } from 'next';
-import Title from '@/app/components/Title';
-import Text from '@/app/components/Text';
-import Image from 'next/image';
 import Section from '@/app/components/Section';
 import Suptitle from '@/app/components/Suptitle';
+import Text from '@/app/components/Text';
+import Title from '@/app/components/Title';
+
+import React from 'react';
+
+import { Metadata } from 'next';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'Aftercare',

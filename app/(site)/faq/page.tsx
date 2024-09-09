@@ -1,8 +1,10 @@
-import React from 'react';
-import { Metadata } from 'next';
 import Section from '@/app/components/Section';
-import Title from '@/app/components/Title';
 import Text from '@/app/components/Text';
+import Title from '@/app/components/Title';
+
+import React from 'react';
+
+import { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
