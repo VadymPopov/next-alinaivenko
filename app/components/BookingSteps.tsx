@@ -12,7 +12,7 @@ export function BookingSteps() {
 
   const links = [
     { label: 'Service', href: '/booking' },
-    { label: 'Client', href: '/booking/client' },
+    { label: 'Client', href: '/booking/client-info' },
     { label: 'Time', href: '/booking/schedule' },
     { label: 'Payment', href: '/booking/payment' },
   ];

@@ -20,6 +20,7 @@ const config: Config = {
       mainLightColor: '#fff',
       mainDarkColor: '#303030',
       transparent: 'transparent',
+      error: '#D2042D',
     },
   },
   plugins: [],

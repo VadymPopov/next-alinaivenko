@@ -21,8 +21,8 @@ interface IAppContext {
 interface IAppointmentInfo {
   name: string;
   email: string;
-  phone: string;
-  sketch?: File | null;
+  phone?: string | null;
+  images?: File[] | null;
   description?: string;
   instagram?: string;
 }

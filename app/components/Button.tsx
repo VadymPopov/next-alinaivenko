@@ -25,14 +25,19 @@ export default function Button({
     <button
       {...rest}
       className={clsx(
-        'flex h-10 w-40 cursor-pointer items-center justify-center rounded-3xl border-[1px] border-accentColor bg-transparent px-3 py-5 text-sm font-semibold uppercase transition-colors hover:bg-accentColor hover:shadow-md hover:shadow-cardColor',
-        disabled &&
-          'cursor-not-allowed bg-textColorDarkBg opacity-70 shadow-none',
-        disabled && primary ? 'text-mainLightColor' : 'text-cardColor',
-        primary
-          ? 'text-mainLightColor hover:text-cardColor hover:shadow-mainLightColor'
-          : 'text-cardColor hover:text-mainLightColor',
+        'flex h-10 w-40  items-center justify-center rounded-3xl border-[1px] border-accentColor  px-3 py-5 text-sm font-semibold uppercase transition-colors ',
+        disabled
+          ? 'cursor-not-allowed bg-textColorDarkBg opacity-70 shadow-none'
+          : 'hover:bg-accentColor hover:shadow-md hover:shadow-cardColor cursor-pointer bg-transparent',
+        disabled && primary
+          ? 'text-mainLightColor'
+          : disabled
+            ? 'text-cardColor'
+            : primary
+              ? 'text-mainLightColor hover:text-cardColor hover:shadow-mainLightColor'
+              : 'text-cardColor hover:text-mainLightColor',
       )}
+      disabled={disabled}
     >
       {isProcessing ? <ButtonLoader /> : children}
     </button>
