@@ -1,5 +1,6 @@
 import Footer from '@/app/components/Footer';
 import Navigation from '@/app/components/Navigation';
+import '@/app/datepicker.css';
 import '@/app/globals.css';
 
 import { Metadata } from 'next';

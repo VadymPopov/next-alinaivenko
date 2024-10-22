@@ -1,10 +1,9 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import { useAppContext } from '../context/useGlobalState';
@@ -26,7 +25,6 @@ interface FormValues {
 
 export default function ClientForm() {
   const router = useRouter();
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const { service, setAppointmentInfo } = useAppContext();
 
   useEffect(() => {
@@ -42,7 +40,6 @@ export default function ClientForm() {
 
   const {
     handleSubmit,
-    setValue,
     setFocus,
     formState: { errors },
     trigger,
@@ -53,7 +50,6 @@ export default function ClientForm() {
   }, [setFocus]);
 
   const onSubmitHandler = async (formValues: FormValues) => {
-    formValues.images = selectedFiles;
     const isValid = await trigger();
 
     if (isValid) {
@@ -64,33 +60,6 @@ export default function ClientForm() {
     }
   };
 
-  const handleFileChange = async (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const newFiles = Array.from(event.target.files || []);
-    const combinedFiles = [...selectedFiles, ...newFiles];
-    const uniqueFiles = combinedFiles.reduce((acc: File[], current) => {
-      const existing = acc.find((file) => file.name === current.name);
-      if (!existing) {
-        acc.push(current);
-      }
-      return acc;
-    }, []);
-
-    setSelectedFiles(uniqueFiles);
-    setValue('images', uniqueFiles);
-    await trigger('images');
-  };
-
-  const handleDelete = async (index: number) => {
-    const newFiles = selectedFiles.filter((_, i) => i !== index);
-    setSelectedFiles(newFiles);
-    setValue('images', newFiles);
-    await trigger('images');
-  };
-
-  console.log(Object.keys(errors).length);
-
   return (
     <FormProvider {...methods}>
       <form className="text-center" onSubmit={handleSubmit(onSubmitHandler)}>
@@ -99,14 +68,14 @@ export default function ClientForm() {
             name="name"
             label="Full Name"
             type="text"
-            placeholder="John Doe"
+            placeholder="Enter First and Last Name"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             error={errors.name?.message || ''}
           />
           <InputField
             name="email"
             type="email"
-            placeholder="john.doe@example.com"
+            placeholder="Enter Email"
             title="Email must contain an “@” symbol before the domain"
             label="Email"
             error={errors.email?.message || ''}
@@ -114,7 +83,7 @@ export default function ClientForm() {
           <InputField
             name="phone"
             type="tel"
-            placeholder="+1(111) 111-1111"
+            placeholder="Enter Phone Number"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             label="Phone number"
             optional={true}
@@ -123,7 +92,7 @@ export default function ClientForm() {
           <InputField
             name="instagram"
             type="text"
-            placeholder="@username"
+            placeholder="Enter instagram @username"
             label="Instagram"
             title="Instagram username"
             optional={true}
@@ -142,34 +111,8 @@ export default function ClientForm() {
             label="Please upload images (max 3)"
             multiple={true}
             optional={true}
-            onChange={handleFileChange}
             error={errors.images?.message || ''}
           />
-          <div className="flex justify-center mb-5">
-            <ul className="sm:grid grid-cols-2 gap-4">
-              {selectedFiles.map((file, index) => (
-                <li
-                  key={index}
-                  className="flex flex-col justify-center items-center"
-                >
-                  <Image
-                    src={URL.createObjectURL(file)}
-                    alt={`preview-${index}`}
-                    width={200}
-                    height={200}
-                    className=" border-mainDarkColor rounded-xl object-cover mb-2 h-[200px]"
-                  />
-                  <button
-                    type="button"
-                    className="text-error mb-2"
-                    onClick={() => handleDelete(index)}
-                  >
-                    Delete
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
 
           <InputField
             name="description"

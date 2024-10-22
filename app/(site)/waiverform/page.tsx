@@ -1,3 +1,7 @@
+import Text from '@/app/components/Text';
+import Title from '@/app/components/Title';
+import WaiverForm from '@/app/components/WaiverForm/WaiverForm';
+
 import React from 'react';
 
 import { Metadata } from 'next';
@@ -25,5 +29,21 @@ export const metadata: Metadata = {
 };
 
 export default function Waiverform() {
-  return <div>Waiverform</div>;
+  return (
+    <>
+      <div className="pt-5 px-8">
+        <Title>
+          {' '}
+          Consent to application of Tattoo/ Permanent makeup and release and
+          waiver of all claims
+        </Title>
+        <Text>
+          IMPORTANT NOTICE: BY SIGNING THIS TATTOO WAIVER FORM, YOU ARE WAIVING
+          IMPORTANT LEGAL RIGHTS. READ THIS DOCUMENT CAREFULLY AND SEEK LEGAL
+          COUNSEL IF NECESSARY BEFORE SIGNING.
+        </Text>
+      </div>
+      <WaiverForm />
+    </>
+  );
 }

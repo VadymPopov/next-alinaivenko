@@ -1,12 +1,22 @@
+'use client';
+
 import { SiInstagram, SiTiktok } from 'react-icons/si';
 import { VscGithub } from 'react-icons/vsc';
 import { VscGithubInverted } from 'react-icons/vsc';
 
+import clsx from 'clsx';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function Footer() {
+  const pathname = usePathname();
   return (
-    <footer className="flex flex-col items-center justify-between border-t-[1px] border-t-cardColor px-4 py-3 text-sm md:flex-row lg:px-5 lg:py-4 xl:px-6 xl:py-5">
+    <footer
+      className={clsx(
+        pathname === '/waiverform' ? 'pb-[60px]' : ' py-3  lg:py-4  xl:py-5',
+        'flex flex-col items-center justify-between border-t-[1px] border-t-cardColor  text-sm md:flex-row px-4 lg:px-5 xl:px-6',
+      )}
+    >
       <div className="order-3 flex items-center justify-center text-center md:order-1">
         <span className="text-base lg:text-lg">Developed by</span>
         <Link

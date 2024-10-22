@@ -10,8 +10,12 @@ import React, {
 } from 'react';
 
 interface IAppContext {
-  service: string | null;
-  setService: Dispatch<SetStateAction<string | null>>;
+  service: 'small-tattoo' | 'large-tattoo' | 'permanent' | 'touch-up' | null;
+  setService: Dispatch<
+    SetStateAction<
+      'small-tattoo' | 'large-tattoo' | 'permanent' | 'touch-up' | null
+    >
+  >;
   appointmentInfo: IAppointmentInfo | null;
   setAppointmentInfo: Dispatch<SetStateAction<IAppointmentInfo | null>>;
   paymentInfo: IPaymentInfo | null;
@@ -19,12 +23,13 @@ interface IAppContext {
 }
 
 interface IAppointmentInfo {
-  name: string;
-  email: string;
+  name?: string;
+  email?: string;
   phone?: string | null;
   images?: File[] | null;
   description?: string;
   instagram?: string;
+  address?: string;
 }
 
 interface IPaymentInfo {
@@ -36,7 +41,9 @@ interface IPaymentInfo {
 const AppContext = createContext<IAppContext | undefined>(undefined);
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
-  const [service, setService] = useState<string | null>(null);
+  const [service, setService] = useState<
+    'small-tattoo' | 'large-tattoo' | 'permanent' | 'touch-up' | null
+  >(null);
   const [appointmentInfo, setAppointmentInfo] =
     useState<IAppointmentInfo | null>(null);
   const [paymentInfo, setPaymentInfo] = useState<IPaymentInfo | null>(null);

@@ -28,7 +28,7 @@ module.exports = {
     // JavaScript rules
     'prefer-const': 'warn',
     'no-var': 'warn',
-    'no-unused-vars': 'warn',
+    'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
     'object-shorthand': 'warn',
     'quote-props': ['warn', 'as-needed'],
     // TypeScript rules
