@@ -1,3 +1,5 @@
+import PaymentForm from '@/app/components/PaymentForm';
+
 import React from 'react';
 
 import { Metadata } from 'next';
@@ -5,11 +7,11 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Payment',
   description:
-    "Pay easily on our secure payment page. Confirm your details, make your payment, and you're all set. Thank you for trusting me as your tattoo artist!",
+    "Settle your remaining balance effortlessly with our secure payment page. Confirm your details, make your payment, and you're good to go. Thank you for choosing Alina Ivenko!",
   openGraph: {
     title: 'Tattoo payment',
     description:
-      "Pay easily on our secure payment page. Confirm your details, make your payment, and you're all set. Thank you for trusting me as your tattoo artist!",
+      "Settle your remaining balance effortlessly with our secure payment page. Confirm your details, make your payment, and you're good to go. Thank you for choosing Alina Ivenko!",
     url: 'https://alinaivenko.com/payment',
     siteName: 'alinaivenko.com',
     images: [
@@ -25,5 +27,5 @@ export const metadata: Metadata = {
 };
 
 export default function Payment() {
-  return <div>Payment</div>;
+  return <PaymentForm />;
 }

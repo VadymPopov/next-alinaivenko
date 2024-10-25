@@ -6,16 +6,18 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-export function BookingSteps() {
+interface Link {
+  label: string;
+  href: string;
+}
+
+interface ProcessStepsProps {
+  links: Link[];
+}
+
+export function ProcessSteps({ links }: ProcessStepsProps) {
   const pathname = usePathname();
   const isActive = (path: string) => pathname === path;
-
-  const links = [
-    { label: 'Service', href: '/booking' },
-    { label: 'Client', href: '/booking/client-info' },
-    { label: 'Time', href: '/booking/schedule' },
-    { label: 'Payment', href: '/booking/payment' },
-  ];
 
   return (
     <ul className="flex items-center my-5 mx-0">

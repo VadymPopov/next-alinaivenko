@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 
-export interface IFormData {
+export interface IWaiverFormData {
   // Step 1 - Personal Info
   name: string;
   email: string;
@@ -49,13 +49,13 @@ export interface IFormData {
 }
 
 interface IWaiverFormContext {
-  formData: IFormData;
-  updateFormData: (_newData: Partial<IFormData>) => void;
+  formData: IWaiverFormData;
+  updateFormData: (_newData: Partial<IWaiverFormData>) => void;
   isClientUnder18: boolean;
   setIsClientUnder18: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const initialFormData: IFormData = {
+const initialFormData: IWaiverFormData = {
   name: '',
   email: '',
   phone: '',
@@ -109,9 +109,9 @@ export const WaiverFormProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [formData, setFormData] = useState<IFormData>(initialFormData);
+  const [formData, setFormData] = useState<IWaiverFormData>(initialFormData);
   const [isClientUnder18, setIsClientUnder18] = useState(false);
-  const updateFormData = (newData: Partial<IFormData>) => {
+  const updateFormData = (newData: Partial<IWaiverFormData>) => {
     setFormData((prev) => ({ ...prev, ...newData }));
   };
   return (

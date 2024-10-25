@@ -13,10 +13,12 @@ const addressRegex = /^[0-9a-zA-Z\s.,-]+\s*$/;
 
 export const validationSchemaClient = Yup.object().shape({
   name: Yup.string()
+    .trim()
     .required('Name is required')
     .min(2, 'Name must be at least 2 characters')
     .matches(nameRegExp, 'Please enter a valid name'),
   email: Yup.string()
+    .trim()
     .required('Email is required')
     .matches(emailRegExp, 'Please enter a valid email'),
   phone: Yup.string()
@@ -42,12 +44,43 @@ export const validationSchemaSchedule = Yup.object().shape({
   slot: Yup.string().required('Time is required'),
 });
 
+export const validationSchemaPaymentForm = Yup.object().shape({
+  name: Yup.string()
+    .trim()
+    .required('Name is required')
+    .min(2, 'Name must be at least 2 characters')
+    .matches(nameRegExp, 'Please enter a valid name'),
+  email: Yup.string()
+    .trim()
+    .required('Email is required')
+    .matches(emailRegExp, 'Please enter a valid email'),
+  amount: Yup.number()
+    .required('Amount is required')
+    .typeError('Amount must be a number')
+    .positive('Amount must be greater than zero')
+    .transform((value, originalValue) =>
+      originalValue === '' ? undefined : value,
+    ),
+});
+
+export const validationSchemaCustomTip = Yup.object().shape({
+  amount: Yup.number()
+    .required('Amount is required')
+    .typeError('Amount must be a number')
+    .positive('Amount must be greater than zero')
+    .transform((value, originalValue) =>
+      originalValue === '' ? undefined : value,
+    ),
+});
+
 export const validationSchemaWaiverStepOne = Yup.object().shape({
   name: Yup.string()
+    .trim()
     .required('Name is required')
     .matches(nameRegExp, 'Please enter a valid name')
     .min(2, 'Name must be at least 2 characters'),
   email: Yup.string()
+    .trim()
     .required('Email is required')
     .matches(emailRegExp, 'Please enter a valid email'),
   phone: Yup.string()
@@ -60,19 +93,23 @@ export const validationSchemaWaiverStepOne = Yup.object().shape({
       (value) => !value || phoneRegExp.test(value),
     ),
   governmentId: Yup.string()
+    .trim()
     .required('Government ID is required')
     .matches(governmentId, 'Please enter a valid government-issued ID number'),
-  dob: Yup.string().required('Birthday date is required'),
+  dob: Yup.string().trim().required('Birthday date is required'),
   address: Yup.string()
+    .trim()
     .required('Address is required')
     .matches(addressRegex, 'Please enter a valid address'),
 });
 
 export const validationSchemaWaiverStepTwo = Yup.object().shape({
   bodyPart: Yup.string()
+    .trim()
     .required('Body part is required')
     .matches(nameRegExp, 'Please enter a valid body part'),
   design: Yup.string()
+    .trim()
     .required('Design is required')
     .matches(nameRegExp, 'Please enter a valid design description'),
   service: Yup.string().required('Service is required'),
@@ -121,7 +158,9 @@ export const validationSchemaWaiverStepSeven = (isClientUnder18: boolean) => {
       [true],
       'Acknowledgement of Agreement must be accepted',
     ),
-    lot: Yup.string().required('Lot number is required (Ask Tattoo Artist)'),
+    lot: Yup.string()
+      .trim()
+      .required('Lot number is required (Ask Tattoo Artist)'),
     clientSignature: Yup.string().when([], {
       is: () => isClientUnder18 === false,
       then: (schema) => schema.required('Please provide a signature'),
@@ -145,6 +184,7 @@ export const validationSchemaWaiverStepSeven = (isClientUnder18: boolean) => {
       is: () => isClientUnder18 === true,
       then: (schema) =>
         schema
+          .trim()
           .required('Parental/Guardian name is required.')
           .matches(nameRegExp, 'Please enter a valid name')
           .min(3, 'Name must be at least 3 characters'),
@@ -154,6 +194,7 @@ export const validationSchemaWaiverStepSeven = (isClientUnder18: boolean) => {
       is: () => isClientUnder18 === true,
       then: (schema) =>
         schema
+          .trim()
           .required('Parental/Guardian Government ID is required.')
           .matches(
             governmentId,

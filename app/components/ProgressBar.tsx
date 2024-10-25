@@ -20,7 +20,7 @@ export default function ProgressBar({
         <button
           onClick={prevStep}
           disabled={step === 1}
-          className="flex justify-center items-center mr-2"
+          className="flex justify-center items-center mr-2 disabled:text-textColorDarkBg disabled:cursor-not-allowed"
         >
           <GrPrevious />
         </button>

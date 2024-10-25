@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
+    "@react-pdf/renderer": "^4.0.0",
     "@typescript-eslint/eslint-plugin": "^7.15.0",
     "@typescript-eslint/parser": "^7.15.0",
     "clsx": "^2.1.1",

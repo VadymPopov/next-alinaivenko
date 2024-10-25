@@ -49,6 +49,7 @@ export default function StepSeven() {
 
   const onSubmitHandler = (formValues: StepSevenData) => {
     updateFormData(formValues);
+    console.log({ ...formData, ...formValues });
   };
 
   return (

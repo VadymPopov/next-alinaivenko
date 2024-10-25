@@ -15,7 +15,7 @@ interface IServiceCard {
   deposit: string;
   size?: string;
   duration: string;
-  serviceSlug: string;
+  serviceSlug: 'small-tattoo' | 'large-tattoo' | 'permanent' | 'touch-up';
 }
 
 export default function ServiceCard({
@@ -31,7 +31,9 @@ export default function ServiceCard({
 
   const router = useRouter();
 
-  const onBtnClick = (service: string) => {
+  const onBtnClick = (
+    service: 'small-tattoo' | 'large-tattoo' | 'permanent' | 'touch-up',
+  ) => {
     setService(service);
     router.push('/booking');
   };

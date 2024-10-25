@@ -77,14 +77,17 @@ export const pickDuration = (selectedProcedure: selectedProcedure) => {
 export const calculateTip = (amount: number, percentage: number) => {
   switch (percentage) {
     case 15:
-      return amount * 0.15;
+      return Number((amount * 0.15).toFixed(2));
     case 20:
-      return amount * 0.2;
+      return Number((amount * 0.2).toFixed(2));
     case 25:
-      return amount * 0.25;
+      return Number((amount * 0.25).toFixed(2));
     case 30:
-      return amount * 0.3;
+      return Number((amount * 0.3).toFixed(2));
     default:
-      throw new Error('Invalid tip percentage');
+      return 0;
   }
 };
+
+export const formatCurrency = (value: number) =>
+  value.toLocaleString('en-US', { style: 'currency', currency: 'CAD' });

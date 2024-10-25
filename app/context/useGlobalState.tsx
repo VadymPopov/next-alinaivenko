@@ -33,9 +33,12 @@ interface IAppointmentInfo {
 }
 
 interface IPaymentInfo {
-  name: string;
-  email: string;
-  amount: string;
+  name?: string;
+  email?: string;
+  amount?: number;
+  tip?: number;
+  taxes?: number;
+  total?: number;
 }
 
 const AppContext = createContext<IAppContext | undefined>(undefined);

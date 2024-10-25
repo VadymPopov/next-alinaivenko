@@ -1,7 +1,7 @@
 'use client';
 
 import { useWaiverFormContext } from '@/app/context/WaiverFormContext';
-import { IFormData } from '@/app/context/WaiverFormContext';
+import { IWaiverFormData } from '@/app/context/WaiverFormContext';
 import { verifyClientLegalAge } from '@/app/utils/ageVerification';
 
 import React, { useEffect } from 'react';
@@ -48,7 +48,7 @@ export default function StepOne({ nextStep }: { nextStep: () => void }) {
     formState: { errors },
   } = methods;
 
-  const onSubmitHandler = (formValues: Partial<IFormData>) => {
+  const onSubmitHandler = (formValues: Partial<IWaiverFormData>) => {
     updateFormData(formValues);
     setIsClientUnder18(
       verifyClientLegalAge(new Date(formValues?.dob as string)),
