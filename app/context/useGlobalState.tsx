@@ -26,7 +26,7 @@ interface IAppointmentInfo {
   name?: string;
   email?: string;
   phone?: string | null;
-  images?: File[] | null;
+  images?: string[] | null;
   description?: string;
   instagram?: string;
   address?: string;

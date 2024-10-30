@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 
 import { useAppContext } from '../context/useGlobalState';
 import { validationSchemaClient } from '../schemas';
+import { getBase64 } from '../utils/getBase64';
 import Button from './Button';
 import FieldSet from './FieldSet';
 import FileInput from './FileInput';
@@ -52,8 +53,13 @@ export default function ClientForm() {
   const onSubmitHandler = async (formValues: FormValues) => {
     const isValid = await trigger();
 
+    const imagesArray = Array.from(formValues?.images ?? []);
+    const imagesBase64 = await Promise.all(
+      imagesArray.map(async (image) => await getBase64(image)),
+    );
+
     if (isValid) {
-      setAppointmentInfo(formValues);
+      setAppointmentInfo({ ...formValues, images: imagesBase64 });
       router.push('/booking/schedule');
     } else {
       console.log('Validation failed');

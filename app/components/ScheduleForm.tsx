@@ -58,7 +58,7 @@ export default function ScheduleForm() {
       duration,
     };
 
-    // router.push('/booking/payment');
+    router.push('/booking/payment');
 
     setAppointmentInfo(info);
   };

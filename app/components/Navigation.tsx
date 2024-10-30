@@ -45,7 +45,7 @@ export default function Navigation() {
           className="font inline-block rounded-lg font-bold no-underline"
         >
           <Image
-            src="/images/logo-circle.svg"
+            src="/logo-circle.svg"
             alt="logo"
             width="64"
             height="64"

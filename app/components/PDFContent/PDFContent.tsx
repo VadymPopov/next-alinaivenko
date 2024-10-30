@@ -2,7 +2,7 @@ import { IWaiverFormData } from '@/app/context/WaiverFormContext';
 
 import React from 'react';
 
-import { Document, Image, Page, Text, View } from '@react-pdf/renderer';
+import { Document, Page, Text, View } from '@react-pdf/renderer';
 import { format } from 'date-fns';
 
 import { styles } from './PDFContent.stylesheet';
@@ -31,10 +31,11 @@ export default function PDFContent({
           </Text>
           <Text style={styles.value}>
             In consideration of receiving a {values.service} (hereinafter
-            referred to as the "tattoo") from ALINA IVENKO (hereinafter referred
-            to as the "Tattoo Artist"), I voluntarily agree to the following
-            terms and conditions. I acknowledge that the tattooing process
-            involves inherent risks, uncertainties, and potential discomfort.
+            referred to as the &quot;tattoo&quot;) from ALINA IVENKO
+            (hereinafter referred to as the &quot;Tattoo Artist&quot;), I
+            voluntarily agree to the following terms and conditions. I
+            acknowledge that the tattooing process involves inherent risks,
+            uncertainties, and potential discomfort.
           </Text>
         </View>
 
@@ -132,11 +133,11 @@ export default function PDFContent({
         <View style={styles.section}>
           <Text style={styles.title}>No Refunds:</Text>
           <Text style={styles.value}>
-            I acknowledge and accept the Tattoo Artist's NO REFUND policy for
-            tattoos. I understand that the tattoo deposit is non-refundable and
-            that I must provide at least 1 week's notice to reschedule or change
-            my appointment. Failure to do so will require the purchase of a new
-            deposit.
+            I acknowledge and accept the Tattoo Artist&quot;s NO REFUND policy
+            for tattoos. I understand that the tattoo deposit is non-refundable
+            and that I must provide at least 1 week&quot;s notice to reschedule
+            or change my appointment. Failure to do so will require the purchase
+            of a new deposit.
           </Text>
         </View>
 
@@ -177,7 +178,7 @@ export default function PDFContent({
           </Text>
           <Text style={styles.value}>
             I confirm that I am not a recipient of an organ or bone marrow
-            transplant. If I am, I have diligently followed my doctor's
+            transplant. If I am, I have diligently followed my doctor&quot;s
             prescribed preventative regimen of antibiotics in preparation for
             any invasive procedure, such as tattooing.
           </Text>
@@ -243,7 +244,7 @@ export default function PDFContent({
               and understood the contents of this form, and I agree to be bound
               by its terms and conditions. Additionally, I acknowledge that I
               will provide both my government-issued photo identification and my
-              child's government-issued photo identification as required.
+              child&quot;s government-issued photo identification as required.
             </Text>
           </View>
         )}
@@ -284,20 +285,20 @@ export default function PDFContent({
               <Text style={styles.text}>
                 {isClientUnder18 ? 'Parental/Guardian' : 'Client'} Signature:{' '}
               </Text>
-              {(values.signatureField || values.parentalSignatureField) && (
+              {/* {(values.clientSignature || values.parentalSignature) && (
                 <Image
                   style={styles.signature}
                   src={
                     isClientUnder18
-                      ? values.parentalSignatureField
-                      : values.signatureField
+                      ? values.parentalSignature
+                      : values.clientSignature
                   }
                 />
-              )}
+              )} */}
             </View>
 
             <Text style={styles.text}>
-              Date: {format(values.date, 'yyyy-MM-dd')}
+              Date: {format(values.appointmentDate as string, 'yyyy-MM-dd')}
             </Text>
           </View>
         </View>
