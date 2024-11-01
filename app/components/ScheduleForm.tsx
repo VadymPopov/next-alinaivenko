@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -22,6 +22,7 @@ export interface IFormValues {
 }
 
 export default function ScheduleForm() {
+  const [slots, setSlots] = useState([]);
   const router = useRouter();
   const { service, appointmentInfo, setAppointmentInfo } = useAppContext();
 
@@ -63,28 +64,15 @@ export default function ScheduleForm() {
     setAppointmentInfo(info);
   };
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const slots = await getAvailableSlots(
-  //       format(selectedDate, 'MM.dd.yyyy'),
-  //       duration
-  //     );
-  //     setSlots(slots);
-  //   })();
-  // }, [duration, selectedDate]);
-
-  const slots = [
-    '11:00am',
-    '12:00pm',
-    '1:00pm',
-    '2:00pm',
-    '3:00pm',
-    '4:00pm',
-    '5:00pm',
-    '6:00pm',
-    '7:00pm',
-    '8:00pm',
-  ];
+  useEffect(() => {
+    (async () => {
+      const response = await fetch(
+        `/api/slots?date=${format(selectedDate, 'MM.dd.yyyy')}&duration=${duration}`,
+      );
+      const slots = await response.json();
+      setSlots(slots);
+    })();
+  }, [duration, selectedDate]);
 
   return (
     <FormProvider {...methods}>

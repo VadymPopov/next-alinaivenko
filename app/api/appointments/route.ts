@@ -2,12 +2,48 @@ import connect from '@/app/lib/db';
 import Appointment from '@/app/lib/modals/appointment';
 import { sendEmail } from '@/app/lib/nodemailer/sendEmail';
 
-import { NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 
-export const GET = async () => {
+interface AppointmentType {
+  date: string;
+  slot: string;
+  duration: number;
+}
+
+function convertToDate(appointment: AppointmentType): Date {
+  const [month, day, year] = appointment.date.split('.').map(Number);
+
+  let hours = Number(appointment.slot.replace(/(am|pm)/i, '').split(':')[0]);
+  const minutes = Number(
+    appointment.slot.replace(/(am|pm)/i, '').split(':')[1],
+  );
+
+  if (/pm/i.test(appointment.slot) && hours !== 12) {
+    hours += 12;
+  } else if (/am/i.test(appointment.slot) && hours === 12) {
+    hours = 0;
+  }
+
+  return new Date(year, month - 1, day, hours, minutes);
+}
+
+export const GET = async (request: NextRequest) => {
   try {
     await connect();
-    const appointments = await Appointment.find();
+    const searchParams = request.nextUrl.searchParams;
+    const query: Record<string, unknown> = {};
+
+    const date = searchParams.get('date');
+    const month = searchParams.get('month');
+
+    if (date) query.date = date;
+    if (month) query.date = { $regex: `^${month}\\.` };
+
+    const appointments = await Appointment.find(query);
+    appointments.sort(
+      (a, b) => convertToDate(a).getTime() - convertToDate(b).getTime(),
+    );
+
     return NextResponse.json(appointments, { status: 200 });
   } catch (error) {
     const errorMessage =
