@@ -42,7 +42,8 @@ export default function Button({
       )}
       disabled={disabled}
     >
-      {isProcessing ? <ButtonLoader /> : children}
+      {children}
+      {isProcessing && <ButtonLoader />}
     </button>
   );
 }

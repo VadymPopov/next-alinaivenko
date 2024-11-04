@@ -5,7 +5,7 @@ import { generateUpdatedAppointmentEmail } from '../templates/updatedAppointment
 import { generateEmailOptions } from './generateEmailOptions';
 import { getTransporter } from './transporter';
 
-interface IData {
+export interface IData {
   name: string;
   email: string;
   phone?: string;
@@ -17,6 +17,12 @@ interface IData {
   duration: string;
   description?: string;
   images: string[];
+  deposit: {
+    amount: number;
+    tax: number;
+    fee: number;
+    total: number;
+  };
 }
 
 interface sendEmailI {

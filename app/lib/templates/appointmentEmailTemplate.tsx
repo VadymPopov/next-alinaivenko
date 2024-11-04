@@ -1,3 +1,5 @@
+import { formatCurrency } from '@/app/utils/helpers';
+
 import { format } from 'date-fns';
 
 interface generateAppointmentEmailI {
@@ -12,6 +14,12 @@ interface generateAppointmentEmailI {
   duration: string;
   description?: string;
   client?: boolean;
+  deposit: {
+    amount: number;
+    tax: number;
+    fee: number;
+    total: number;
+  };
 }
 
 export function generateAppointmentEmail({
@@ -26,6 +34,7 @@ export function generateAppointmentEmail({
   duration,
   description,
   client,
+  deposit,
 }: generateAppointmentEmailI) {
   return `
   <div style="font-family: Arial, sans-serif; background-color: #000; padding: 40px 20px; max-width: 600px; margin: 0 auto; border-radius: 10px;">
@@ -94,6 +103,18 @@ export function generateAppointmentEmail({
         <tr style="background-color: #fff; border-bottom: 1px solid #303030;">
           <td style="padding: 10px; font-weight: bold; text-align: left;">Procedure:</td>
           <td style="padding: 10px; text-align: right;">${service}</td>
+        </tr>
+         <tr style="background-color: #fff; border-bottom: 1px solid #303030;">
+          <td style="padding: 10px; font-weight: bold; text-align: left;">Deposit:</td>
+          <td style="padding: 10px; text-align: right;">${formatCurrency(deposit.amount)}</td>
+        </tr>
+         <tr style="background-color: #fff; border-bottom: 1px solid #303030;">
+          <td style="padding: 10px; font-weight: bold; text-align: left;">Tax (GST/HST):</td>
+          <td style="padding: 10px; text-align: right;">${formatCurrency(deposit.tax)}</td>
+        </tr>
+         <tr style="background-color: #fff; border-bottom: 1px solid #303030;">
+          <td style="padding: 10px; font-weight: bold; text-align: left;">Processing Fee:</td>
+          <td style="padding: 10px; text-align: right;">${formatCurrency(deposit.fee)}</td>
         </tr>
         ${
           client

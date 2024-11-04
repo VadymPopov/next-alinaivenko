@@ -1,49 +1,62 @@
 'use client';
 
+import CheckoutStripeForm from '@/app/components/CheckoutStripeForm';
+import SkeletonForm from '@/app/components/Skeleton';
 import { useAppContext } from '@/app/context/useGlobalState';
 
-// import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
-// import { useRouter } from 'next/navigation';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import { useRouter } from 'next/navigation';
+
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
+);
 
 export default function BookingPayment() {
+  const [clientSecret, setClientSecret] = useState(null);
   const { service, appointmentInfo } = useAppContext();
-  // const router = useRouter();
+  const router = useRouter();
 
   if (appointmentInfo) {
-    appointmentInfo.address = '123 St.Clair Street';
+    appointmentInfo.address =
+      '689 St. Clair Avenue West, Toronto, Ontario M6C 1B2, Canada';
   }
 
-  const onSubmit = async () => {
-    const res = await fetch('/api/appointments/67214085c309bcb8e2e87b42', {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'PUT',
-      body: JSON.stringify({ ...appointmentInfo, service }),
-    });
+  useEffect(() => {
+    if (!service) {
+      router.replace('/booking/service');
+    }
+  });
 
-    const data = await res.json();
-    console.log(data);
-  };
+  useEffect(() => {
+    (async () => {
+      if (!service) {
+        return;
+      }
 
-  // useEffect(() => {
-  //   if (!service) {
-  //     router.replace('/booking/service');
-  //   }
+      const res = await fetch(`/api/payments?service=${service}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: appointmentInfo?.name,
+          email: appointmentInfo?.email,
+        }),
+      });
 
-  //   if (appointmentInfo) {
-  //     //   appointmentInfo.address = checkDay(date);
-  //     appointmentInfo.address =
-  //       '689 St. Clair Avenue West, Toronto, Ontario M6C 1B2, Canada';
-  //   }
-  // });
+      const data = await res.json();
+      setClientSecret(data.clientSecret);
+    })();
+  }, [appointmentInfo?.email, appointmentInfo?.name, service]);
 
-  // return <div>Payment system is here</div>;
-  return (
-    <>
-      <p>Payment</p>
-      <button onClick={onSubmit}>Submit</button>
-    </>
-  );
+  if (!stripePromise || !clientSecret) {
+    return <SkeletonForm />;
+  } else {
+    return (
+      <Elements stripe={stripePromise} options={{ clientSecret }}>
+        <CheckoutStripeForm />
+      </Elements>
+    );
+  }
 }

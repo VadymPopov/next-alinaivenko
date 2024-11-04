@@ -12,7 +12,7 @@ const appointmentSchema = new Schema(
     },
     phone: {
       type: String,
-      required: [true, 'Phone is required'],
+      default: 'none',
     },
     service: {
       type: String,
@@ -48,6 +48,29 @@ const appointmentSchema = new Schema(
     instagram: {
       type: String,
       default: 'none',
+    },
+    paymentIntentId: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    deposit: {
+      amount: {
+        type: Number,
+        required: true,
+      },
+      tax: {
+        type: Number,
+        required: true,
+      },
+      fee: {
+        type: Number,
+        required: true,
+      },
+      total: {
+        type: Number,
+        required: true,
+      },
     },
   },
   { versionKey: false, timestamps: false },

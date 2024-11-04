@@ -2,7 +2,10 @@ interface generateEmailOptionsI {
   to: string;
   subject: string;
   htmlContent: string;
-  attachments?: { path: string }[];
+  attachments?: (
+    | { path: string; filename?: string; contentType?: string }
+    | { filename: string; content: Buffer; contentType: string }
+  )[];
   logoPath: string;
 }
 

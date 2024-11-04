@@ -2,8 +2,7 @@ import { IWaiverFormData } from '@/app/context/WaiverFormContext';
 
 import React from 'react';
 
-import { Document, Page, Text, View } from '@react-pdf/renderer';
-import { format } from 'date-fns';
+import { Document, Image, Page, Text, View } from '@react-pdf/renderer';
 
 import { styles } from './PDFContent.stylesheet';
 
@@ -285,7 +284,8 @@ export default function PDFContent({
               <Text style={styles.text}>
                 {isClientUnder18 ? 'Parental/Guardian' : 'Client'} Signature:{' '}
               </Text>
-              {/* {(values.clientSignature || values.parentalSignature) && (
+              {(values.clientSignature || values.parentalSignature) && (
+                // eslint-disable-next-line jsx-a11y/alt-text
                 <Image
                   style={styles.signature}
                   src={
@@ -294,12 +294,10 @@ export default function PDFContent({
                       : values.clientSignature
                   }
                 />
-              )} */}
+              )}
             </View>
 
-            <Text style={styles.text}>
-              Date: {format(values.appointmentDate as string, 'yyyy-MM-dd')}
-            </Text>
+            <Text style={styles.text}>Date: {values.appointmentDate}</Text>
           </View>
         </View>
       </Page>

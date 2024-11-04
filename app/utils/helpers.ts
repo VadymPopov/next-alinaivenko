@@ -91,3 +91,11 @@ export const calculateTip = (amount: number, percentage: number) => {
 
 export const formatCurrency = (value: number) =>
   value.toLocaleString('en-US', { style: 'currency', currency: 'CAD' });
+
+export const calculateStripeFee = (amount: number) => {
+  const percentageFee = 0.029;
+  const flatFee = 0.3;
+
+  const fee = amount * percentageFee + flatFee;
+  return Number(fee.toFixed(2));
+};

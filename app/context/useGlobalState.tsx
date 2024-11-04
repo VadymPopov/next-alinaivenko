@@ -30,6 +30,9 @@ interface IAppointmentInfo {
   description?: string;
   instagram?: string;
   address?: string;
+  date?: string;
+  slot?: string;
+  duration?: number;
 }
 
 interface IPaymentInfo {
