@@ -40,7 +40,7 @@ export async function sendEmail({ data, client, updated }: sendEmailI) {
     const subject = updated
       ? 'Tattoo Appointment Rescheduling'
       : client
-        ? 'Tattoo Appointment Confirmation'
+        ? `Tattoo Appointment Confirmation - ${date} at ${slot}`
         : `New Tattoo Appointment - ${date}, ${slot}, ${name}`;
     const htmlContent = updated
       ? generateUpdatedAppointmentEmail(data)

@@ -11,11 +11,7 @@ import { useRouter } from 'next/navigation';
 
 import { useAppContext } from '../context/useGlobalState';
 import { formatCurrency } from '../utils/helpers';
-import {
-  calculatePrice,
-  calculateStripeFee,
-  switchName,
-} from '../utils/helpers';
+import { getDepositBreakdown } from '../utils/helpers';
 import Button from './Button';
 
 export default function CheckoutStripeForm() {
@@ -23,12 +19,7 @@ export default function CheckoutStripeForm() {
   const [isProcessing, setIsProcessing] = useState(false);
   const { service, appointmentInfo } = useAppContext();
   const router = useRouter();
-  const procedureName = switchName(service);
-
-  const amount = calculatePrice(service) || 0;
-  const tax = Number((amount * 0.13).toFixed(2)) || 0;
-  const fee = calculateStripeFee(amount + tax);
-  const total = Number((tax + amount + fee).toFixed(2));
+  const { amount, tax, fee, total } = getDepositBreakdown(service);
 
   const stripe = useStripe();
   const elements = useElements();
@@ -83,47 +74,47 @@ export default function CheckoutStripeForm() {
       id="payment-form"
       onSubmit={handleSubmit}
     >
-      <div className="w-[470px] py-2.5 px-8 flex flex-col justify-between border border-textColorDarkBg shadow-md  rounded-lg bg-bgColor sm:w-auto">
+      <div className="md:w-[470px] py-2.5 px-8 flex flex-col justify-between border border-textColorDarkBg shadow-md  rounded-lg bg-bgColor w-auto">
         <div className="w-full border-b border-mainDarkColor flex flex-col items-baseline my-4">
-          <h3 className="text-lg font-semibold mb-5 tracking-wider">
+          <h3 className="text-lg font-semibold mb-4 tracking-wider">
             Service Details
           </h3>
-          <p className="text-base mb-4 tracking-wider">
-            {procedureName} Appointment Deposit
+          <p className="text-base mb-3 tracking-wider">
+            {service} Appointment Deposit
           </p>
-          <p className="text-base mb-4 tracking-wider">
+          <p className="text-base mb-3 tracking-wider">
             {appointmentInfo?.slot && appointmentInfo?.date}
-            {appointmentInfo?.slot && <span>at {appointmentInfo?.slot}</span>}
+            {appointmentInfo?.slot && <span> at {appointmentInfo?.slot}</span>}
           </p>
         </div>
 
         <div className="w-full text-start">
-          <h3 className="text-lg font-semibold mb-5 tracking-wider">
+          <h3 className="text-lg font-semibold mb-4 tracking-wider">
             Payment Details
           </h3>
           <div className="w-full border-b border-mainDarkColor flex flex-col my-4">
             <div className="flex justify-between">
-              <p className="text-base mb-4 tracking-wider">Subtotal</p>
-              <p className="text-base mb-4 tracking-wider">
+              <p className="text-base mb-3 tracking-wider">Subtotal</p>
+              <p className="text-base mb-3 tracking-wider">
                 {formatCurrency(amount)}
               </p>
             </div>
             <div className="flex justify-between">
-              <p className="text-base mb-4 tracking-wider">Tax (GST/HST)</p>
-              <p className="text-base mb-4 tracking-wider">
+              <p className="text-base mb-3 tracking-wider">Tax (GST/HST)</p>
+              <p className="text-base mb-3 tracking-wider">
                 {formatCurrency(tax)}
               </p>
             </div>
             <div className="flex justify-between">
-              <p className="text-base mb-4 tracking-wider">Processing Fee</p>
-              <p className="text-base mb-4 tracking-wider">
+              <p className="text-base mb-3 tracking-wider">Processing Fee</p>
+              <p className="text-base mb-3 tracking-wider">
                 {formatCurrency(fee)}
               </p>
             </div>
           </div>
           <div className="flex justify-between">
-            <p className="text-base mb-4 tracking-wider">Total</p>
-            <p className="text-base mb-4 tracking-wider">
+            <p className="text-base mb-3 tracking-wider">Total</p>
+            <p className="text-base mb-3 tracking-wider">
               {formatCurrency(total)}
             </p>
           </div>

@@ -42,7 +42,6 @@ export default function Services() {
             deposit="CA$100"
             size="up to 10 cm"
             duration="1.2h"
-            serviceSlug="small-tattoo"
           />
           <div>
             <Title>Small Tattoo</Title>
@@ -91,7 +90,6 @@ export default function Services() {
             deposit="CA$120"
             size="more than 10 cm and detailed"
             duration="3h"
-            serviceSlug="large-tattoo"
           />
 
           <div>
@@ -135,7 +133,6 @@ export default function Services() {
             price="from CA$20"
             deposit="CA$20"
             duration="30min"
-            serviceSlug="touch-up"
           />
 
           <div>
@@ -172,17 +169,16 @@ export default function Services() {
         <li className="mb-0 flex flex-col-reverse sm:p-5 lg:mb-7 lg:flex-row bg-bgColor">
           <ServiceCard
             imgURL={'/images/permanent.jpg'}
-            title="Permanent"
+            title="Permanent Makeup"
             price="fixed CA$300"
             deposit="CA$100"
             duration="1h-3h"
-            serviceSlug="permanent"
           />
 
           <div>
-            <Title>Permanent</Title>
+            <Title>Permanent Makeup</Title>
             <Text>
-              Permanent makeup offers a selection of three procedures: eyebrows,
+              Permanent Makeup offers a selection of three procedures: eyebrows,
               eyelash, or lips tattooing. These procedures can be performed
               individually or combined according to your preferences. By opting
               for cosmetic tattooing, you can significantly reduce the time

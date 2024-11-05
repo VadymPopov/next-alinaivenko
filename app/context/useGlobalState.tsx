@@ -9,13 +9,15 @@ import React, {
   useState,
 } from 'react';
 
+export type serviceType =
+  | 'Small Tattoo'
+  | 'Large Tattoo'
+  | 'Permanent Makeup'
+  | 'Touch-up';
+
 interface IAppContext {
-  service: 'small-tattoo' | 'large-tattoo' | 'permanent' | 'touch-up' | null;
-  setService: Dispatch<
-    SetStateAction<
-      'small-tattoo' | 'large-tattoo' | 'permanent' | 'touch-up' | null
-    >
-  >;
+  service: serviceType | null;
+  setService: Dispatch<SetStateAction<serviceType | null>>;
   appointmentInfo: IAppointmentInfo | null;
   setAppointmentInfo: Dispatch<SetStateAction<IAppointmentInfo | null>>;
   paymentInfo: IPaymentInfo | null;
@@ -47,9 +49,7 @@ interface IPaymentInfo {
 const AppContext = createContext<IAppContext | undefined>(undefined);
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
-  const [service, setService] = useState<
-    'small-tattoo' | 'large-tattoo' | 'permanent' | 'touch-up' | null
-  >(null);
+  const [service, setService] = useState<serviceType | null>(null);
   const [appointmentInfo, setAppointmentInfo] =
     useState<IAppointmentInfo | null>(null);
   const [paymentInfo, setPaymentInfo] = useState<IPaymentInfo | null>(null);

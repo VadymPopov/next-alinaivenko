@@ -36,12 +36,13 @@ export default function BookingPayment() {
         return;
       }
 
-      const res = await fetch(`/api/payments?service=${service}`, {
+      const res = await fetch('/api/payments', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: appointmentInfo?.name,
           email: appointmentInfo?.email,
+          service,
         }),
       });
 

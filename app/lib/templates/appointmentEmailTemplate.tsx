@@ -1,7 +1,5 @@
 import { formatCurrency } from '@/app/utils/helpers';
 
-import { format } from 'date-fns';
-
 interface generateAppointmentEmailI {
   name: string;
   email: string;
@@ -148,7 +146,7 @@ export function generateAppointmentEmail({
       </ol>
       <p style="font-size: 16px; color: #fff; text-align: right; margin-top: 30px;">For questions, contact me at <a href="mailto:inkedbyAlina@gmail.com" style="color: #9DA4BD; text-decoration: none;">inkedbyAlina@gmail.com</a> or via <a href="https://www.instagram.com/ivenko.alinaaa/" style="color: #9DA4BD; text-decoration: none;">Instagram</a>.</p>
       <p style="font-size: 16px; color: #fff; text-align: justify; margin-top: 30px;">Thank you for choosing and trusting me with world of art.</p>
-      <p style="font-size: 16px; color: #fff; text-align: justify;">See you on <strong>${format(new Date(date), 'MMMM dd, yyyy')}</strong>!</p>
+      <p style="font-size: 16px; color: #fff; text-align: justify;">See you on <strong>${date}</strong>!</p>
       <p style="font-size: 16px; color: rgba(255, 108, 0, 1); text-align: center; margin-top: 40px;">Sincerely yours,</p>
       <p style="font-size: 16px; color: rgba(255, 108, 0, 1); text-align: center;">I.A.</p>
     `

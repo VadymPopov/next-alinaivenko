@@ -16,7 +16,7 @@ const appointmentSchema = new Schema(
     },
     service: {
       type: String,
-      enum: ['small-tattoo', 'large-tattoo', 'permanent', 'touch-up'],
+      enum: ['Small Tattoo', 'Large Tattoo', 'Permanent Makeup', 'Touch-up'],
       required: [true, 'Service is required'],
     },
     date: {
@@ -73,7 +73,7 @@ const appointmentSchema = new Schema(
       },
     },
   },
-  { versionKey: false, timestamps: false },
+  { versionKey: false, timestamps: true },
 );
 
 const Appointment =

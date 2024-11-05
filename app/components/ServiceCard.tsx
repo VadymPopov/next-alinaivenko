@@ -5,17 +5,16 @@ import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-import { useAppContext } from '../context/useGlobalState';
+import { serviceType, useAppContext } from '../context/useGlobalState';
 import Button from './Button';
 
 interface IServiceCard {
   imgURL: string;
-  title: string;
+  title: serviceType;
   price: string;
   deposit: string;
   size?: string;
   duration: string;
-  serviceSlug: 'small-tattoo' | 'large-tattoo' | 'permanent' | 'touch-up';
 }
 
 export default function ServiceCard({
@@ -25,15 +24,12 @@ export default function ServiceCard({
   deposit,
   size,
   duration,
-  serviceSlug,
 }: IServiceCard) {
   const { setService } = useAppContext();
 
   const router = useRouter();
 
-  const onBtnClick = (
-    service: 'small-tattoo' | 'large-tattoo' | 'permanent' | 'touch-up',
-  ) => {
+  const onBtnClick = (service: serviceType) => {
     setService(service);
     router.push('/booking');
   };
@@ -57,7 +53,7 @@ export default function ServiceCard({
           <p>Duration: {duration}</p>
         </div>
         <div className="flex justify-center">
-          <Button primary={true} onClick={() => onBtnClick(serviceSlug)}>
+          <Button primary={true} onClick={() => onBtnClick(title)}>
             Book now
           </Button>
         </div>

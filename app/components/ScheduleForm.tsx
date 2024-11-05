@@ -54,7 +54,7 @@ export default function ScheduleForm() {
   const onSubmitHandler = async (formData: IFormValues) => {
     const info = {
       ...appointmentInfo,
-      date: format(formData.date, 'MM.dd.yyyy'),
+      date: format(formData.date, 'MMMM dd, yyyy'),
       slot: formData.slot,
       duration,
     };
@@ -67,7 +67,7 @@ export default function ScheduleForm() {
   useEffect(() => {
     (async () => {
       const response = await fetch(
-        `/api/slots?date=${format(selectedDate, 'MM.dd.yyyy')}&duration=${duration}`,
+        `/api/slots?date=${format(selectedDate, 'MMMM dd, yyyy')}&duration=${duration}`,
       );
       const slots = await response.json();
       setSlots(slots);

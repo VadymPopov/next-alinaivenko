@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 
-import { useAppContext } from '../context/useGlobalState';
+import { serviceType, useAppContext } from '../context/useGlobalState';
 import Button from './Button';
 
 const services = [
@@ -13,38 +13,34 @@ const services = [
     title: 'Small Tattoo',
     duration: '60 min',
     deposit: 'CA$100',
-    serviceSlug: 'small-tattoo',
   },
   {
     title: 'Large Tattoo',
     duration: '120 min',
     deposit: 'CA$120',
-    serviceSlug: 'large-tattoo',
   },
   {
     title: 'Permanent Makeup',
     duration: '60 min',
     deposit: 'CA$100',
-    serviceSlug: 'permanent',
   },
   {
     title: 'Touch-up',
     duration: '30 min',
     deposit: 'CA$20',
-    serviceSlug: 'touch-up',
   },
 ];
 
 export default function ServicesPicker() {
   const router = useRouter();
   const { service, setService } = useAppContext();
-  const [selectedService, setSelectedService] = useState<string | null>(
+  const [selectedService, setSelectedService] = useState<serviceType | null>(
     service || null,
   );
 
   const isActive = (service: string) => selectedService === service;
 
-  const handleCardClick = (value: string) => {
+  const handleCardClick = (value: serviceType) => {
     if (selectedService === value) {
       setSelectedService(null);
     } else {
@@ -68,18 +64,18 @@ export default function ServicesPicker() {
       </h3>
 
       <ul className="lg:flex lg:mb-10 lg:items-center lg:justify-center mb-5 sm:grid sm:grid-cols-[170px_150px] md:grid-cols-[200px_200px] md:gap-7 sm:gap-5 sm:mx-auto sm:mb-7 sm:justify-center grid grid-cols-[140px_140px] gap-2.5 justify-center">
-        {services.map(({ serviceSlug, title, deposit, duration }) => {
+        {services.map(({ title, deposit, duration }) => {
           return (
             <li
-              key={serviceSlug}
+              key={title}
               className={clsx(
                 'flex flex-col items-end justify-between p-5 font-semibold text-sm leading-5 h-[140px] w-[140px] sm:h-[150px] sm:w-[170px] md:h-[160px] md:w-[200px] border rounded-2xl transition-colors duration-[250] ease-linear cursor-pointer hover:shadow-2xl hover:bg-accentColor hover:text-mainLightColor ',
-                isActive(serviceSlug)
+                isActive(title)
                   ? 'bg-cardColor text-mainLightColor shadow-2xl'
                   : 'bg-mainLightColor text-cardColor',
                 'border-accentColor',
               )}
-              onClick={() => handleCardClick(serviceSlug)}
+              onClick={() => handleCardClick(title as serviceType)}
             >
               <p className="text-nowrap text-xs sm:text-base md:text-lg">
                 {title}

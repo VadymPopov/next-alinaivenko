@@ -5,21 +5,19 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 export const POST = async (request: NextRequest) => {
   try {
-    const { email, name } = await request.json();
-    const searchParams = request.nextUrl.searchParams;
-    const service = searchParams.get('service');
+    const { email, name, service } = await request.json();
 
     let serviceAmount;
 
     switch (service) {
-      case 'permanent':
-      case 'small-tattoo':
+      case 'Permanent Makeup':
+      case 'Small Tattoo':
         serviceAmount = 11658;
         break;
-      case 'large-tattoo':
+      case 'Large Tattoo':
         serviceAmount = 13983;
         break;
-      case 'touch-up':
+      case 'Touch-up':
         serviceAmount = 2356;
         break;
     }

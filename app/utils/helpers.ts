@@ -1,47 +1,19 @@
-type selectedProcedure =
-  | 'small-tattoo'
-  | 'large-tattoo'
-  | 'permanent'
-  | 'touch-up'
-  | null;
+import { serviceType } from '../context/useGlobalState';
 
-export const switchName = (selectedProcedure: selectedProcedure) => {
-  let procedureName;
-
-  switch (selectedProcedure) {
-    case 'small-tattoo':
-      procedureName = 'Small Tattoo';
-      break;
-    case 'large-tattoo':
-      procedureName = 'Large Tattoo';
-      break;
-    case 'permanent':
-      procedureName = 'Permanent Makeup';
-      break;
-    case 'touch-up':
-      procedureName = 'Touch-up';
-      break;
-    default:
-      procedureName = 'Small Tattoo';
-  }
-
-  return procedureName;
-};
-
-export const calculatePrice = (selectedProcedure: selectedProcedure) => {
+export const calculatePrice = (selectedProcedure: serviceType | null) => {
   let price;
 
   switch (selectedProcedure) {
-    case 'small-tattoo':
+    case 'Small Tattoo':
       price = 100;
       break;
-    case 'large-tattoo':
+    case 'Large Tattoo':
       price = 120;
       break;
-    case 'permanent':
+    case 'Permanent Makeup':
       price = 100;
       break;
-    case 'touch-up':
+    case 'Touch-up':
       price = 20;
       break;
     default:
@@ -51,20 +23,20 @@ export const calculatePrice = (selectedProcedure: selectedProcedure) => {
   return price;
 };
 
-export const pickDuration = (selectedProcedure: selectedProcedure) => {
+export const pickDuration = (selectedProcedure: serviceType | null) => {
   let duration;
 
   switch (selectedProcedure) {
-    case 'small-tattoo':
+    case 'Small Tattoo':
       duration = 60;
       break;
-    case 'large-tattoo':
+    case 'Large Tattoo':
       duration = 120;
       break;
-    case 'permanent':
+    case 'Permanent Makeup':
       duration = 60;
       break;
-    case 'touch-up':
+    case 'Touch-up':
       duration = 30;
       break;
     default:
@@ -98,4 +70,18 @@ export const calculateStripeFee = (amount: number) => {
 
   const fee = amount * percentageFee + flatFee;
   return Number(fee.toFixed(2));
+};
+
+export const getDepositBreakdown = (service: serviceType | null) => {
+  const amount = calculatePrice(service) || 0;
+  const tax = Number((amount * 0.13).toFixed(2)) || 0;
+  const fee = calculateStripeFee(amount + tax);
+  const total = Number((tax + amount + fee).toFixed(2));
+
+  return {
+    amount,
+    tax,
+    fee,
+    total,
+  };
 };
