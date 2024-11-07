@@ -24,7 +24,7 @@ interface IAppContext {
   setPaymentInfo: Dispatch<SetStateAction<IPaymentInfo | null>>;
 }
 
-interface IAppointmentInfo {
+export interface IAppointmentInfo {
   name?: string;
   email?: string;
   phone?: string | null;
@@ -35,14 +35,19 @@ interface IAppointmentInfo {
   date?: string;
   slot?: string;
   duration?: number;
+  amount?: number;
+  tax?: number;
+  fee?: number;
+  total?: number;
 }
 
-interface IPaymentInfo {
+export interface IPaymentInfo {
   name?: string;
   email?: string;
   amount?: number;
   tip?: number;
-  taxes?: number;
+  tax?: number;
+  fee?: number;
   total?: number;
 }
 

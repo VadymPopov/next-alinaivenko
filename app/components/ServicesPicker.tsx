@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 
 import { serviceType, useAppContext } from '../context/useGlobalState';
+import { getDepositBreakdown } from '../utils/helpers';
 import Button from './Button';
 
 const services = [
@@ -33,7 +34,7 @@ const services = [
 
 export default function ServicesPicker() {
   const router = useRouter();
-  const { service, setService } = useAppContext();
+  const { service, setService, setAppointmentInfo } = useAppContext();
   const [selectedService, setSelectedService] = useState<serviceType | null>(
     service || null,
   );
@@ -53,7 +54,10 @@ export default function ServicesPicker() {
       return;
     }
 
+    const { amount, tax, fee, total } = getDepositBreakdown(selectedService);
+
     setService(selectedService);
+    setAppointmentInfo({ amount, tax, fee, total });
     router.push('/booking/client-info');
   };
 

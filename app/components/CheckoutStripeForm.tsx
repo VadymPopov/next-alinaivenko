@@ -1,5 +1,9 @@
 'use client';
 
+// 3. Check if it's possible to get invoice from stripe to attach it
+// 4. Fix errors
+// 5. Add all get request from admin
+// 6. Next.js autho or something else for Admin and Owner
 import React, { FormEvent, useState } from 'react';
 
 import {
@@ -9,17 +13,34 @@ import {
 } from '@stripe/react-stripe-js';
 import { useRouter } from 'next/navigation';
 
-import { useAppContext } from '../context/useGlobalState';
+import {
+  IAppointmentInfo,
+  IPaymentInfo,
+  serviceType,
+} from '../context/useGlobalState';
 import { formatCurrency } from '../utils/helpers';
-import { getDepositBreakdown } from '../utils/helpers';
 import Button from './Button';
 
-export default function CheckoutStripeForm() {
+interface AppointmentCheckoutProps {
+  isBooking: true;
+  body: IAppointmentInfo;
+  service?: serviceType | null;
+}
+
+interface PaymentCheckoutProps {
+  isBooking: false;
+  body: IPaymentInfo;
+  service?: never;
+}
+
+export default function CheckoutStripeForm({
+  isBooking,
+  body,
+  service,
+}: AppointmentCheckoutProps | PaymentCheckoutProps) {
   const [message, setMessage] = useState<string | undefined>('');
   const [isProcessing, setIsProcessing] = useState(false);
-  const { service, appointmentInfo } = useAppContext();
   const router = useRouter();
-  const { amount, tax, fee, total } = getDepositBreakdown(service);
 
   const stripe = useStripe();
   const elements = useElements();
@@ -46,22 +67,21 @@ export default function CheckoutStripeForm() {
     ) {
       setMessage(error.message);
     } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-      await fetch('/api/appointments', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...appointmentInfo,
-          service,
-          paymentIntentId: paymentIntent.id,
-          deposit: {
-            amount,
-            tax,
-            fee,
-            total,
-          },
-        }),
-      });
-      router.replace('/payment-succeeded?type=booking');
+      await fetch(
+        isBooking ? '/api/appointments' : '/api/payment-confirmation',
+        {
+          method: isBooking ? 'POST' : 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            ...body,
+            service,
+            paymentIntentId: paymentIntent.id,
+          }),
+        },
+      );
+      // router.replace(
+      //   isBooking ? '/payment-succeeded?type=booking' : '/payment-succeeded',
+      // );
     } else {
       setMessage('Unexpected state');
     }
@@ -77,15 +97,18 @@ export default function CheckoutStripeForm() {
       <div className="md:w-[470px] py-2.5 px-8 flex flex-col justify-between border border-textColorDarkBg shadow-md  rounded-lg bg-bgColor w-auto">
         <div className="w-full border-b border-mainDarkColor flex flex-col items-baseline my-4">
           <h3 className="text-lg font-semibold mb-4 tracking-wider">
-            Service Details
+            {isBooking ? 'Service Details' : 'Your Order'}
           </h3>
           <p className="text-base mb-3 tracking-wider">
-            {service} Appointment Deposit
+            {isBooking
+              ? `${service} Appointment Deposit`
+              : 'Tattoo service payment'}
           </p>
-          <p className="text-base mb-3 tracking-wider">
-            {appointmentInfo?.slot && appointmentInfo?.date}
-            {appointmentInfo?.slot && <span> at {appointmentInfo?.slot}</span>}
-          </p>
+          {isBooking && (
+            <p className="text-base mb-3 tracking-wider">
+              {body.date} at {body.slot}
+            </p>
+          )}
         </div>
 
         <div className="w-full text-start">
@@ -96,29 +119,38 @@ export default function CheckoutStripeForm() {
             <div className="flex justify-between">
               <p className="text-base mb-3 tracking-wider">Subtotal</p>
               <p className="text-base mb-3 tracking-wider">
-                {formatCurrency(amount)}
+                {formatCurrency(body.amount as number)}
               </p>
             </div>
+            {!isBooking && (
+              <div className="flex justify-between">
+                <p className="text-base mb-3 tracking-wider">Tips</p>
+                <p className="text-base mb-3 tracking-wider">
+                  {formatCurrency((body as IPaymentInfo).tip as number)}
+                </p>
+              </div>
+            )}
             <div className="flex justify-between">
               <p className="text-base mb-3 tracking-wider">Tax (GST/HST)</p>
               <p className="text-base mb-3 tracking-wider">
-                {formatCurrency(tax)}
+                {formatCurrency(body.tax as number)}
               </p>
             </div>
             <div className="flex justify-between">
               <p className="text-base mb-3 tracking-wider">Processing Fee</p>
               <p className="text-base mb-3 tracking-wider">
-                {formatCurrency(fee)}
+                {formatCurrency(body.fee as number)}
               </p>
             </div>
           </div>
           <div className="flex justify-between">
             <p className="text-base mb-3 tracking-wider">Total</p>
             <p className="text-base mb-3 tracking-wider">
-              {formatCurrency(total)}
+              {formatCurrency(body.total as number)}
             </p>
           </div>
         </div>
+
         <div className="mt-5">
           <div className="mb-5">
             <PaymentElement />

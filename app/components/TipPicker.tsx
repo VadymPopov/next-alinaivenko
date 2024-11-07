@@ -6,7 +6,11 @@ import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 
 import { useAppContext } from '../context/useGlobalState';
-import { calculateTip, formatCurrency } from '../utils/helpers';
+import {
+  calculateTip,
+  formatCurrency,
+  getPaymentBreakdown,
+} from '../utils/helpers';
 import Button from './Button';
 import CustomTipForm from './CustomTipForm';
 
@@ -21,11 +25,11 @@ export default function TipPicker() {
   const [customTip, setCustomTip] = useState<number | 'custom' | null>(null);
   const [showCustomTipForm, setShowCustomTipForm] = useState(false);
   const router = useRouter();
+
   const amount = paymentInfo?.amount || 0;
-  const taxes = useMemo(() => Number((amount * 0.16).toFixed(2)), [amount]);
-  const total = useMemo(
-    () => Number((amount + taxes + tip).toFixed(2)),
-    [amount, taxes, tip],
+  const { tax, fee, total } = useMemo(
+    () => getPaymentBreakdown(amount, tip),
+    [amount, tip],
   );
 
   useEffect(() => {
@@ -64,7 +68,7 @@ export default function TipPicker() {
   };
 
   const onBtnClick = () => {
-    setPaymentInfo((prevState) => ({ ...prevState, tip, taxes, total }));
+    setPaymentInfo((prevState) => ({ ...prevState, fee, tip, tax, total }));
     router.push('/payment/confirmation');
   };
 
@@ -130,8 +134,12 @@ export default function TipPicker() {
             <td className="border-none">{formatCurrency(tip)}</td>
           </tr>
           <tr className="border-none flex justify-between mb-2.5">
-            <td className="border-none">Taxes & Fees</td>
-            <td className="border-none">{formatCurrency(taxes)}</td>
+            <td className="border-none">Tax (GST/HST)</td>
+            <td className="border-none">{formatCurrency(tax)}</td>
+          </tr>
+          <tr className="border-none flex justify-between mb-2.5">
+            <td className="border-none">Processing Fee</td>
+            <td className="border-none">{formatCurrency(fee)}</td>
           </tr>
           <tr className="border-none flex justify-between mb-2.5 text-base sm:text-lg md:text-xl font-semibold">
             <td className="border-none">Total</td>

@@ -85,3 +85,15 @@ export const getDepositBreakdown = (service: serviceType | null) => {
     total,
   };
 };
+
+export const getPaymentBreakdown = (amount: number, tip: number) => {
+  const tax = Number((amount * 0.13).toFixed(2)) || 0;
+  const fee = calculateStripeFee(amount + tax);
+  const total = Number((tax + amount + fee + tip).toFixed(2));
+
+  return {
+    tax,
+    fee,
+    total,
+  };
+};

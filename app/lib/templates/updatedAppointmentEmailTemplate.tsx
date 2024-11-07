@@ -109,7 +109,7 @@ export function generateUpdatedAppointmentEmail({
             Duration:
           </td>
           <td style="padding: 10px; text-align: right;">
-            ${duration}
+            ${duration}min
           </td>
         </tr>
         <tr style="

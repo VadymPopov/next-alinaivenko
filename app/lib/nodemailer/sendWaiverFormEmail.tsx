@@ -7,7 +7,7 @@ import { generateWaiverFormEmail } from '../templates/waiverformEmailTemplate';
 import { generateEmailOptions } from './generateEmailOptions';
 import { getTransporter } from './transporter';
 
-export async function sendWaiverFormEmail(data: {
+export async function sendEmail(data: {
   name: string;
   appointmentDate: string;
   isClientUnder18: boolean;

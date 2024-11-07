@@ -26,7 +26,7 @@ interface FormValues {
 
 export default function ClientForm() {
   const router = useRouter();
-  const { service, setAppointmentInfo } = useAppContext();
+  const { service, setAppointmentInfo, appointmentInfo } = useAppContext();
 
   useEffect(() => {
     if (!service) {
@@ -59,7 +59,11 @@ export default function ClientForm() {
     );
 
     if (isValid) {
-      setAppointmentInfo({ ...formValues, images: imagesBase64 });
+      setAppointmentInfo({
+        ...appointmentInfo,
+        ...formValues,
+        images: imagesBase64,
+      });
       router.push('/booking/schedule');
     } else {
       console.log('Validation failed');

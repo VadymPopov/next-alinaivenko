@@ -59,12 +59,23 @@ export const POST = async (request: Request) => {
   try {
     const body = await request.json();
     await connect();
-    const newAppointment = new Appointment(body);
+
+    const preparedBody = {
+      ...body,
+      deposit: {
+        amount: body.amount,
+        tax: body.tax,
+        fee: body.fee,
+        total: body.total,
+      },
+    };
+
+    const newAppointment = new Appointment(preparedBody);
     await newAppointment.save();
 
     await Promise.all([
-      sendEmail({ data: body, client: true }),
-      sendEmail({ data: body }),
+      sendEmail({ data: preparedBody, client: true }),
+      sendEmail({ data: preparedBody }),
     ]);
 
     return NextResponse.json(

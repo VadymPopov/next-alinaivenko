@@ -1,11 +1,11 @@
-import { sendWaiverFormEmail } from '@/app/lib/nodemailer/sendWaiverFormEmail';
+import { sendEmail } from '@/app/lib/nodemailer/sendWaiverFormEmail';
 
 import { NextResponse } from 'next/server';
 
 export const POST = async (request: Request) => {
   try {
     const body = await request.json();
-    await sendWaiverFormEmail(body);
+    await sendEmail(body);
 
     return NextResponse.json(
       { message: 'Waiverform has been sent successfully', status: 200 },

@@ -37,10 +37,6 @@ const appointmentSchema = new Schema(
         message: 'Duration must be a multiple of 30.',
       },
     },
-    address: {
-      type: String,
-      required: [true, 'Address is required'],
-    },
     description: {
       type: String,
       default: 'none',
@@ -71,6 +67,13 @@ const appointmentSchema = new Schema(
         type: Number,
         required: true,
       },
+    },
+    payment: {
+      amount: { type: Number },
+      tip: { type: Number },
+      fee: { type: Number },
+      tax: { type: Number },
+      total: { type: Number },
     },
   },
   { versionKey: false, timestamps: true },

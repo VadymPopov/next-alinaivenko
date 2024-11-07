@@ -48,6 +48,8 @@ export const POST = async (request: NextRequest) => {
 
   if (event.type === 'charge.updated') {
     const charge = event.data.object;
+    const updateField =
+      charge.metadata?.type === 'deposit' ? 'deposit.fee' : 'payment.fee';
     const balanceTransactionId = charge.balance_transaction as string;
     const balanceTransaction =
       await stripe.balanceTransactions.retrieve(balanceTransactionId);
@@ -58,7 +60,7 @@ export const POST = async (request: NextRequest) => {
         paymentIntentId: charge.payment_intent,
       },
       {
-        $set: { 'deposit.fee': balanceTransaction.fee / 100 },
+        $set: { [updateField]: balanceTransaction.fee / 100 },
       },
       {
         new: true,

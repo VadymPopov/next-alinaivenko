@@ -96,17 +96,17 @@ export function generateAppointmentEmail({
         </tr>
         <tr style="background-color: #f7f7f7; border-bottom: 1px solid #303030;">
           <td style="padding: 10px; font-weight: bold; text-align: left;">Duration:</td>
-          <td style="padding: 10px; text-align: right;">${duration}</td>
+          <td style="padding: 10px; text-align: right;">${duration}min</td>
         </tr>
-        <tr style="background-color: #fff; border-bottom: 1px solid #303030;">
+        <tr style="background-color: #f7f7f7; border-bottom: 1px solid #303030;">
           <td style="padding: 10px; font-weight: bold; text-align: left;">Procedure:</td>
           <td style="padding: 10px; text-align: right;">${service}</td>
         </tr>
          <tr style="background-color: #fff; border-bottom: 1px solid #303030;">
           <td style="padding: 10px; font-weight: bold; text-align: left;">Deposit:</td>
-          <td style="padding: 10px; text-align: right;">${formatCurrency(deposit.amount)}</td>
+          <td style="padding: 10px; text-align: right; font-weight: bold">${formatCurrency(deposit.amount)}</td>
         </tr>
-         <tr style="background-color: #fff; border-bottom: 1px solid #303030;">
+         <tr style="background-color: #f7f7f7; border-bottom: 1px solid #303030;">
           <td style="padding: 10px; font-weight: bold; text-align: left;">Tax (GST/HST):</td>
           <td style="padding: 10px; text-align: right;">${formatCurrency(deposit.tax)}</td>
         </tr>

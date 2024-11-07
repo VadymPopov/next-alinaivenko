@@ -36,7 +36,7 @@ export default function BookingPayment() {
         return;
       }
 
-      const res = await fetch('/api/payments', {
+      const res = await fetch('/api/create-payment-intent?type=booking', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -56,7 +56,11 @@ export default function BookingPayment() {
   } else {
     return (
       <Elements stripe={stripePromise} options={{ clientSecret }}>
-        <CheckoutStripeForm />
+        <CheckoutStripeForm
+          body={appointmentInfo!}
+          isBooking={true}
+          service={service}
+        />
       </Elements>
     );
   }
