@@ -18,6 +18,7 @@ interface generateAppointmentEmailI {
     fee: number;
     total: number;
   };
+  receiptUrl: string | null;
 }
 
 export function generateAppointmentEmail({
@@ -33,6 +34,7 @@ export function generateAppointmentEmail({
   description,
   client,
   deposit,
+  receiptUrl,
 }: generateAppointmentEmailI) {
   return `
   <div style="font-family: Arial, sans-serif; background-color: #000; padding: 40px 20px; max-width: 600px; margin: 0 auto; border-radius: 10px;">
@@ -132,6 +134,21 @@ export function generateAppointmentEmail({
         }
       </tbody>
     </table>
+
+    ${
+      receiptUrl
+        ? `<p style="
+          font-size: 16px;
+          color: #ffffff;
+          text-align: right;
+          margin-top: 30px;">
+              You can view and download your receipt here: 
+              <a href="${receiptUrl}" style="color: #9DA4BD; text-decoration: underline;">
+                View Receipt
+              </a>
+           </p>`
+        : ''
+    }
 
     ${
       client

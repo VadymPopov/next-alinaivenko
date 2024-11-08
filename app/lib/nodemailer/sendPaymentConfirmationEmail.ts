@@ -15,6 +15,7 @@ export interface IData {
     fee: number;
     total: number;
   };
+  receiptUrl: string | null;
 }
 
 interface sendEmailI {

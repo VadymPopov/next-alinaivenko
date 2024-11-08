@@ -12,6 +12,7 @@ interface generatePaymentConfirmationEmailI {
     fee: number;
     total: number;
   };
+  receiptUrl: string | null;
 }
 
 export function generatePaymentConfirmationEmail({
@@ -20,6 +21,7 @@ export function generatePaymentConfirmationEmail({
   payment,
   client,
   date,
+  receiptUrl,
 }: generatePaymentConfirmationEmailI) {
   return `
   <div style="
@@ -118,6 +120,21 @@ export function generatePaymentConfirmationEmail({
         </tr>
       </tbody>
     </table>
+
+    ${
+      receiptUrl
+        ? `<p style="
+          font-size: 16px;
+          color: #ffffff;
+          text-align: right;
+          margin-top: 30px;">
+              You can view and download your receipt here: 
+              <a href="${receiptUrl}" style="color: #9DA4BD; text-decoration: underline;">
+                View Receipt
+              </a>
+           </p>`
+        : ''
+    }
 
     ${
       client

@@ -1,7 +1,9 @@
 import connect from '@/app/lib/db';
 import Appointment from '@/app/lib/modals/appointment';
 import { sendEmail } from '@/app/lib/nodemailer/sendEmail';
+import { getReceipt } from '@/app/lib/stripe/getReceipt';
 
+import { format } from 'date-fns';
 import { type NextRequest, NextResponse } from 'next/server';
 
 interface AppointmentType {
@@ -11,7 +13,9 @@ interface AppointmentType {
 }
 
 function convertToDate(appointment: AppointmentType): Date {
-  const [month, day, year] = appointment.date.split('.').map(Number);
+  const date = format(new Date(appointment.date), 'MM.dd.yyyy');
+
+  const [month, day, year] = date.split('.').map(Number);
 
   let hours = Number(appointment.slot.replace(/(am|pm)/i, '').split(':')[0]);
   const minutes = Number(
@@ -35,9 +39,17 @@ export const GET = async (request: NextRequest) => {
 
     const date = searchParams.get('date');
     const month = searchParams.get('month');
+    const year = searchParams.get('year');
 
-    if (date) query.date = date;
-    if (month) query.date = { $regex: `^${month}\\.` };
+    if (date) {
+      query.date = date;
+    } else if (month && year) {
+      query.date = { $regex: `^${month} \\d{2}, ${year}$`, $options: 'i' };
+    } else if (month) {
+      query.date = { $regex: `^${month} \\d{2}, \\d{4}$`, $options: 'i' };
+    } else if (year) {
+      query.date = { $regex: `^[A-Za-z]+ \\d{2}, ${year}$`, $options: 'i' };
+    }
 
     const appointments = await Appointment.find(query);
     appointments.sort(
@@ -59,6 +71,7 @@ export const POST = async (request: Request) => {
   try {
     const body = await request.json();
     await connect();
+    const receiptUrl = await getReceipt(body.paymentIntentId);
 
     const preparedBody = {
       ...body,
@@ -68,6 +81,7 @@ export const POST = async (request: Request) => {
         fee: body.fee,
         total: body.total,
       },
+      receiptUrl,
     };
 
     const newAppointment = new Appointment(preparedBody);

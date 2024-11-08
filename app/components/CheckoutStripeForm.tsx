@@ -1,9 +1,5 @@
 'use client';
 
-// 3. Check if it's possible to get invoice from stripe to attach it
-// 4. Fix errors
-// 5. Add all get request from admin
-// 6. Next.js autho or something else for Admin and Owner
 import React, { FormEvent, useState } from 'react';
 
 import {
@@ -79,9 +75,9 @@ export default function CheckoutStripeForm({
           }),
         },
       );
-      // router.replace(
-      //   isBooking ? '/payment-succeeded?type=booking' : '/payment-succeeded',
-      // );
+      router.replace(
+        isBooking ? '/payment-succeeded?type=booking' : '/payment-succeeded',
+      );
     } else {
       setMessage('Unexpected state');
     }

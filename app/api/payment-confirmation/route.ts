@@ -1,6 +1,7 @@
 import connect from '@/app/lib/db';
 import Appointment from '@/app/lib/modals/appointment';
 import { sendEmail } from '@/app/lib/nodemailer/sendPaymentConfirmationEmail';
+import { getReceipt } from '@/app/lib/stripe/getReceipt';
 
 import { format } from 'date-fns';
 import { NextResponse } from 'next/server';
@@ -10,6 +11,7 @@ export const PUT = async (request: Request) => {
     const body = await request.json();
     const date = format(new Date(), 'MMMM dd, yyyy');
     await connect();
+    const receiptUrl = await getReceipt(body.paymentIntentId);
 
     const preparedBody = {
       paymentIntentId: body.paymentIntentId,
@@ -27,6 +29,7 @@ export const PUT = async (request: Request) => {
       email: body.email,
       date,
       payment: preparedBody.payment,
+      receiptUrl,
     };
 
     const query = {

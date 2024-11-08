@@ -24,7 +24,7 @@ const getServiceAmount = (serviceName: string) => {
 
 export const POST = async (request: NextRequest) => {
   try {
-    const { email, name, service, total } = await request.json();
+    const { name, service, total } = await request.json();
     const searchParams = request.nextUrl.searchParams;
     const type = searchParams.get('type');
     const isBooking = type === 'booking';
@@ -42,7 +42,6 @@ export const POST = async (request: NextRequest) => {
       description: isBooking
         ? `${service} Deposit by ${name}`
         : `Payment by ${name}`,
-      receipt_email: `${email}`,
       metadata: {
         type: isBooking ? 'deposit' : 'payment',
       },
