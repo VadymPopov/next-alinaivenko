@@ -1,5 +1,5 @@
 import connect from '@/app/lib/db';
-import Appointment from '@/app/lib/modals/appointment';
+import Appointment from '@/app/lib/models/appointment';
 import { sendEmail } from '@/app/lib/nodemailer/sendEmail';
 import { getReceipt } from '@/app/lib/stripe/getReceipt';
 
@@ -38,20 +38,27 @@ export const GET = async (request: NextRequest) => {
     const query: Record<string, unknown> = {};
 
     const date = searchParams.get('date');
+    const day = searchParams.get('day');
     const month = searchParams.get('month');
     const year = searchParams.get('year');
 
-    if (date) {
-      query.date = date;
+    if (day && month && year) {
+      query.date = { $regex: `^${month} ${day}, ${year}$`, $options: 'i' };
     } else if (month && year) {
       query.date = { $regex: `^${month} \\d{2}, ${year}$`, $options: 'i' };
     } else if (month) {
       query.date = { $regex: `^${month} \\d{2}, \\d{4}$`, $options: 'i' };
     } else if (year) {
       query.date = { $regex: `^[A-Za-z]+ \\d{2}, ${year}$`, $options: 'i' };
+    } else if (date) {
+      query.date = date;
     }
 
-    const appointments = await Appointment.find(query);
+    const appointments =
+      Object.keys(query).length > 0
+        ? await Appointment.find(query)
+        : await Appointment.find();
+
     appointments.sort(
       (a, b) => convertToDate(a).getTime() - convertToDate(b).getTime(),
     );

@@ -97,3 +97,42 @@ export const getPaymentBreakdown = (amount: number, tip: number) => {
     total,
   };
 };
+
+export const monthMap: { [key: string]: number } = {
+  January: 1,
+  February: 2,
+  March: 3,
+  April: 4,
+  May: 5,
+  June: 6,
+  July: 7,
+  August: 8,
+  September: 9,
+  October: 10,
+  November: 11,
+  December: 12,
+};
+
+export const getMonthNumberFromName = (monthName: string): number => {
+  return monthMap[monthName] || 0;
+};
+
+export const generateDays = (year?: number, month?: string) => {
+  if (!year || !month) return [];
+
+  const monthNumber = getMonthNumberFromName(month);
+  const daysInMonth = new Date(year, monthNumber, 0).getDate();
+  return Array.from({ length: daysInMonth }, (_, i) => ({
+    value: String(i + 1).padStart(2, '0'),
+    label: String(i + 1),
+  }));
+};
+
+export const formatDuration = (duration: number): string => {
+  const hours = Math.floor(duration / 60);
+  const minutes = duration % 60;
+
+  return hours > 0
+    ? `${hours}h${minutes > 0 ? ` ${minutes}min` : ''}`
+    : `${minutes}min`;
+};

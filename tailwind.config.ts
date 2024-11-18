@@ -21,6 +21,7 @@ const config: Config = {
       mainDarkColor: '#303030',
       transparent: 'transparent',
       error: '#D2042D',
+      backdrop: 'rgba(0, 0, 0, 0.5)',
     },
   },
   plugins: [],

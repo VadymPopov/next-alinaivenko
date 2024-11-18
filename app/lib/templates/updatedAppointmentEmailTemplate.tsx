@@ -1,5 +1,3 @@
-import { formatCurrency } from '@/app/utils/helpers';
-
 interface generateUpdatedAppointmentEmailI {
   name: string;
   slot: string;
@@ -7,12 +5,6 @@ interface generateUpdatedAppointmentEmailI {
   address: string;
   service: string;
   duration: string;
-  deposit: {
-    amount: number;
-    tax: number;
-    fee: number;
-    total: number;
-  };
 }
 
 export function generateUpdatedAppointmentEmail({
@@ -22,7 +14,6 @@ export function generateUpdatedAppointmentEmail({
   address,
   service,
   duration,
-  deposit,
 }: generateUpdatedAppointmentEmailI) {
   return `
   <div style="
@@ -122,19 +113,6 @@ export function generateUpdatedAppointmentEmail({
             ${service}
           </td>
         </tr>
-          </tr>
-         <tr style="background-color: #fff; border-bottom: 1px solid #303030;">
-          <td style="padding: 10px; font-weight: bold; text-align: left;">Deposit:</td>
-          <td style="padding: 10px; text-align: right;">${formatCurrency(deposit.amount)}</td>
-        </tr>
-         <tr style="background-color: #fff; border-bottom: 1px solid #303030;">
-          <td style="padding: 10px; font-weight: bold; text-align: left;">Tax (GST/HST):</td>
-          <td style="padding: 10px; text-align: right;">${formatCurrency(deposit.tax)}</td>
-        </tr>
-         <tr style="background-color: #fff; border-bottom: 1px solid #303030;">
-          <td style="padding: 10px; font-weight: bold; text-align: left;">Processing Fee:</td>
-          <td style="padding: 10px; text-align: right;">${formatCurrency(deposit.fee)}</td>
-        </tr>
         <tr style="
           background-color: #f7f7f7;
           border-bottom: 1px solid #303030;">
@@ -142,7 +120,7 @@ export function generateUpdatedAppointmentEmail({
             Studio Address:
           </td>
           <td style="padding: 10px; text-align: right;">
-            ${address}
+            ${address || '689 St. Clair Avenue West, Toronto, Ontario M6C 1B2, Canada'}
           </td>
         </tr>
       </tbody>

@@ -1,5 +1,5 @@
 import connect from '@/app/lib/db';
-import Appointment from '@/app/lib/modals/appointment';
+import Appointment from '@/app/lib/models/appointment';
 
 import { type NextRequest, NextResponse } from 'next/server';
 
@@ -28,9 +28,12 @@ const SLOT_TIMES = [
 export const GET = async (request: NextRequest) => {
   try {
     await connect();
+
     const searchParams = request.nextUrl.searchParams;
     const date = searchParams.get('date');
     const duration = searchParams.get('duration');
+    const isEditing = searchParams.get('isEditing') === 'true';
+    const currentAppointmentId = searchParams.get('id');
 
     if (!date || !duration) {
       return new NextResponse('Missing date or duration in the query', {
@@ -39,14 +42,27 @@ export const GET = async (request: NextRequest) => {
     }
 
     const procedureDurationInSlots = Number(duration) / SLOT_DURATION;
-    const availableSlots = [];
+    const availableSlots: string[] = [];
 
     const slots = SLOT_TIMES.map((time) => ({ time, available: true }));
 
     const appointments = await Appointment.find({ date });
 
+    let currentAppointment = null;
+    if (isEditing && currentAppointmentId) {
+      currentAppointment = await Appointment.findById(currentAppointmentId);
+    }
+
     if (appointments.length > 0) {
       appointments.forEach((appointment) => {
+        if (
+          isEditing &&
+          currentAppointment &&
+          appointment.id === currentAppointmentId
+        ) {
+          return;
+        }
+
         const appointmentIdx = slots.findIndex(
           (slot) => slot.time === appointment.slot,
         );
@@ -65,13 +81,31 @@ export const GET = async (request: NextRequest) => {
           }
         }
       });
-    } else {
-      return NextResponse.json(SLOT_TIMES, { status: 200 });
+    }
+
+    if (isEditing && currentAppointment) {
+      const appointmentIdx = slots.findIndex(
+        (slot) => slot.time === currentAppointment.slot,
+      );
+
+      if (appointmentIdx !== -1) {
+        const totalSlotsNeeded = currentAppointment.duration / SLOT_DURATION;
+
+        for (
+          let i = appointmentIdx;
+          i < appointmentIdx + totalSlotsNeeded;
+          i++
+        ) {
+          if (i >= slots.length) break;
+
+          slots[i].available = true;
+        }
+      }
     }
 
     const isAvailableSlotRange = (startIdx: number) => {
       for (let j = 0; j < procedureDurationInSlots; j++) {
-        if (!slots[startIdx + j].available) return false;
+        if (!slots[startIdx + j]?.available) return false;
       }
       return true;
     };

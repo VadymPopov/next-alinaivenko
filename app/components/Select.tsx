@@ -1,34 +1,41 @@
-import { HTMLAttributes } from 'react';
-import { Control, Controller } from 'react-hook-form';
+import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { FcCheckmark } from 'react-icons/fc';
 import Select from 'react-select';
 
-// import { FormValues } from './OrderForm';
+import clsx from 'clsx';
 
 interface Option {
   value: string;
   label: string;
 }
 
-interface SelectFieldProps extends HTMLAttributes<HTMLSelectElement> {
+interface SelectFieldProps<T extends FieldValues> {
   options?: Option[];
   label: string;
-  name: keyof FormValues;
+  name: Path<T>;
   error?: string;
-  control?: Control<FormValues>;
+  control: Control<T>;
+  admin?: boolean;
+  isClearable?: boolean;
 }
 
-export default function SelectField({
+export default function SelectField<T extends FieldValues>({
   options,
   label,
   name,
   error,
   control,
-}: SelectFieldProps) {
+  admin,
+  isClearable,
+}: SelectFieldProps<T>) {
   return (
-    <div className="flex  items-center justify-center">
-      <div className="flex flex-col md:w-96 sm:w-80 w-full ">
-        <label className="text-start mb-1 text-base" htmlFor={name}>
+    <div className="flex items-center justify-center">
+      <div
+        className={clsx(
+          admin ? 'w-40 flex flex-col' : 'flex flex-col md:w-96 sm:w-80 w-full',
+        )}
+      >
+        <label className="text-start mb-1 text-base" htmlFor={name as string}>
           {label}
         </label>
         <Controller
@@ -37,11 +44,13 @@ export default function SelectField({
           render={({ field: { onChange, onBlur, value } }) => (
             <div className="relative">
               <Select
-                id={name}
+                id={name as string}
                 options={options}
                 onChange={(selectedOption) => onChange(selectedOption?.value)}
                 onBlur={onBlur}
-                value={options.find((option) => option.value === value) || null}
+                value={
+                  options!.find((option) => option.value === value) || null
+                }
                 classNamePrefix="react-select"
                 styles={{
                   dropdownIndicator: (provided, state) => ({
@@ -92,8 +101,9 @@ export default function SelectField({
                     fontWeight: 'lighter',
                   }),
                 }}
+                isClearable={isClearable}
               />
-              {value && !error && (
+              {value && !error && !admin && (
                 <span
                   className="absolute top-1/2 right-2 translate-y-[-50%]"
                   aria-label="Valid input"
@@ -104,7 +114,9 @@ export default function SelectField({
             </div>
           )}
         />
-        <span className="my-1 text-error text-sm h-5">{error}</span>
+        <span className={clsx(!admin ? 'my-1 text-error text-sm h-5' : '')}>
+          {error}
+        </span>
       </div>
     </div>
   );

@@ -204,3 +204,65 @@ export const validationSchemaWaiverStepSeven = (isClientUnder18: boolean) => {
     }),
   });
 };
+
+export const validationSchemaAddAppointment = Yup.object().shape({
+  name: Yup.string()
+    .trim()
+    .required('Name is required')
+    .min(2, 'Name must be at least 2 characters')
+    .matches(nameRegExp, 'Please enter a valid name'),
+  email: Yup.string()
+    .trim()
+    .required('Email is required')
+    .matches(emailRegExp, 'Please enter a valid email'),
+  phone: Yup.string()
+    .trim()
+    .optional()
+    .nullable()
+    .test(
+      'is-valid-phone',
+      'Please enter a valid phone number',
+      (value) => !value || phoneRegExp.test(value),
+    ),
+  instagram: Yup.string().trim().optional(),
+  description: Yup.string().trim().optional(),
+  slot: Yup.string().required('Time is required'),
+  service: Yup.string().required('Service is required'),
+  date: Yup.date().required('Date is required'),
+  duration: Yup.string().required('Duration is required'),
+});
+
+export const validationSchemaEditAppointment = Yup.object().shape({
+  name: Yup.string()
+    .trim()
+    .required('Name is required')
+    .min(2, 'Name must be at least 2 characters')
+    .matches(nameRegExp, 'Please enter a valid name'),
+  email: Yup.string()
+    .trim()
+    .required('Email is required')
+    .matches(emailRegExp, 'Please enter a valid email'),
+  phone: Yup.string()
+    .trim()
+    .optional()
+    .nullable()
+    .test(
+      'is-valid-phone',
+      'Please enter a valid phone number',
+      (value) => !value || phoneRegExp.test(value),
+    ),
+  instagram: Yup.string().trim().optional(),
+  description: Yup.string().trim().optional(),
+  slot: Yup.string().required('Time is required'),
+  service: Yup.string().required('Service is required'),
+  date: Yup.date().required('Date is required'),
+  duration: Yup.string().required('Duration is required'),
+  depositAmount: Yup.number().optional(),
+  depositTax: Yup.number().optional(),
+  depositTotal: Yup.number().optional(),
+  depositFee: Yup.number().optional(),
+  paymentAmount: Yup.number().optional(),
+  paymentTax: Yup.number().optional(),
+  paymentTotal: Yup.number().optional(),
+  paymentFee: Yup.number().optional(),
+});

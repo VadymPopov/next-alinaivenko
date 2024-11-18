@@ -1,5 +1,9 @@
 import React from 'react';
 
-export default function Admin() {
-  return <div>Admin</div>;
+export default async function Admin() {
+  return (
+    <>
+      <p>Login/Signup screen</p>
+    </>
+  );
 }

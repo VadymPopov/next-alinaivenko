@@ -1,5 +1,5 @@
 import connect from '@/app/lib/db';
-import Appointment from '@/app/lib/modals/appointment';
+import Appointment from '@/app/lib/models/appointment';
 
 import { type NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';

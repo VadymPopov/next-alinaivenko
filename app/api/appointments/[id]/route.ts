@@ -1,8 +1,34 @@
 import connect from '@/app/lib/db';
-import Appointment from '@/app/lib/modals/appointment';
+import Appointment from '@/app/lib/models/appointment';
 import { sendEmail } from '@/app/lib/nodemailer/sendEmail';
 
+import { revalidatePath } from 'next/cache';
 import { NextResponse } from 'next/server';
+
+export const GET = async (
+  _request: Request,
+  { params }: { params: { id: string } },
+) => {
+  const { id } = params;
+
+  try {
+    await connect();
+    const appointment = await Appointment.findById(id);
+
+    if (!appointment) {
+      return new NextResponse('Appointment not found', { status: 404 });
+    }
+
+    return NextResponse.json(appointment, { status: 200 });
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : 'Unknown error';
+    console.error('Error fetching appointment:', errorMessage);
+    return new NextResponse(`Error fetching appointment: ${errorMessage}`, {
+      status: 500,
+    });
+  }
+};
 
 export const PUT = async (
   request: Request,
@@ -57,6 +83,8 @@ export const DELETE = async (
         status: 404,
       });
     }
+
+    revalidatePath('/admin/appointments');
 
     return NextResponse.json(
       {

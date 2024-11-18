@@ -1,5 +1,5 @@
 import connect from '@/app/lib/db';
-import Appointment from '@/app/lib/modals/appointment';
+import Appointment from '@/app/lib/models/appointment';
 import { sendEmail } from '@/app/lib/nodemailer/sendPaymentConfirmationEmail';
 import { getReceipt } from '@/app/lib/stripe/getReceipt';
 

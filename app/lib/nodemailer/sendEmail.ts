@@ -37,7 +37,7 @@ export async function sendEmail({ data, client, updated }: sendEmailI) {
   try {
     const transporter = await getTransporter();
     const logoPath = path.resolve('./public/email-logo.png');
-    const attachments = images.map((image) => ({ path: image }));
+    const attachments = images && images.map((image) => ({ path: image }));
     const subject = updated
       ? 'Tattoo Appointment Rescheduling'
       : client

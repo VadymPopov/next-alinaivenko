@@ -47,8 +47,7 @@ const appointmentSchema = new Schema(
     },
     paymentIntentId: {
       type: String,
-      required: true,
-      unique: true,
+      default: '',
     },
     deposit: {
       amount: {
