@@ -8,7 +8,7 @@ interface InputFieldProps
   extends InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
   title?: string;
   placeholder?: string;
-  label: string;
+  label?: string;
   type?: string;
   name: string;
   optional?: boolean;

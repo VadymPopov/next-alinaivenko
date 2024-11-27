@@ -23,8 +23,8 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="fixed top-0 left-0 z-40 w-60 h-screen">
-      <div className="flex flex-col h-full overflow-y-auto bg-mainDarkColor">
+    <aside className="w-64 bg-gray-800 text-white fixed h-full">
+      <div className="flex flex-col h-full overflow-y-auto  bg-gradient-to-b from-mainDarkColor from-10%  to-cardColor to-80%">
         <Image
           className="my-11 mx-auto rounded-full"
           width={80}

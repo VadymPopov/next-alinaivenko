@@ -14,7 +14,7 @@ export interface IAppointment {
   name: string;
   email: string;
   phone: string;
-  service: string;
+  service: 'Small Tattoo' | 'Large Tattoo' | 'Touch-up' | 'Permanent Makeup';
   date: string;
   slot: string;
   duration: number;

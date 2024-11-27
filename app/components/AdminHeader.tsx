@@ -14,8 +14,10 @@ export default function Header() {
   const pageName = capitalizeFirstLetter(pathname.split('/')[2] || 'admin');
 
   return (
-    <header className="flex items-center gap-5 py-6	px-10 border-b border-textColor ml-60">
-      <h1 className="flex-1 text-3xl font-semibold  ">{pageName}</h1>
+    <header className="fixed top-0 left-64 right-0 h-16 flex items-center gap-5 py-2.5 px-10 shadow-lg bg-gradient-to-r from-textColorDarkBg from-10%  to-bgColor to-80% z-50">
+      <h1 className="flex-1 text-3xl font-semibld  text-mainLightColor">
+        {pageName}
+      </h1>
       <div className="w-px self-stretch bg-textColor" />
       <div className="flex gap-3">
         <FaCat size={36} />

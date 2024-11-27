@@ -22,11 +22,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Props) {
   return (
     <html lang="en">
-      <body className="mx-auto my-0">
+      <body className="flex h-screen bg-bgColor">
         <Toaster position="top-center" reverseOrder={false} />
-        <Header />
         <Sidebar />
-        <main className="ml-60 bg-bgColor min-h-screen">{children}</main>
+        <div className="flex-1 ml-64">
+          <Header />
+          <main className="mt-16 p-4  min-h-screen">{children}</main>
+        </div>
       </body>
     </html>
   );

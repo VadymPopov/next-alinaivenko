@@ -26,9 +26,10 @@ export default function AvailabilityCalendar() {
         if (!response.ok) throw new Error('Failed to fetch blocked dates');
         const data = await response.json();
         const dates = data.blockedDates || [];
-        const now = new Date();
+        const now = new Date().toISOString().split('T')[0];
         const futureOrEqualDates = dates.filter(
-          (dateString: string) => new Date(dateString) >= now,
+          (dateString: string) =>
+            new Date(dateString).toISOString().split('T')[0] >= now,
         );
         setSelectedDates(futureOrEqualDates);
         setInitialDates(futureOrEqualDates);
@@ -59,7 +60,8 @@ export default function AvailabilityCalendar() {
 
       const formattedDates = selectedDates
         .filter((date) => !isNaN(new Date(date).getTime()))
-        .map((date) => new Date(date).toISOString());
+        .map((date) => new Date(date).toISOString())
+        .sort();
 
       await fetch(
         `/api/admin/calendar${exists ? `?month=${currentMonth}&year=${currentYear}` : ''}`,
@@ -77,7 +79,7 @@ export default function AvailabilityCalendar() {
       toast.success('Blocked dates saved successfully!', {
         duration: 3000,
       });
-      setInitialDates(selectedDates);
+      setInitialDates(selectedDates.sort((a, b) => a - b));
     } catch (error) {
       console.error(error);
       toast.error(

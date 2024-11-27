@@ -17,7 +17,7 @@ export default function AppointmentsRow({
 
   return (
     <tr
-      className="h-14 text-center bg-mainLightColor hover:cursor-pointer hover:shadow-lg transition-colors"
+      className="h-14 text-center bg-bgColor hover:cursor-pointer hover:shadow-lg hover:bg-mainLightColor transition-colors"
       onClick={() => router.push(`/admin/appointments/${_id}`)}
     >
       <td className="font-medium text-accentColor rounded-l border-l-4 border-accentColor">

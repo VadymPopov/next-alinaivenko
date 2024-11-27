@@ -5,6 +5,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { MdSearch } from 'react-icons/md';
 
 import { generateDays, monthMap } from '../utils/helpers';
+import { IAppointment } from './AppointmentDetails';
 import Button from './Button';
 import InputField from './InputField';
 import SelectField from './Select';
@@ -28,7 +29,7 @@ const monthOptions = Object.keys(monthMap).map((month) => ({
 export default function AppointmentsSearchForm({
   setAppointments,
 }: {
-  setAppointments: React.Dispatch<React.SetStateAction<never[]>>;
+  setAppointments: React.Dispatch<React.SetStateAction<IAppointment[]>>;
 }) {
   const [daysOptions, setDaysOptions] = useState<daysOptionsType[]>([]);
 
@@ -37,7 +38,7 @@ export default function AppointmentsSearchForm({
     defaultValues: {
       day: '',
       month: '',
-      year: undefined,
+      year: new Date().getFullYear(),
     },
   });
 
@@ -79,30 +80,29 @@ export default function AppointmentsSearchForm({
         className="text-center flex gap-2.5 justify-center items-center"
         onSubmit={handleSubmit(onSubmitHandler)}
       >
-        <SelectField
-          admin={true}
-          name="day"
-          control={control}
-          label="Day"
-          options={daysOptions}
-          isClearable={true}
-        />
-        <SelectField
-          admin={true}
-          name="month"
-          control={control}
-          label="Month"
-          options={monthOptions}
-          isClearable={true}
-        />
         <InputField
           styles="w-24 px-3 py-2.5"
           admin={true}
           name="year"
           type="number"
-          placeholder="Enter year"
+          placeholder="Year"
           title="Year"
-          label="Year"
+        />
+        <SelectField
+          admin={true}
+          name="month"
+          control={control}
+          placeholder="Month"
+          options={monthOptions}
+          isClearable={true}
+        />
+        <SelectField
+          admin={true}
+          name="day"
+          control={control}
+          placeholder="Day"
+          options={daysOptions}
+          isClearable={true}
         />
         <div className="flex justify-center items-center text-s">
           <Button type="submit" styles="p-2">

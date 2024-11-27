@@ -11,12 +11,13 @@ interface Option {
 
 interface SelectFieldProps<T extends FieldValues> {
   options?: Option[];
-  label: string;
+  label?: string;
   name: Path<T>;
   error?: string;
   control: Control<T>;
   admin?: boolean;
   isClearable?: boolean;
+  placeholder?: string;
 }
 
 export default function SelectField<T extends FieldValues>({
@@ -27,6 +28,7 @@ export default function SelectField<T extends FieldValues>({
   control,
   admin,
   isClearable,
+  placeholder,
 }: SelectFieldProps<T>) {
   return (
     <div className="flex items-center justify-center">
@@ -51,6 +53,7 @@ export default function SelectField<T extends FieldValues>({
                 value={
                   options!.find((option) => option.value === value) || null
                 }
+                placeholder={placeholder}
                 classNamePrefix="react-select"
                 styles={{
                   dropdownIndicator: (provided, state) => ({
