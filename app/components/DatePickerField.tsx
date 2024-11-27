@@ -9,11 +9,12 @@ import clsx from 'clsx';
 interface DatePickerProps<T extends FieldValues> {
   name: Path<T>;
   control: Control<T>;
-  label: string;
+  label?: string;
   error?: string;
   minDate?: Date;
   maxDate?: Date;
   bday: boolean;
+  admin?: boolean;
 }
 
 export default function DatePickerField<T extends FieldValues>({
@@ -24,6 +25,7 @@ export default function DatePickerField<T extends FieldValues>({
   minDate,
   maxDate,
   bday,
+  admin,
 }: DatePickerProps<T>) {
   return (
     <div className="flex items-center justify-center">
@@ -58,7 +60,7 @@ export default function DatePickerField<T extends FieldValues>({
                     'flex text-lg md:text-xl rounded-xl border-2 focus:border-accentColor hover:border-accentColor px-4 py-2.5 w-full outline-accentColor font-light ',
                   )}
                 />
-                {value && !error && (
+                {!admin && value && !error && (
                   <FcCheckmark
                     className="absolute top-1/2 right-2 translate-y-[-50%] text-xl"
                     aria-label="Valid input"

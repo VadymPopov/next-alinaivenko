@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { format } from 'date-fns';
@@ -23,6 +24,7 @@ export interface IFormValues {
 
 export default function ScheduleForm() {
   const [slots, setSlots] = useState([]);
+  const [initialDate, setInitialDate] = useState<Date | undefined>(undefined);
   const router = useRouter();
   const { service, appointmentInfo, setAppointmentInfo } = useAppContext();
 
@@ -32,11 +34,42 @@ export default function ScheduleForm() {
     }
   });
 
+  useEffect(() => {
+    const fetchBlockedDates = async () => {
+      try {
+        const currentDate = new Date();
+        const currentMonth = currentDate.toLocaleString('default', {
+          month: 'long',
+        });
+        const currentYear = currentDate.toLocaleString('default', {
+          year: 'numeric',
+        });
+        const response = await fetch(
+          `/api/admin/calendar?month=${currentMonth}&year=${currentYear}`,
+        );
+        if (!response.ok) throw new Error('Failed to fetch blocked dates');
+        const data = await response.json();
+        const dates = data.blockedDates || [];
+        const nextDate = findNextAvailableDate(dates);
+        setInitialDate(nextDate);
+      } catch (error) {
+        console.error(error);
+        toast.error(
+          error instanceof Error
+            ? error.message
+            : 'Error fetching blocked dates',
+        );
+      }
+    };
+
+    fetchBlockedDates();
+  }, []);
+
   const methods = useForm({
     mode: 'all',
     resolver: yupResolver(validationSchemaSchedule),
     defaultValues: {
-      date: findNextAvailableDate(),
+      date: undefined,
       slot: '',
     },
   });
@@ -46,6 +79,7 @@ export default function ScheduleForm() {
     formState: { errors },
     watch,
     control,
+    reset,
   } = methods;
 
   const selectedDate = watch('date');
@@ -65,6 +99,8 @@ export default function ScheduleForm() {
   };
 
   useEffect(() => {
+    if (!selectedDate || selectedDate === initialDate) return;
+
     (async () => {
       const response = await fetch(
         `/api/slots?date=${format(selectedDate, 'MMMM dd, yyyy')}&duration=${duration}`,
@@ -72,7 +108,17 @@ export default function ScheduleForm() {
       const slots = await response.json();
       setSlots(slots);
     })();
-  }, [duration, selectedDate]);
+  }, [duration, selectedDate, initialDate]);
+
+  useEffect(() => {
+    if (initialDate) {
+      reset({ date: initialDate, slot: '' });
+    }
+  }, [initialDate, reset]);
+
+  if (!initialDate) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <FormProvider {...methods}>

@@ -136,3 +136,10 @@ export const formatDuration = (duration: number): string => {
     ? `${hours}h${minutes > 0 ? ` ${minutes}min` : ''}`
     : `${minutes}min`;
 };
+
+export const filterDate = (date: Date, blockedDates: string[]) => {
+  return blockedDates?.find(
+    (blockedDate) =>
+      blockedDate.split('T')[0] === date.toISOString().split('T')[0],
+  );
+};

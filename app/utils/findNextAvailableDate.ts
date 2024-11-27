@@ -1,16 +1,15 @@
 import { addDays } from 'date-fns';
 
-import { isNotMonTueWed } from './isNotMonTueWed';
+import { filterDate } from './helpers';
 
-export const findNextAvailableDate = () => {
+export const findNextAvailableDate = (blockedDates: string[]) => {
   let dateToCheck = new Date();
 
   for (let i = 0; i < 30; i++) {
-    if (isNotMonTueWed(dateToCheck)) {
+    if (filterDate(dateToCheck, blockedDates)) {
+      dateToCheck = addDays(dateToCheck, 1);
+    } else {
       return dateToCheck;
     }
-    dateToCheck = addDays(dateToCheck, 1);
   }
-
-  return new Date();
 };

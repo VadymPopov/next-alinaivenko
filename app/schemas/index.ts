@@ -266,3 +266,14 @@ export const validationSchemaEditAppointment = Yup.object().shape({
   paymentTotal: Yup.number().optional(),
   paymentFee: Yup.number().optional(),
 });
+
+export const validationSchemaSetMaxBookingDate = Yup.object().shape({
+  date: Yup.date().required('Date is required'),
+});
+
+export const validationSchemaBlockSlot = Yup.object().shape({
+  reason: Yup.string().trim().optional(),
+  slot: Yup.string().required('Time is required'),
+  date: Yup.date().required('Date is required'),
+  duration: Yup.string().required('Duration is required'),
+});

@@ -1,7 +1,13 @@
 'use client';
 
 import React from 'react';
-import { MdAttachFile, MdDashboard, MdLogout, MdWork } from 'react-icons/md';
+import {
+  MdAttachFile,
+  MdDashboard,
+  MdLogout,
+  MdOutlineEditCalendar,
+  MdWork,
+} from 'react-icons/md';
 
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
@@ -47,6 +53,13 @@ export default function Sidebar() {
           >
             <MdAttachFile size={18} />
             Report
+          </SidebarItem>
+          <SidebarItem
+            current={pathname === '/admin/calendar'}
+            pathname="/admin/calendar"
+          >
+            <MdOutlineEditCalendar size={18} />
+            Calendar
           </SidebarItem>
         </ul>
         <button
