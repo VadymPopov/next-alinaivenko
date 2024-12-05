@@ -22,7 +22,7 @@ interface FormValues {
 }
 
 const monthOptions = Object.keys(monthMap).map((month) => ({
-  value: month,
+  value: String(monthMap[month]).padStart(2, '0'),
   label: month,
 }));
 

@@ -20,7 +20,7 @@ export default function Appointments() {
   useEffect(() => {
     (async () => {
       const response = await fetch(
-        `/api/appointments?date=${format(new Date(), 'MMMM dd, yyyy')}`,
+        `/api/appointments?date=${format(new Date(), 'yyyy-MM-dd')}`,
         {
           cache: 'no-store',
         },

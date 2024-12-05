@@ -41,7 +41,7 @@ export default function DayColumn({ day, appointments, slotHeight }) {
           </div>
         ))}
         {appointments
-          .filter((appt) => format(day, 'MMMM dd, yyyy') === appt.date)
+          .filter((appt) => format(day, 'yyyy-MM-dd') === appt.date)
           .map((appt, idx) => {
             const [time, period] = appt.slot.split(/(am|pm)/i);
             const [startHours, startMinutes] = time.split(':').map(Number);

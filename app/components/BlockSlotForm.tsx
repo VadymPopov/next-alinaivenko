@@ -62,7 +62,7 @@ export default function BlockSlotForm() {
     (async () => {
       if (!selectedDuration) return;
       const response = await fetch(
-        `/api/slots?date=${format(selectedDate, 'MMMM dd, yyyy')}&duration=${selectedDuration}`,
+        `/api/slots?date=${format(selectedDate, 'yyyy-MM-dd')}&duration=${selectedDuration}`,
       );
       const slots = await response.json();
       const slotsOptions = slots.map((slot: string) => ({
@@ -82,7 +82,7 @@ export default function BlockSlotForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...formValues,
-          date: format(formValues.date, 'MMMM dd, yyyy'),
+          date: format(formValues.date, 'yyyy-MM-dd'),
         }),
       });
       if (!res.ok) throw new Error(await res.text());

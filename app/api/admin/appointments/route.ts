@@ -1,8 +1,45 @@
 import connect from '@/app/lib/db';
 import Appointment from '@/app/lib/models/appointment';
+import convertToDate from '@/app/utils/convertToDate';
 
 import { format } from 'date-fns';
-import { NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
+
+export const GET = async (request: NextRequest) => {
+  try {
+    await connect();
+
+    const searchParams = request.nextUrl.searchParams;
+    const weekStart = searchParams.get('start');
+    const weekEnd = searchParams.get('end');
+
+    if (!weekStart || !weekEnd) {
+      return new NextResponse('Missing `start` or `end` query parameter.', {
+        status: 400,
+      });
+    }
+
+    const appointments = await Appointment.find({
+      date: {
+        $gte: weekStart,
+        $lte: weekEnd,
+      },
+    });
+
+    appointments.sort(
+      (a, b) => convertToDate(a).getTime() - convertToDate(b).getTime(),
+    );
+
+    return NextResponse.json(appointments, { status: 200 });
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : 'Unknown error';
+    console.error('Error fetching appointments:', errorMessage);
+    return new NextResponse(`Error in fetching appointment: ${errorMessage}`, {
+      status: 500,
+    });
+  }
+};
 
 export const POST = async (request: Request) => {
   try {
@@ -11,7 +48,7 @@ export const POST = async (request: Request) => {
 
     const preparedBody = {
       ...body,
-      date: format(body.date, 'MMMM dd, yyyy'),
+      date: format(body.date, 'yyyy-MM-dd'),
       duration: Number(body.duration),
       deposit: {
         amount: 0,

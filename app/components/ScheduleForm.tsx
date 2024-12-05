@@ -88,12 +88,13 @@ export default function ScheduleForm() {
   const onSubmitHandler = async (formData: IFormValues) => {
     const info = {
       ...appointmentInfo,
-      date: format(formData.date, 'MMMM dd, yyyy'),
+      date: formData.date,
       slot: formData.slot,
       duration,
     };
 
     router.push('/booking/payment');
+    console.log(info);
 
     setAppointmentInfo(info);
   };
@@ -103,7 +104,7 @@ export default function ScheduleForm() {
 
     (async () => {
       const response = await fetch(
-        `/api/slots?date=${format(selectedDate, 'MMMM dd, yyyy')}&duration=${duration}`,
+        `/api/slots?date=${format(selectedDate, 'yyyy-MM-dd')}&duration=${duration}`,
       );
       const slots = await response.json();
       setSlots(slots);

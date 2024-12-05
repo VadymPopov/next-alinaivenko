@@ -87,7 +87,7 @@ export default function AddAppointmentForm() {
     (async () => {
       if (!selectedDuration) return;
       const response = await fetch(
-        `/api/slots?date=${format(selectedDate, 'MMMM dd, yyyy')}&duration=${selectedDuration}`,
+        `/api/slots?date=${format(selectedDate, 'yyyy-MM-dd')}&duration=${selectedDuration}`,
       );
       const slots = await response.json();
       const slotsOptions = slots.map((slot: string) => ({

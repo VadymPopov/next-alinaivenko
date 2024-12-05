@@ -34,7 +34,7 @@ export const PUT = async (request: Request) => {
 
     const query = {
       $and: [
-        { date },
+        { date: format(new Date(), 'yyyy-MM-dd') },
         {
           $or: [{ name: body.name }, { email: body.email }],
         },

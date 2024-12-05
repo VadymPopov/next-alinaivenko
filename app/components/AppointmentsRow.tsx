@@ -1,5 +1,6 @@
 'use client';
 
+import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 
 import { formatDuration } from '../utils/helpers';
@@ -29,7 +30,8 @@ export default function AppointmentsRow({
         <ServiceLabel service={service} />
       </td>
       <td className="rounded-r">
-        {new Date(date).toLocaleDateString('uk-UA')}
+        {/* {new Date(date).toLocaleDateString('uk-UA')} */}
+        {format(new Date(date), 'dd.MM.yyyy')}
       </td>
       <td>{slot}</td>
       <td>{formatDuration(duration)}</td>

@@ -7,6 +7,7 @@ import {
   useElements,
   useStripe,
 } from '@stripe/react-stripe-js';
+import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 
 import {
@@ -102,7 +103,7 @@ export default function CheckoutStripeForm({
           </p>
           {isBooking && (
             <p className="text-base mb-3 tracking-wider">
-              {body.date} at {body.slot}
+              {format(body.date as Date, 'MMMM dd, yyyy')} at {body.slot}
             </p>
           )}
         </div>

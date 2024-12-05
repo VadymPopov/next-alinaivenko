@@ -32,7 +32,7 @@ export interface IAppointmentInfo {
   description?: string;
   instagram?: string;
   address?: string;
-  date?: string;
+  date?: Date;
   slot?: string;
   duration?: number;
   amount?: number;

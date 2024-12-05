@@ -2,34 +2,10 @@ import connect from '@/app/lib/db';
 import Appointment from '@/app/lib/models/appointment';
 import { sendEmail } from '@/app/lib/nodemailer/sendEmail';
 import { getReceipt } from '@/app/lib/stripe/getReceipt';
+import convertToDate from '@/app/utils/convertToDate';
 
 import { format } from 'date-fns';
 import { type NextRequest, NextResponse } from 'next/server';
-
-interface AppointmentType {
-  date: string;
-  slot: string;
-  duration: number;
-}
-
-function convertToDate(appointment: AppointmentType): Date {
-  const date = format(new Date(appointment.date), 'MM.dd.yyyy');
-
-  const [month, day, year] = date.split('.').map(Number);
-
-  let hours = Number(appointment.slot.replace(/(am|pm)/i, '').split(':')[0]);
-  const minutes = Number(
-    appointment.slot.replace(/(am|pm)/i, '').split(':')[1],
-  );
-
-  if (/pm/i.test(appointment.slot) && hours !== 12) {
-    hours += 12;
-  } else if (/am/i.test(appointment.slot) && hours === 12) {
-    hours = 0;
-  }
-
-  return new Date(year, month - 1, day, hours, minutes);
-}
 
 export const GET = async (request: NextRequest) => {
   try {
@@ -43,13 +19,13 @@ export const GET = async (request: NextRequest) => {
     const year = searchParams.get('year');
 
     if (day && month && year) {
-      query.date = { $regex: `^${month} ${day}, ${year}$`, $options: 'i' };
+      query.date = { $regex: `^${year}-${month}-${day}$`, $options: 'i' };
     } else if (month && year) {
-      query.date = { $regex: `^${month} \\d{2}, ${year}$`, $options: 'i' };
+      query.date = { $regex: `^${year}-${month}-\\d{2}$`, $options: 'i' };
     } else if (month) {
-      query.date = { $regex: `^${month} \\d{2}, \\d{4}$`, $options: 'i' };
+      query.date = { $regex: `^\\d{4}-${month}-\\d{2}$`, $options: 'i' };
     } else if (year) {
-      query.date = { $regex: `^[A-Za-z]+ \\d{2}, ${year}$`, $options: 'i' };
+      query.date = { $regex: `^${year}-\\d{2}-\\d{2}$`, $options: 'i' };
     } else if (date) {
       query.date = date;
     }
@@ -82,6 +58,7 @@ export const POST = async (request: Request) => {
 
     const preparedBody = {
       ...body,
+      date: format(body.date, 'yyyy-MM-dd'),
       deposit: {
         amount: body.amount,
         tax: body.tax,
@@ -90,13 +67,17 @@ export const POST = async (request: Request) => {
       },
       receiptUrl,
     };
+    const formattedDate = format(body.date, 'MMMM dd, yyyy');
 
     const newAppointment = new Appointment(preparedBody);
     await newAppointment.save();
 
     await Promise.all([
-      sendEmail({ data: preparedBody, client: true }),
-      sendEmail({ data: preparedBody }),
+      sendEmail({
+        data: { ...preparedBody, date: formattedDate },
+        client: true,
+      }),
+      sendEmail({ data: { ...preparedBody, date: formattedDate } }),
     ]);
 
     return NextResponse.json(

@@ -105,7 +105,7 @@ export default function EditAppointmentForm({
     (async () => {
       if (!selectedDuration || !selectedDate || !appointment._id) return;
       const response = await fetch(
-        `/api/slots?date=${format(selectedDate, 'MMMM dd, yyyy')}&duration=${selectedDuration}&isEditing=true&id=${appointment._id}`,
+        `/api/slots?date=${format(selectedDate, 'yyyy-MM-dd')}&duration=${selectedDuration}&isEditing=true&id=${appointment._id}`,
       );
       const slots = await response.json();
       const slotsOptions = slots.map((slot: string) => ({

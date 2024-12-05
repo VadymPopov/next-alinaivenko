@@ -47,18 +47,16 @@ const DayView = () => {
 
   const onDateChange = async (date: Date) => {
     setSelectedDate(date);
-    const day = date.getDate();
-    const month = date.toLocaleString('en-US', {
-      month: 'long',
-    });
-    const year = date.getFullYear();
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = String(date.getFullYear());
 
     try {
       const queryParams = new URLSearchParams();
 
       if (day) queryParams.append('day', day.toString());
       if (month) queryParams.append('month', month);
-      if (year) queryParams.append('year', year.toString());
+      if (year) queryParams.append('year', year);
 
       const query = queryParams.toString();
       const response = await fetch(`/api/appointments?${query}`);

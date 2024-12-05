@@ -1,6 +1,16 @@
 'use client';
 
-import React, { useState } from 'react';
+// change date of appointment from string to Date object
+// update Date handling in all places where needed
+// make week view get appointments for selected week
+// get statistics
+// add new clients by last week from date now  to 7 past days in ascending order to now
+// show chart.js craph with income if needed
+// fix styles for mobile
+// add authentication for admin and gatita
+// add setup of studio address with admin panel both during appointment and for contact page
+import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { MdArrowForwardIos, MdOutlineArrowBackIos } from 'react-icons/md';
 
 import clsx from 'clsx';
@@ -14,12 +24,41 @@ import {
   sub,
 } from 'date-fns';
 
+import { IAppointment } from './AppointmentDetails';
 import DayColumn from './DayColumn';
 
-const WeekView = ({ appointments }) => {
+const WeekView = () => {
+  const [appointments, setAppointments] = useState<IAppointment[]>([]);
   const [week, setWeek] = useState(new Date());
-  const weekStart = startOfWeek(week, { weekStartsOn: 0 });
-  // const weekEnd = addDays(weekStart, 6);
+  const weekStart = React.useMemo(
+    () => startOfWeek(week, { weekStartsOn: 0 }),
+    [week],
+  );
+
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      const weekStart = startOfWeek(week, { weekStartsOn: 0 });
+      const weekEnd = addDays(weekStart, 6);
+
+      try {
+        const response = await fetch(
+          `/api/admin/appointments?start=${format(weekStart, 'yyyy-MM-dd')}&end=${format(weekEnd, 'yyyy-MM-dd')}`,
+        );
+        if (!response.ok) throw new Error('Failed to fetch appointments');
+        const appointments = await response.json();
+        setAppointments(appointments);
+      } catch (error) {
+        console.error(error);
+        toast.error(
+          error instanceof Error
+            ? error.message
+            : 'Error fetching blocked dates',
+        );
+      }
+    };
+
+    fetchAppointments();
+  }, [week]);
 
   const hours = React.useMemo(
     () => Array.from({ length: 10 }, (_, i) => setHours(new Date(), 11 + i)),
