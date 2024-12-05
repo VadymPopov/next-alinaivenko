@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 import { validationSchemaAddAppointment } from '../schemas';
 import Button from './Button';
@@ -52,6 +53,9 @@ const durationOptions = Array.from({ length: 540 / 30 }, (_, i) => {
 
 export default function AddAppointmentForm() {
   const [isProcessing, setIsProcessing] = useState(false);
+  const searchParams = useSearchParams();
+  const slot = searchParams.get('slot');
+  const date = searchParams.get('date');
 
   const [slotsOptions, setSlotsOptions] = useState([]);
   const router = useRouter();
@@ -59,7 +63,8 @@ export default function AddAppointmentForm() {
     mode: 'all',
     resolver: yupResolver(validationSchemaAddAppointment),
     defaultValues: {
-      date: new Date(),
+      date: date ? new Date(date) : new Date(),
+      slot: slot ? slot : undefined,
     },
   });
 
