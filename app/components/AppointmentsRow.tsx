@@ -1,6 +1,6 @@
 'use client';
 
-import { format } from 'date-fns';
+import { format, parse } from 'date-fns';
 import { useRouter } from 'next/navigation';
 
 import { formatDuration } from '../utils/helpers';
@@ -15,6 +15,7 @@ export default function AppointmentsRow({
   const { _id, name, email, service, date, duration, instagram, slot } =
     appointment;
   const router = useRouter();
+  const parsedDate = parse(date, 'yyyy-MM-dd', new Date());
 
   return (
     <tr
@@ -29,10 +30,7 @@ export default function AppointmentsRow({
       <td>
         <ServiceLabel service={service} />
       </td>
-      <td className="rounded-r">
-        {/* {new Date(date).toLocaleDateString('uk-UA')} */}
-        {format(new Date(date), 'dd.MM.yyyy')}
-      </td>
+      <td className="rounded-r">{format(parsedDate, 'dd.MM.yyyy')}</td>
       <td>{slot}</td>
       <td>{formatDuration(duration)}</td>
     </tr>

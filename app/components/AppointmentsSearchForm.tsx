@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { MdSearch } from 'react-icons/md';
 
+import { IDate } from '../(admin)/admin/appointments/page';
 import { generateDays, monthMap } from '../utils/helpers';
 import { IAppointment } from './AppointmentDetails';
 import Button from './Button';
@@ -28,8 +29,10 @@ const monthOptions = Object.keys(monthMap).map((month) => ({
 
 export default function AppointmentsSearchForm({
   setAppointments,
+  setDate,
 }: {
   setAppointments: React.Dispatch<React.SetStateAction<IAppointment[]>>;
+  setDate: React.Dispatch<React.SetStateAction<IDate>>;
 }) {
   const [daysOptions, setDaysOptions] = useState<daysOptionsType[]>([]);
 
@@ -54,6 +57,11 @@ export default function AppointmentsSearchForm({
 
   const onSubmitHandler = async (formValues: FormValues) => {
     const { day, month, year } = formValues;
+    setDate({
+      day: Number(day),
+      month: Number(month),
+      year,
+    });
     try {
       const queryParams = new URLSearchParams();
 

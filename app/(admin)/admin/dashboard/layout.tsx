@@ -4,32 +4,30 @@ export interface LayoutProps {
   children: React.ReactNode;
   calendar: React.ReactNode;
   stats: React.ReactNode;
-  categories: React.ReactNode;
-  countries: React.ReactNode;
-  promotions: React.ReactNode;
+  clients: React.ReactNode;
+  doughnut: React.ReactNode;
 }
 
 export default function Layout({
   children,
   calendar,
   stats,
-  //   sales,
-  //   categories,
-  //   countries,
-  //   promotions,
+  clients,
+  doughnut,
 }: LayoutProps) {
   return (
     <div>
       {children}
-      <div>{stats}</div>
-      <div>{calendar}</div>
-      {/* <main className="grid grid-cols-12 gap-5 py-10 pl-10 pr-7">
+      <main className="grid grid-cols-12 gap-5 py-4 px-10">
         <div className="col-span-12">{stats}</div>
-        <div className="col-span-5">{sales}</div>
-        <div className="col-span-7">{categories}</div>
-        <div className="col-span-6">{countries}</div>
-        <div className="col-span-6">{promotions}</div>
-      </main> */}
+        <div className="col-span-5 items-center justify-center flex bg-mainLightColor rounded-3xl mr-10 shadow-lg">
+          {doughnut}
+        </div>
+        <div className="col-span-7 bg-mainLightColor rounded-3xl  shadow-lg py-8 px-10">
+          {clients}
+        </div>
+        <div className="col-span-12">{calendar}</div>
+      </main>
     </div>
   );
 }

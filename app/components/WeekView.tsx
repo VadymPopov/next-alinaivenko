@@ -1,14 +1,9 @@
 'use client';
 
-// change date of appointment from string to Date object
-// update Date handling in all places where needed
-// make week view get appointments for selected week
-// get statistics
-// add new clients by last week from date now  to 7 past days in ascending order to now
-// show chart.js craph with income if needed
 // fix styles for mobile
 // add authentication for admin and gatita
 // add setup of studio address with admin panel both during appointment and for contact page
+// add back button where is needed
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { MdArrowForwardIos, MdOutlineArrowBackIos } from 'react-icons/md';

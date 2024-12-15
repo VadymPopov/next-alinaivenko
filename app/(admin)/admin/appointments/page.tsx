@@ -5,14 +5,28 @@ import AppointmentsSearchForm from '@/app/components/AppointmentsSearchForm';
 import AppointmentsTable from '@/app/components/AppointmentsTable';
 import Button from '@/app/components/Button';
 import SearchBar from '@/app/components/SearchBar';
+import { getFilterString } from '@/app/utils/helpers';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { MdAdd } from 'react-icons/md';
 
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 
+export interface IDate {
+  year?: number;
+  month?: number;
+  day?: number;
+}
+
+const defaultDate = {
+  day: new Date().getDate(),
+  month: new Date().getMonth() + 1,
+  year: new Date().getFullYear(),
+};
+
 export default function Appointments() {
+  const [date, setDate] = useState<IDate>(defaultDate);
   const [query, setQuery] = useState<string>('');
   const [appointments, setAppointments] = useState<IAppointment[]>([]);
   const router = useRouter();
@@ -30,11 +44,13 @@ export default function Appointments() {
     })();
   }, []);
 
-  const filteredAppointments = appointments.filter(
-    (appointment) =>
-      appointment.name.toLowerCase().includes(query.toLowerCase()) ||
-      appointment.email.toLowerCase().includes(query.toLowerCase()),
-  );
+  const filteredAppointments = useMemo(() => {
+    return appointments.filter(
+      (appointment) =>
+        appointment.name.toLowerCase().includes(query.toLowerCase()) ||
+        appointment.email.toLowerCase().includes(query.toLowerCase()),
+    );
+  }, [appointments, query]);
 
   const handleChange = (searchTerm: string) => {
     setQuery(searchTerm);
@@ -57,13 +73,16 @@ export default function Appointments() {
         <h2 className="text-accentColor font-semibold text-2xl">
           Search Appointments by Date
         </h2>
-        <AppointmentsSearchForm setAppointments={setAppointments} />
+        <AppointmentsSearchForm
+          setAppointments={setAppointments}
+          setDate={setDate}
+        />
       </div>
 
       <div className="py-8 px-10 bg-mainLightColor rounded-3xl mb-10 shadow-lg">
         <div className="flex justify-between border-b border-textColorDarkBg pb-5 mb-3">
           <h2 className="text-accentColor font-semibold text-2xl">
-            Appointments
+            {getFilterString(date)}
           </h2>
           <SearchBar query={query} onSearch={handleChange} />
         </div>

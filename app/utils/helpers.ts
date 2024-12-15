@@ -1,3 +1,6 @@
+import { format } from 'date-fns';
+
+import { IDate } from '../(admin)/admin/appointments/page';
 import { serviceType } from '../context/useGlobalState';
 
 export const calculatePrice = (selectedProcedure: serviceType | null) => {
@@ -142,4 +145,18 @@ export const filterDate = (date: Date, blockedDates: string[]) => {
     (blockedDate) =>
       blockedDate.split('T')[0] === date.toISOString().split('T')[0],
   );
+};
+
+export const getFilterString = (date: IDate) => {
+  if (date.year && date.month && date.day) {
+    const fullDate = new Date(date.year, date.month - 1, date.day);
+    return `Showing appointments for: ${format(fullDate, 'MMM dd, yyyy')}`;
+  } else if (date.year && date.month) {
+    const fullDate = new Date(date.year, date.month - 1, 1);
+    return `Showing appointments for: ${format(fullDate, 'MMMM yyyy')}`;
+  } else if (date.year) {
+    return `Showing appointments for the year: ${date.year}`;
+  } else {
+    return 'Showing appointments by default date (Today)';
+  }
 };
