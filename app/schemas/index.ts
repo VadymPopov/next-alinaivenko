@@ -277,3 +277,11 @@ export const validationSchemaBlockSlot = Yup.object().shape({
   date: Yup.date().required('Date is required'),
   duration: Yup.string().required('Duration is required'),
 });
+
+export const validationSchemaStudioInfo = Yup.object().shape({
+  address: Yup.string().required('Address is required'),
+  city: Yup.string().required('City is required'),
+  name: Yup.string().required('Name is required'),
+  latitude: Yup.string().required('Latitude is required'),
+  longitude: Yup.string().required('Longitude is required'),
+});

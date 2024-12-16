@@ -32,7 +32,21 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Contact() {
+export async function getStudioInfo() {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/calendar/studio`,
+  );
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch studio info');
+  }
+  return response.json();
+}
+
+export default async function Contact() {
+  const studio = await getStudioInfo();
+  const query = encodeURIComponent(`${studio?.name}, ${studio?.address}`);
+
   return (
     <Section primary={true}>
       <Title>Contact me</Title>
@@ -40,27 +54,27 @@ export default function Contact() {
         <div className="flex-1">
           <div className="mb-2.5 flex items-center font-medium">
             <p className="text-justify text-lg tracking-wide text-textColor">
-              Toronto
+              {studio.city}
             </p>
           </div>
 
           <div className="mb-2.5 flex items-center font-medium">
             <p className="text-justify text-lg tracking-wide text-textColor">
-              Lara Jade Beauty
+              {studio.name}
             </p>
           </div>
 
           <div className="mb-2.5 flex items-center font-medium">
             <FiMapPin className="mr-2.5 text-3xl text-accentColor" />
             <p className="text-justify text-lg tracking-wide text-textColor">
-              689 St Clair Ave W 2nd Floor, Toronto, ON M6C 1B2
+              {studio.address}
             </p>
           </div>
           <div className="flex-1">
             <EmbeddedMap
-              latitude="43.682014043129215"
-              longitude="-79.42608935396728"
-              query="Lara+Jade+Beauty+StClair+Toronto"
+              latitude={studio.latitude}
+              longitude={studio.longitude}
+              query={query}
             />
           </div>
           <br />

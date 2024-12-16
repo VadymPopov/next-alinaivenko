@@ -1,9 +1,8 @@
 'use client';
 
+// add back button where is needed
 // fix styles for mobile
 // add authentication for admin and gatita
-// add setup of studio address with admin panel both during appointment and for contact page
-// add back button where is needed
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { MdArrowForwardIos, MdOutlineArrowBackIos } from 'react-icons/md';

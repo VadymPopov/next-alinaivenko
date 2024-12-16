@@ -1,5 +1,6 @@
 import connect from '@/app/lib/db';
 import Appointment from '@/app/lib/models/appointment';
+import Studio from '@/app/lib/models/studio';
 import { sendEmail } from '@/app/lib/nodemailer/sendEmail';
 import { getReceipt } from '@/app/lib/stripe/getReceipt';
 import convertToDate from '@/app/utils/convertToDate';
@@ -55,6 +56,7 @@ export const POST = async (request: Request) => {
     const body = await request.json();
     await connect();
     const receiptUrl = await getReceipt(body.paymentIntentId);
+    const studio = await Studio.findOne({});
 
     const preparedBody = {
       ...body,
@@ -74,10 +76,20 @@ export const POST = async (request: Request) => {
 
     await Promise.all([
       sendEmail({
-        data: { ...preparedBody, date: formattedDate },
+        data: {
+          ...preparedBody,
+          date: formattedDate,
+          address: studio.address,
+        },
         client: true,
       }),
-      sendEmail({ data: { ...preparedBody, date: formattedDate } }),
+      sendEmail({
+        data: {
+          ...preparedBody,
+          date: formattedDate,
+          address: studio.address,
+        },
+      }),
     ]);
 
     return NextResponse.json(
