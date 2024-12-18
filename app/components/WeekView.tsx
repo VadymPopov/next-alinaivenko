@@ -1,6 +1,5 @@
 'use client';
 
-// add back button where is needed
 // fix styles for mobile
 // add authentication for admin and gatita
 import React, { useEffect, useState } from 'react';

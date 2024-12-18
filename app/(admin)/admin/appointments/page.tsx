@@ -3,15 +3,13 @@
 import { IAppointment } from '@/app/components/AppointmentDetails';
 import AppointmentsSearchForm from '@/app/components/AppointmentsSearchForm';
 import AppointmentsTable from '@/app/components/AppointmentsTable';
-import Button from '@/app/components/Button';
+import Flyout from '@/app/components/Flyout';
 import SearchBar from '@/app/components/SearchBar';
 import { getFilterString } from '@/app/utils/helpers';
 
 import React, { useEffect, useMemo, useState } from 'react';
-import { MdAdd } from 'react-icons/md';
 
 import { format } from 'date-fns';
-import { useRouter } from 'next/navigation';
 
 export interface IDate {
   year?: number;
@@ -29,7 +27,6 @@ export default function Appointments() {
   const [date, setDate] = useState<IDate>(defaultDate);
   const [query, setQuery] = useState<string>('');
   const [appointments, setAppointments] = useState<IAppointment[]>([]);
-  const router = useRouter();
 
   useEffect(() => {
     (async () => {
@@ -57,18 +54,7 @@ export default function Appointments() {
   };
 
   return (
-    <div className="bg-bgColor py-4 px-10 min-h-screen">
-      <div className="flex justify-end">
-        <Button
-          styles="rounded-xl px-3 py-2 h-10 mb-5"
-          onClick={() =>
-            router.push('/admin/appointments/add', { scroll: false })
-          }
-        >
-          Add Appointment
-          <MdAdd size={24} />
-        </Button>
-      </div>
+    <div className="bg-bgColor py-20 px-10 min-h-screen">
       <div className="flex justify-between py-6 px-10 bg-mainLightColor rounded-3xl mb-10 shadow-lg">
         <h2 className="text-accentColor font-semibold text-2xl">
           Search Appointments by Date
@@ -88,6 +74,8 @@ export default function Appointments() {
         </div>
         <AppointmentsTable appointments={filteredAppointments} />
       </div>
+
+      <Flyout appointments={filteredAppointments} date={date} />
     </div>
   );
 }

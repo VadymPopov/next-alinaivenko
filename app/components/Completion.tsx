@@ -5,6 +5,7 @@ import { MdOutlineArrowBackIos } from 'react-icons/md';
 
 import { useRouter, useSearchParams } from 'next/navigation';
 
+import Button from './Button';
 import Text from './Text';
 import Title from './Title';
 
@@ -16,13 +17,13 @@ export default function Completion() {
 
   return (
     <div className="flex flex-col justify-center items-center min-h-[100vh] p-8 relative m-0">
-      <button
+      <Button
+        styles="absolute top-10 left-10 px-5 py-3 text-xs"
         onClick={() => router.replace('/')}
-        className="flex items-center absolute top-10 left-10 px-5 py-3 font-semibold text-xs uppercase border-[1px] border-accentColor transition-colors rounded-3xl cursor-pointer text-mainDarkColor bg-transparent hover:bg-accentColor hover:shadow-2xl hover:text-mainLightColor"
       >
         <MdOutlineArrowBackIos />
         Back
-      </button>
+      </Button>
       <Title>
         {type === 'booking'
           ? 'Your appointment was successfully booked!'

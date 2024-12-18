@@ -1,12 +1,17 @@
 'use client';
 
 import React, { useState } from 'react';
-import { MdDeleteOutline, MdOutlineModeEdit } from 'react-icons/md';
+import {
+  MdDeleteOutline,
+  MdOutlineArrowBackIos,
+  MdOutlineModeEdit,
+} from 'react-icons/md';
 
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 
 import AppointmentView from './AppointmentView';
+import Button from './Button';
 import EditAppointmentForm from './EditAppointmentForm';
 
 export interface IAppointment {
@@ -30,6 +35,7 @@ export interface IAppointment {
     amount: number;
     tax: number;
     fee: number;
+    tip: number;
     total: number;
   };
 }
@@ -57,7 +63,14 @@ export default function AppointmentDetails({
 
   return (
     <div className="min-h-screen bg-bgColor flex flex-col items-center py-10 px-4">
-      <div className="w-full max-w-3xl bg-mainLightColor rounded-lg shadow-lg p-8">
+      <Button
+        styles="fixed top-24 left-80 px-5 py-3 text-xs"
+        onClick={() => router.back()}
+      >
+        <MdOutlineArrowBackIos />
+        Back
+      </Button>
+      <div className="top- w-full max-w-3xl bg-mainLightColor rounded-lg shadow-lg p-8">
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-3xl font-bold text-mainDarkColor">
             {isEditing ? 'Edit Appointment' : 'Appointment Details'}

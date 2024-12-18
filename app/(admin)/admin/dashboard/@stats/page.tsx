@@ -23,7 +23,7 @@ async function getTotalIncome() {
     const totalIncome = totalAppointments.reduce((total, appt) => {
       const depositAmount = appt.deposit?.amount || 0;
       const paymentAmount = appt.payment?.amount || 0;
-      const tipsAmount = appt.payment?.tips || 0;
+      const tipsAmount = appt.payment?.tip || 0;
       return total + depositAmount + paymentAmount + tipsAmount;
     }, 0);
 
@@ -75,7 +75,7 @@ async function getMonthlyIncome() {
     const totalIncome = appointments.reduce((total, appt) => {
       const depositAmount = appt.deposit?.amount || 0;
       const paymentAmount = appt.payment?.amount || 0;
-      const tipsAmount = appt.payment?.tips || 0;
+      const tipsAmount = appt.payment?.tip || 0;
       return total + depositAmount + paymentAmount + tipsAmount;
     }, 0);
 

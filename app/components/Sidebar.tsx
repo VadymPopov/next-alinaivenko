@@ -2,7 +2,6 @@
 
 import React from 'react';
 import {
-  MdAttachFile,
   MdDashboard,
   MdLogout,
   MdOutlineEditCalendar,
@@ -46,13 +45,6 @@ export default function Sidebar() {
           >
             <MdWork size={18} />
             Appointments
-          </SidebarItem>
-          <SidebarItem
-            current={pathname === '/admin/report'}
-            pathname="/admin/report"
-          >
-            <MdAttachFile size={18} />
-            Report
           </SidebarItem>
           <SidebarItem
             current={pathname === '/admin/calendar'}

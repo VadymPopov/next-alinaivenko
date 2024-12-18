@@ -160,3 +160,17 @@ export const getFilterString = (date: IDate) => {
     return 'Showing appointments by default date (Today)';
   }
 };
+
+export const getDateString = (date: IDate) => {
+  if (date.year && date.month && date.day) {
+    const fullDate = new Date(date.year, date.month - 1, date.day);
+    return `${format(fullDate, 'MMM dd, yyyy')}`;
+  } else if (date.year && date.month) {
+    const fullDate = new Date(date.year, date.month - 1, 1);
+    return `${format(fullDate, 'MMMM yyyy')}`;
+  } else if (date.year) {
+    return `${date.year}`;
+  } else {
+    return '';
+  }
+};

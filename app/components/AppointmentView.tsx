@@ -86,16 +86,22 @@ export default function AppointmentView({
         <div className="space-y-2">
           <p>
             <strong>Amount:</strong>{' '}
-            {formatCurrency(appointment.deposit.amount || 0)}
+            {formatCurrency(appointment.payment?.amount || 0)}
           </p>
           <p>
-            <strong>Tax:</strong> {formatCurrency(appointment.deposit.tax || 0)}
+            <strong>Tax:</strong>{' '}
+            {formatCurrency(appointment.payment?.tax || 0)}
           </p>
           <p>
-            <strong>Fee:</strong> {formatCurrency(appointment.deposit.fee || 0)}
+            <strong>Fee:</strong>{' '}
+            {formatCurrency(appointment.payment?.fee || 0)}
+          </p>
+          <p>
+            <strong>Tips:</strong>{' '}
+            {formatCurrency(appointment.payment?.tip || 0)}
           </p>
           <p className="font-bold">
-            Total: {formatCurrency(appointment.deposit.total)}
+            Total: {formatCurrency(appointment.payment?.total || 0)}
           </p>
         </div>
       </section>
