@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { MdSearch } from 'react-icons/md';
 
-import { IDate } from '../(admin)/admin/appointments/page';
+import { IDate } from '../admin/appointments/page';
 import { generateDays, monthMap } from '../utils/helpers';
 import { IAppointment } from './AppointmentDetails';
 import Button from './Button';

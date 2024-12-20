@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 
-import { serviceType, useAppContext } from '../context/useGlobalState';
+import { serviceType, useAppContext } from '../providers/BookingFormContext';
 import { getDepositBreakdown } from '../utils/helpers';
 import Button from './Button';
 

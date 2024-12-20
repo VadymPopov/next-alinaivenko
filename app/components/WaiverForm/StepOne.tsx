@@ -1,7 +1,7 @@
 'use client';
 
-import { useWaiverFormContext } from '@/app/context/WaiverFormContext';
-import { IWaiverFormData } from '@/app/context/WaiverFormContext';
+import { useWaiverFormContext } from '@/app/providers/WaiverFormContext';
+import { IWaiverFormData } from '@/app/providers/WaiverFormContext';
 import { verifyClientLegalAge } from '@/app/utils/ageVerification';
 
 import React, { useEffect } from 'react';

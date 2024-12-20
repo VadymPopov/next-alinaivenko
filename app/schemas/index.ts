@@ -285,3 +285,37 @@ export const validationSchemaStudioInfo = Yup.object().shape({
   latitude: Yup.string().required('Latitude is required'),
   longitude: Yup.string().required('Longitude is required'),
 });
+
+export const validationSchemaSignIn = Yup.object().shape({
+  email: Yup.string()
+    .trim()
+    .required('Email is required')
+    .matches(emailRegExp, 'Please enter a valid email'),
+  password: Yup.string().trim().required('Password is required'),
+});
+
+export const validationSchemaSignUp = Yup.object().shape({
+  name: Yup.string().required('Name is required'),
+  role: Yup.string().required('Role is required'),
+  email: Yup.string()
+    .trim()
+    .required('Email is required')
+    .matches(emailRegExp, 'Please enter a valid email'),
+  password: Yup.string().trim().required('Password is required'),
+});
+
+export const validationSchemaProfileForm = Yup.object().shape({
+  password: Yup.string()
+    .required('Password is required')
+    .min(8, 'Password must be at least 8 characters')
+    .matches(/[0-9]/, 'Password must contain at least one number')
+    .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
+    .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
+    .matches(
+      /[!@#$%^&*(),.?":{}|<>]/,
+      'Password must contain at least one special character',
+    ),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref('password')], 'Passwords must match')
+    .required('Confirm Password is required'),
+});

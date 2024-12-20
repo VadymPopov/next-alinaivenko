@@ -6,7 +6,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/navigation';
 
-import { useAppContext } from '../context/useGlobalState';
+import { useAppContext } from '../providers/BookingFormContext';
 import { validationSchemaPaymentForm } from '../schemas';
 import Button from './Button';
 import FieldSet from './FieldSet';

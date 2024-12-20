@@ -1,4 +1,4 @@
-import { IWaiverFormData } from '@/app/context/WaiverFormContext';
+import { IWaiverFormData } from '@/app/providers/WaiverFormContext';
 
 import React from 'react';
 

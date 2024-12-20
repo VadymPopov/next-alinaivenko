@@ -8,13 +8,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 
-import { useAppContext } from '../context/useGlobalState';
+import { useAppContext } from '../providers/BookingFormContext';
 import { validationSchemaSchedule } from '../schemas';
 import { findNextAvailableDate } from '../utils/findNextAvailableDate';
 import { pickDuration } from '../utils/helpers';
 import Button from './Button';
 import CalendarPicker from './CalendarPicker';
 import FieldSet from './FieldSet';
+import Loader from './Loader';
 import SlotsPicker from './SlotsPicker';
 
 export interface IFormValues {
@@ -118,7 +119,7 @@ export default function ScheduleForm() {
   }, [initialDate, reset]);
 
   if (!initialDate) {
-    return <p>Loading...</p>;
+    return <Loader />;
   }
 
   return (

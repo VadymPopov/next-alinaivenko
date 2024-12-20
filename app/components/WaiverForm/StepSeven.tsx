@@ -3,7 +3,7 @@
 import {
   IWaiverFormData,
   useWaiverFormContext,
-} from '@/app/context/WaiverFormContext';
+} from '@/app/providers/WaiverFormContext';
 
 import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';

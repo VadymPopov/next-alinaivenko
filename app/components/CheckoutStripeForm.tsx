@@ -14,7 +14,7 @@ import {
   IAppointmentInfo,
   IPaymentInfo,
   serviceType,
-} from '../context/useGlobalState';
+} from '../providers/BookingFormContext';
 import { formatCurrency } from '../utils/helpers';
 import Button from './Button';
 

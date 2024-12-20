@@ -1,16 +1,21 @@
 'use client';
 
 import React from 'react';
-import { FaCat } from 'react-icons/fa';
 
+import { useSession } from 'next-auth/react';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
+
+import { getProfileInfo } from '../utils/getProfileInfo';
+import { capitalizeFirstLetter } from '../utils/helpers';
 
 export default function Header() {
   const pathname = usePathname();
+  const router = useRouter();
+  const { data: session } = useSession();
+  const { profileImageURL } = getProfileInfo(session);
 
-  function capitalizeFirstLetter(string: string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
   const pageName = capitalizeFirstLetter(pathname.split('/')[2] || 'admin');
 
   return (
@@ -20,11 +25,20 @@ export default function Header() {
       </h1>
       <div className="w-px self-stretch bg-textColor" />
       <div className="flex gap-3">
-        <FaCat size={36} />
+        <Image
+          className="rounded-full h-10 w-10 cursor-pointer"
+          alt="profile picture"
+          src={profileImageURL}
+          width={40}
+          height={40}
+          onClick={() => router.push('/admin/profile', { scroll: false })}
+        />
         <div>
-          <p className="text-base	font-semibold text-textColor">Gatita</p>
+          <p className="text-base	font-semibold text-textColor">
+            {session?.user?.role}
+          </p>
           <p className="text-sm	font-light text-textColor">
-            ali.ivenko@gmail.com
+            {session?.user?.email}
           </p>
         </div>
       </div>

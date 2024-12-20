@@ -1,6 +1,6 @@
 'use client';
 
-import { WaiverFormProvider } from '@/app/context/WaiverFormContext';
+import { WaiverFormProvider } from '@/app/providers/WaiverFormContext';
 
 import React, { useState } from 'react';
 

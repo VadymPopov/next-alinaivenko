@@ -1,3 +1,4 @@
+import Loader from '@/app/components/Loader';
 import Section from '@/app/components/Section';
 import Title from '@/app/components/Title';
 import { freshArray } from '@/public/images/fresh';
@@ -12,7 +13,7 @@ import Image from 'next/image';
 
 const Swiper = dynamic(() => import('@/app/components/Swiper'), {
   ssr: false,
-  loading: () => <div>Loading...</div>,
+  loading: () => <Loader />,
 });
 
 export const metadata: Metadata = {

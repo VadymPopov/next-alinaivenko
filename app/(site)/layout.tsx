@@ -7,7 +7,7 @@ import { Toaster } from 'react-hot-toast';
 
 import { Metadata } from 'next';
 
-import { AppProvider } from '../context/useGlobalState';
+import { AppProvider } from '../providers/BookingFormContext';
 
 export const metadata: Metadata = {
   title: {

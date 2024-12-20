@@ -5,7 +5,7 @@ import React from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-import { serviceType, useAppContext } from '../context/useGlobalState';
+import { serviceType, useAppContext } from '../providers/BookingFormContext';
 import Button from './Button';
 
 interface IServiceCard {

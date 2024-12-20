@@ -5,7 +5,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 
-import { useAppContext } from '../context/useGlobalState';
+import { useAppContext } from '../providers/BookingFormContext';
 import {
   calculateTip,
   formatCurrency,

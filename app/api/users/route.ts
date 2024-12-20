@@ -1,13 +1,82 @@
 import connect from '@/app/lib/db';
 import User from '@/app/lib/models/user';
 
+import bcrypt from 'bcrypt';
 import { type NextRequest, NextResponse } from 'next/server';
+
+export const GET = async (request: NextRequest) => {
+  try {
+    await connect();
+    const searchParams = request.nextUrl.searchParams;
+    const id = searchParams.get('id');
+
+    if (!id) {
+      return new NextResponse('Missing id', {
+        status: 400,
+      });
+    }
+
+    const user = await User.findById(id);
+
+    if (!user) {
+      return new NextResponse('User not found', { status: 404 });
+    }
+
+    return NextResponse.json(user, { status: 200 });
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : 'Unknown error';
+    console.error('Error fetching user:', errorMessage);
+    return new NextResponse(`Error fetching user: ${errorMessage}`, {
+      status: 500,
+    });
+  }
+};
+
+export const PATCH = async (request: NextRequest) => {
+  await connect();
+  const searchParams = request.nextUrl.searchParams;
+  const id = searchParams.get('id');
+
+  if (!id) {
+    return new NextResponse('Missing id', {
+      status: 400,
+    });
+  }
+  const body = await request.json();
+
+  try {
+    const user = await User.findById(id);
+
+    if (!user) {
+      return new NextResponse('User not found', { status: 404 });
+    }
+
+    const hashPassword = await bcrypt.hash(body?.password, 10);
+    body.password = hashPassword;
+
+    await User.findByIdAndUpdate(id, body);
+
+    return NextResponse.json(
+      {
+        message: 'Password has been updated successfully',
+      },
+      { status: 200 },
+    );
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : 'Unknown error';
+    console.error('Error updating password:', errorMessage);
+    return new NextResponse(`Error updating  password: ${errorMessage}`, {
+      status: 500,
+    });
+  }
+};
 
 export const POST = async (request: NextRequest) => {
   try {
     const body = await request.json();
     await connect();
-    console.log(body);
 
     if (!body?.email || !body?.password) {
       return NextResponse.json(

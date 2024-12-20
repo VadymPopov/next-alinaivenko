@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 
-import { IDate } from '../(admin)/admin/appointments/page';
-import { serviceType } from '../context/useGlobalState';
+import { IDate } from '../admin/appointments/page';
+import { serviceType } from '../providers/BookingFormContext';
 
 export const calculatePrice = (selectedProcedure: serviceType | null) => {
   let price;
@@ -173,4 +173,8 @@ export const getDateString = (date: IDate) => {
   } else {
     return '';
   }
+};
+
+export const capitalizeFirstLetter = (string: string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 };

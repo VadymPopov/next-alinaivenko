@@ -1,6 +1,6 @@
 'use client';
 
-import { useWaiverFormContext } from '@/app/context/WaiverFormContext';
+import { useWaiverFormContext } from '@/app/providers/WaiverFormContext';
 
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';

@@ -3,7 +3,7 @@ import { MdAdd, MdDownload } from 'react-icons/md';
 
 import { useRouter } from 'next/navigation';
 
-import { IDate } from '../(admin)/admin/appointments/page';
+import { IDate } from '../admin/appointments/page';
 import { downloadCSV, generateCSV } from '../utils/csvUtils';
 import { getDateString } from '../utils/helpers';
 import { IAppointment } from './AppointmentDetails';
