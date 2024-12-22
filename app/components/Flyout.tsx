@@ -1,9 +1,11 @@
 import { useRef } from 'react';
 import { MdAdd, MdDownload } from 'react-icons/md';
 
+import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 
 import { IDate } from '../admin/appointments/page';
+import { useSidebar } from '../providers/SidebarContext';
 import { downloadCSV, generateCSV } from '../utils/csvUtils';
 import { getDateString } from '../utils/helpers';
 import { IAppointment } from './AppointmentDetails';
@@ -16,6 +18,7 @@ export default function Flyout({
   appointments: IAppointment[];
   date: IDate;
 }) {
+  const { isExtended } = useSidebar();
   const router = useRouter();
   const linkRef = useRef<HTMLAnchorElement>(null);
   const dateString = getDateString(date);
@@ -30,23 +33,31 @@ export default function Flyout({
   };
 
   return (
-    <div className="fixed top-16 left-64 right-0 shadow-lg bg-gradient-to-r from-textColorDarkBg from-10%  to-bgColor to-80% z-50 p-3 flex justify-between items-center px-10 py-2.5">
+    <div
+      className={clsx(
+        isExtended ? 'md:left-64' : 'md:left-16',
+        'fixed top-16 right-0 left-0 shadow-lg bg-gradient-to-r from-textColorDarkBg from-10%  to-bgColor to-80% p-3 flex justify-between items-center px-8 py-2.5 transition-all z-40',
+      )}
+    >
       <p className="font-semibold text-xl text-mainLightColor">{message}</p>
       <div className="flex gap-2.5">
         {appointments.length > 0 && (
-          <Button onClick={handleDownload}>
-            Download
-            <MdDownload size={24} />
+          <Button
+            onClick={handleDownload}
+            styles=" rounded-full p-2 md:rounded-xl md:px-3 md:py-2 md:h-10"
+          >
+            <span className="hidden md:block">Download</span>
+            <MdDownload className="size-6" />
           </Button>
         )}
         <Button
-          styles="rounded-xl px-3 py-2 h-10 mb-5"
+          styles="rounded-full p-2 md:rounded-xl md:px-3 md:py-2 md:h-10"
           onClick={() =>
             router.push('/admin/appointments/add', { scroll: false })
           }
         >
-          Add Appointment
-          <MdAdd size={24} />
+          <span className="hidden md:block">Add Appointment</span>
+          <MdAdd className="size-6" />
         </Button>
       </div>
 

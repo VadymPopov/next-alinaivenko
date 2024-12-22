@@ -1,7 +1,6 @@
 'use client';
 
 // fix admin styles for mobile, tablet, desktop
-// check if useMobile needed at all react-use with tailwindcss
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { MdArrowForwardIos, MdOutlineArrowBackIos } from 'react-icons/md';

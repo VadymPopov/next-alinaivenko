@@ -10,7 +10,9 @@ import { Toaster } from 'react-hot-toast';
 import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
-import Provider from '../providers/SessionProvider';
+import MainContent from '../components/AdminMain';
+import AuthProvider from '../providers/SessionProvider';
+import { SidebarProvider } from '../providers/SidebarContext';
 
 type Props = {
   children: ReactNode;
@@ -34,17 +36,19 @@ export default async function RootLayout({ children, modal }: Props) {
   return (
     <html lang="en">
       <body className="flex h-screen bg-bgColor">
-        <Provider session={session}>
-          <Toaster position="top-center" reverseOrder={false} />
-          <Sidebar />
-          <div className="flex-1 ml-64">
-            <Header />
-            <main className="mt-16 p-4  min-h-screen">
-              {modal}
-              {children}
-            </main>
-          </div>
-        </Provider>
+        <SidebarProvider>
+          <AuthProvider session={session}>
+            <Toaster position="top-center" reverseOrder={false} />
+            <Sidebar />
+            <div className="flex-1">
+              <Header />
+              <MainContent>
+                {modal}
+                {children}
+              </MainContent>
+            </div>
+          </AuthProvider>
+        </SidebarProvider>
       </body>
     </html>
   );

@@ -47,7 +47,6 @@
     "react-loading-skeleton": "^3.5.0",
     "react-select": "^5.8.1",
     "react-signature-canvas": "^1.0.6",
-    "react-use": "^17.5.0",
     "stripe": "^17.3.1",
     "swiper": "^11.1.8",
     "yup": "^1.4.0"
