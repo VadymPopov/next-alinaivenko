@@ -6,6 +6,7 @@ import { MdSearch } from 'react-icons/md';
 
 import { IDate } from '../admin/appointments/page';
 import { generateDays, monthMap } from '../utils/helpers';
+import AdminTitle from './AdminTitle';
 import { IAppointment } from './AppointmentDetails';
 import Button from './Button';
 import InputField from './InputField';
@@ -85,37 +86,44 @@ export default function AppointmentsSearchForm({
   return (
     <FormProvider {...methods}>
       <form
-        className="text-center flex gap-2.5 justify-center items-center"
+        className="flex py-2.5 px-4 md:py-4 md:px-8 justify-between gap-2.5 lg:gap-5 flex-wrap flex-col md:flex-row"
         onSubmit={handleSubmit(onSubmitHandler)}
       >
-        <InputField
-          styles="w-24 px-3 py-2.5"
-          admin={true}
-          name="year"
-          type="number"
-          placeholder="Year"
-          title="Year"
-        />
-        <SelectField
-          admin={true}
-          name="month"
-          control={control}
-          placeholder="Month"
-          options={monthOptions}
-          isClearable={true}
-        />
-        <SelectField
-          admin={true}
-          name="day"
-          control={control}
-          placeholder="Day"
-          options={daysOptions}
-          isClearable={true}
-        />
-        <div className="flex justify-center items-center text-s">
-          <Button type="submit" styles="p-2">
-            <MdSearch size={24} />
-          </Button>
+        <AdminTitle title="Search Appointments by Date" />
+        <div className="flex gap-2.5 lg:items-start flex-col sm:flex-row ">
+          <div className="flex gap-2.5">
+            <InputField
+              styles="w-24 px-3 py-2.5"
+              admin={true}
+              name="year"
+              type="number"
+              placeholder="Year"
+              title="Year"
+            />
+            <SelectField
+              admin={true}
+              name="month"
+              control={control}
+              placeholder="Month"
+              options={monthOptions}
+              isClearable={true}
+            />
+          </div>
+          <div className="flex gap-2.5 justify-center sm:justify-normal">
+            <SelectField
+              admin={true}
+              name="day"
+              control={control}
+              placeholder="Day"
+              options={daysOptions}
+              isClearable={true}
+            />
+            <div className="flex justify-center items-center text-s">
+              <Button type="submit" styles="p-2">
+                <MdSearch size={24} />
+              </Button>
+            </div>
+          </div>
         </div>
       </form>
     </FormProvider>

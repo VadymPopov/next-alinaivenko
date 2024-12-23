@@ -3,9 +3,12 @@ import Section from '@/app/components/Section';
 import Title from '@/app/components/Title';
 
 import React from 'react';
-import { FiMail, FiMapPin } from 'react-icons/fi';
+import {
+  MdOutlineAccessTime,
+  MdOutlineEmail,
+  MdOutlinePinDrop,
+} from 'react-icons/md';
 import { SiInstagram } from 'react-icons/si';
-import { TfiTime } from 'react-icons/tfi';
 
 import { Metadata } from 'next';
 import Link from 'next/link';
@@ -65,7 +68,7 @@ export default async function Contact() {
           </div>
 
           <div className="mb-2.5 flex items-center font-medium">
-            <FiMapPin className="mr-2.5 text-3xl text-accentColor" />
+            <MdOutlinePinDrop className="mr-2.5 text-3xl text-accentColor" />
             <p className="text-justify text-lg tracking-wide text-textColor">
               {studio.address}
             </p>
@@ -80,7 +83,7 @@ export default async function Contact() {
           <br />
 
           <div className="mb-2.5 flex items-center font-medium">
-            <FiMail className="mr-2.5 text-3xl text-accentColor" />
+            <MdOutlineEmail className="mr-2.5 text-3xl text-accentColor" />
             <Link
               href="mailto:InkedbyAlina@gmail.com"
               className="list-none text-justify text-lg tracking-wide text-accentColor"
@@ -90,7 +93,7 @@ export default async function Contact() {
           </div>
 
           <div className="mb-2.5 flex items-center font-medium">
-            <TfiTime className="mr-2.5 text-3xl text-accentColor" />
+            <MdOutlineAccessTime className="mr-2.5 text-3xl text-accentColor" />
             <p className="text-justify text-lg tracking-wide text-textColor">
               11AM - 8PM
             </p>

@@ -40,12 +40,16 @@ export default function Header() {
   const { isExtended } = useSidebar();
   const { isOpen, toggleMenu } = useMenu();
   const pageName = capitalizeFirstLetter(pathname.split('/')[2] || 'admin');
+  console.log(pathname);
 
   return (
     <header
       className={clsx(
         isExtended ? 'md:left-64' : 'md:left-16',
-        'fixed z-50 top-0 right-0 left-0 h-16 flex items-center gap-2.5 md:gap-5 py-2 px-5 md:py-2.5 md:px-10 shadow-lg bg-cardColor md:bg-gradient-to-r from-textColorDarkBg from-10%  to-bgColor to-80% transition-all',
+        'fixed z-50 top-0 right-0 left-0 h-16 flex items-center gap-2.5 md:gap-5 py-2 px-5 md:py-2.5 md:px-10  bg-cardColor md:bg-gradient-to-r from-textColorDarkBg from-10%  to-bgColor to-80% transition-all',
+        pathname === '/admin/appointments'
+          ? 'shadow-lg md:shadow-none'
+          : 'shadow-lg',
       )}
     >
       <BurgerBtn

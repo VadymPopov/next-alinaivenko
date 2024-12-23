@@ -1,5 +1,6 @@
 'use client';
 
+import AdminTitle from '@/app/components/AdminTitle';
 import { IAppointment } from '@/app/components/AppointmentDetails';
 import AppointmentsSearchForm from '@/app/components/AppointmentsSearchForm';
 import AppointmentsTable from '@/app/components/AppointmentsTable';
@@ -54,11 +55,8 @@ export default function Appointments() {
   };
 
   return (
-    <div className=" py-20 px-10 min-h-screen">
-      <div className="flex justify-between py-6 px-10 bg-mainLightColor rounded-3xl mb-10 shadow-lg">
-        <h2 className="text-accentColor font-semibold text-2xl">
-          Search Appointments by Date
-        </h2>
+    <div className="py-20 min-h-screen">
+      <div className="bg-mainLightColor rounded-3xl mb-10 shadow-lg">
         <AppointmentsSearchForm
           setAppointments={setAppointments}
           setDate={setDate}
@@ -66,10 +64,8 @@ export default function Appointments() {
       </div>
 
       <div className="py-8 px-10 bg-mainLightColor rounded-3xl mb-10 shadow-lg">
-        <div className="flex justify-between border-b border-textColorDarkBg pb-5 mb-3">
-          <h2 className="text-accentColor font-semibold text-2xl">
-            {getFilterString(date)}
-          </h2>
+        <div className="flex flex-wrap gap-2.5 justify-between border-b border-textColorDarkBg pb-3 mb-3 md:pb-5 md:mb-5">
+          <AdminTitle title={getFilterString(date)} />
           <SearchBar query={query} onSearch={handleChange} />
         </div>
         <AppointmentsTable appointments={filteredAppointments} />

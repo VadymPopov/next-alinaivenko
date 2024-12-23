@@ -39,7 +39,9 @@ export default function Flyout({
         'fixed top-16 right-0 left-0 shadow-lg bg-gradient-to-r from-textColorDarkBg from-10%  to-bgColor to-80% p-3 flex justify-between items-center px-8 py-2.5 transition-all z-40',
       )}
     >
-      <p className="font-semibold text-xl text-mainLightColor">{message}</p>
+      <p className="font-semibold md:text-lg xl:text-xl text-mainLightColor">
+        {message}
+      </p>
       <div className="flex gap-2.5">
         {appointments.length > 0 && (
           <Button
