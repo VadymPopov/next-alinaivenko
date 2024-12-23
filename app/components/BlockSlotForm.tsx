@@ -8,6 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { format } from 'date-fns';
 
 import { validationSchemaBlockSlot } from '../schemas';
+import AdminTitle from './AdminTitle';
 import Button from './Button';
 import DatePickerField from './DatePickerField';
 import InputField from './InputField';
@@ -101,10 +102,10 @@ export default function BlockSlotForm() {
   return (
     <FormProvider {...methods}>
       <form
-        className="py-4 px-8 justify-between"
+        className="py-2.5 px-4 md:py-4 md:px-8"
         onSubmit={handleSubmit(onSubmitHandler)}
       >
-        <h2 className="text-accentColor font-semibold text-2xl">Block slot</h2>
+        <AdminTitle title="Block slot" />
         <div className="text-center">
           <DatePickerField<FormValues>
             name="date"

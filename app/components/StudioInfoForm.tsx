@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { validationSchemaStudioInfo } from '../schemas';
+import AdminTitle from './AdminTitle';
 import Button from './Button';
 import InputField from './InputField';
 
@@ -116,12 +117,13 @@ export default function StudioInfoForm() {
   return (
     <FormProvider {...methods}>
       <form
-        className=" py-4 px-8 justify-between"
+        className="py-2.5 px-4 md:py-4 md:px-8"
         onSubmit={handleSubmit(onSubmitHandler)}
       >
-        <h2 className="text-accentColor font-semibold text-2xl">
+        <AdminTitle title="Studio Address" />
+        {/* <h2 className="text-accentColor font-semibold text-2xl">
           Studio Address
-        </h2>
+        </h2> */}
         <div className="text-center">
           <InputField
             name="name"

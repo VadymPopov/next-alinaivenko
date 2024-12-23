@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { validationSchemaSetMaxBookingDate } from '../schemas';
+import AdminTitle from './AdminTitle';
 import Button from './Button';
 import DatePickerField from './DatePickerField';
 
@@ -102,13 +103,11 @@ export default function SetMaxBookingDateForm() {
   return (
     <FormProvider {...methods}>
       <form
-        className="flex py-4 px-8 justify-between"
+        className="flex py-2.5 px-4 md:py-4 md:px-8 justify-between gap-2.5 lg:gap-5 flex-wrap flex-col md:flex-row"
         onSubmit={handleSubmit(onSubmitHandler)}
       >
-        <h2 className="text-accentColor font-semibold text-2xl">
-          Maximum Booking Date
-        </h2>
-        <div className="flex gap-10 items-start">
+        <AdminTitle title="Maximum Booking Date" />
+        <div className="flex gap-0 lg:gap-10 lg:items-start  flex-col lg:flex-row">
           <DatePickerField<FormValues>
             name="date"
             control={control}
@@ -117,7 +116,7 @@ export default function SetMaxBookingDateForm() {
             minDate={new Date()}
             admin={true}
           />
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center">
             <Button
               type="submit"
               isProcessing={isLoading}

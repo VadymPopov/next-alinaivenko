@@ -7,7 +7,7 @@ import React from 'react';
 
 export default function CalendarPage() {
   return (
-    <div className="bg-bgColor py-4 px-10">
+    <>
       <div className="bg-mainLightColor rounded-3xl mb-10 shadow-lg">
         <SetMaxBookingDateForm />
       </div>
@@ -20,6 +20,6 @@ export default function CalendarPage() {
       <div className="bg-mainLightColor rounded-3xl mb-10 shadow-lg">
         <StudioInfoForm />
       </div>
-    </div>
+    </>
   );
 }

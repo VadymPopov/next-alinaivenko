@@ -7,6 +7,8 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import toast from 'react-hot-toast';
 
+import AdminTitle from './AdminTitle';
+
 export default function AvailabilityCalendar() {
   const [selectedDates, setSelectedDates] = useState<Date[]>([]);
   const [initialDates, setInitialDates] = useState<Date[]>([]);
@@ -105,8 +107,8 @@ export default function AvailabilityCalendar() {
   const hasChanges = !arraysAreEqual(selectedDates, initialDates);
 
   return (
-    <div className="py-4 px-8">
-      <div className="schedule xl:grid grid-cols-2 items-start py-8 px-10 gap-6">
+    <div className="py-2.5 px-4 md:py-4 md:px-8">
+      <div className="schedule xl:grid grid-cols-2 items-start gap-6">
         <div className="flex items-center justify-center mb-8 xl:mb-0">
           <DatePicker
             showDateSelect
@@ -121,19 +123,20 @@ export default function AvailabilityCalendar() {
         </div>
         <div className="flex items-center justify-center">
           <div>
-            <h2 className="text-2xl font-semibold mb-4 text-accentColor pb-4 border-b">
-              Blocked Dates (Days off): {currentMonth} {currentYear}
-            </h2>
+            <AdminTitle
+              title={`Blocked Dates (Days off): ${currentMonth} ${currentYear}`}
+              className="pb-4 border-b"
+            />
             {selectedDates.length === 0 ? (
-              <p className="text-lg text-gray-500">
+              <span className="md:text-lg text-gray-500 text-center block p-4">
                 No blocked dates selected.
-              </p>
+              </span>
             ) : (
-              <ul className="p-4 grid sm:grid-cols-2 gap-x-4">
+              <ul className="p-4 grid grid-cols-2 gap-x-4">
                 {selectedDates.map((date, index) => (
                   <li
                     key={index}
-                    className={`text-lg font-medium text-mainDarkColor ${
+                    className={`text-sm md:text-lg font-medium text-mainDarkColor ${
                       isNewDate(date) && 'flex'
                     }`}
                   >

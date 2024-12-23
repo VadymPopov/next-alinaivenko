@@ -14,7 +14,7 @@ export default function MainContent({
   return (
     <main
       className={clsx(
-        'p-4 min-h-screen transition-all mt-16 ml-0',
+        'bg-bgColor md:py-5 md:px-10 py-2.5 px-5 min-h-screen transition-all mt-16 ml-0',
         isExtended ? 'md:ml-64 ' : 'md:ml-16',
       )}
     >

@@ -54,7 +54,7 @@ export default function Appointments() {
   };
 
   return (
-    <div className="bg-bgColor py-20 px-10 min-h-screen">
+    <div className=" py-20 px-10 min-h-screen">
       <div className="flex justify-between py-6 px-10 bg-mainLightColor rounded-3xl mb-10 shadow-lg">
         <h2 className="text-accentColor font-semibold text-2xl">
           Search Appointments by Date
