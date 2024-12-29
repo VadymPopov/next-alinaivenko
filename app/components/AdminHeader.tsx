@@ -40,7 +40,6 @@ export default function Header() {
   const { isExtended } = useSidebar();
   const { isOpen, toggleMenu } = useMenu();
   const pageName = capitalizeFirstLetter(pathname.split('/')[2] || 'admin');
-  console.log(pathname);
 
   return (
     <header

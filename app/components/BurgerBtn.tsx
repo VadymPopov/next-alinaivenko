@@ -11,7 +11,7 @@ export default function BurgerBtn({
   return (
     <button
       onClick={toggleMenu}
-      className="lg:hidden text-white h-10 w-10 cursor-pointer border-none bg-transparent outline-none z-50"
+      className="md:hidden text-white h-10 w-10 cursor-pointer border-none bg-transparent outline-none z-50"
       aria-label="mobile-menu-toggle"
     >
       {isOpen ? (

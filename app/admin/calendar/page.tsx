@@ -7,19 +7,19 @@ import React from 'react';
 
 export default function CalendarPage() {
   return (
-    <>
-      <div className="bg-mainLightColor rounded-3xl mb-10 shadow-lg">
+    <div className="flex flex-col gap-5">
+      <div className="bg-mainLightColor rounded-3xl shadow-lg">
         <SetMaxBookingDateForm />
       </div>
-      <div className="bg-mainLightColor rounded-3xl mb-10 shadow-lg">
+      <div className="bg-mainLightColor rounded-3xl shadow-lg">
         <AvailabilityCalendar />
       </div>
-      <div className="bg-mainLightColor rounded-3xl mb-10 shadow-lg">
+      <div className="bg-mainLightColor rounded-3xl shadow-lg">
         <BlockSlotForm />
       </div>
-      <div className="bg-mainLightColor rounded-3xl mb-10 shadow-lg">
+      <div className="bg-mainLightColor rounded-3xl shadow-lg">
         <StudioInfoForm />
       </div>
-    </>
+    </div>
   );
 }

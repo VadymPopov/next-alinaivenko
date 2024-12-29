@@ -30,3 +30,14 @@
 .no-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari, and Opera */
 }
+
+.dayoff {
+  color: #9da4bd;
+  background: repeating-linear-gradient(
+    45deg,
+    rgb(230, 230, 230) 0px,
+    rgb(230, 230, 230) 2px,
+    rgb(202, 202, 202) 6px,
+    rgb(202, 202, 202) 2px
+  );
+}

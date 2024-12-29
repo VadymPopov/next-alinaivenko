@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { format, parse } from 'date-fns';
 
 import { IDate } from '../admin/appointments/page';
 import { serviceType } from '../providers/BookingFormContext';
@@ -177,4 +177,8 @@ export const getDateString = (date: IDate) => {
 
 export const capitalizeFirstLetter = (string: string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
+export const getParsedDate = (dateStr: string) => {
+  return parse(dateStr, 'yyyy-MM-dd', new Date());
 };

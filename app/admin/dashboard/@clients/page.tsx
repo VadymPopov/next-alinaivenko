@@ -1,5 +1,6 @@
+import AdminTitle from '@/app/components/AdminTitle';
 import { IAppointment } from '@/app/components/AppointmentDetails';
-import NewAppointmentsTable from '@/app/components/NewAppointmentsTable';
+import AppointmentsTable from '@/app/components/AppointmentsTable';
 import connect from '@/app/lib/db';
 import Appointment from '@/app/lib/models/appointment';
 
@@ -38,16 +39,28 @@ async function getRecentAppointments() {
   }
 }
 
+const newTableHeaders = [
+  'Client',
+  'Email',
+  'Deposit',
+  'Service',
+  'Date',
+  'Slot',
+];
+
 export default async function page() {
   const appointments = await getRecentAppointments();
   return (
     <div>
-      <div className="flex justify-between border-b border-textColorDarkBg pb-5 mb-3">
-        <h2 className="text-accentColor font-semibold text-2xl text-end">
-          New Appointments
-        </h2>
+      <div className=" border-b border-textColorDarkBg pb-5 mb-3">
+        <AdminTitle title="New Appointments" />
       </div>
-      <NewAppointmentsTable appointments={appointments} />
+      <AppointmentsTable
+        combinedApptSlots={appointments}
+        appointments={appointments}
+        headers={newTableHeaders}
+        isNew={true}
+      />
     </div>
   );
 }

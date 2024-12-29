@@ -6,7 +6,7 @@ import { endOfMonth, format, startOfMonth } from 'date-fns';
 
 async function getTotalAppointments() {
   try {
-    await connect(); // Ensure your database connection is established
+    await connect();
     const totalAppointments = await Appointment.countDocuments();
     return totalAppointments;
   } catch (error) {
@@ -92,24 +92,26 @@ export default async function Page() {
   const totalIncome = await getTotalIncome();
   const monthlyIncome = await getMonthlyIncome();
 
+  const currentMonth = format(new Date(), 'MMMM');
+
   return (
-    <div className="grid grid-cols-12 gap-5 mb-4">
-      <div className="col-span-3">
+    <div className="grid grid-cols-2 xl:grid-cols-12 xl:gap-5 gap-5 justify-center items-center">
+      <div className="col-span-1 sm:col-span-3">
         <StatCard label="Total appointments" counter={total} />
       </div>
-      <div className="col-span-3">
-        <StatCard label="This month appointments" counter={monthly} />
+      <div className="col-span-1 sm:col-span-3">
+        <StatCard label={`${currentMonth} appointments`} counter={monthly} />
       </div>
-      <div className="col-span-3">
+      <div className="col-span-1 sm:col-span-3">
         <StatCard
           label="Total income"
           counter={totalIncome}
           isCurrency={true}
         />
       </div>
-      <div className="col-span-3">
+      <div className="col-span-1 sm:col-span-3">
         <StatCard
-          label="This month income"
+          label={`${currentMonth} income`}
           counter={monthlyIncome}
           isCurrency={true}
         />

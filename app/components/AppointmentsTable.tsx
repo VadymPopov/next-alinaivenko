@@ -1,24 +1,25 @@
+'use client';
+
 import React from 'react';
 
+import AppointmentCardView from './AppointmentCardView';
 import { IAppointment } from './AppointmentDetails';
-import AppointmentRow from './AppointmentRow';
+import AppointmentRowView from './AppointmentRowView';
+import BlockedSlotView from './BlockedSlotView';
+import { IBlockedSlot } from './WeekView';
 
 interface AppointmentsTableProps {
   appointments: IAppointment[];
+  combinedApptSlots?: (IAppointment | IBlockedSlot)[];
+  headers: string[];
+  isNew?: boolean;
 }
-
-const headers = [
-  'Client',
-  'Email',
-  'Instagram',
-  'Service',
-  'Date',
-  'Slot',
-  'Duration',
-];
 
 export default function AppointmentsTable({
   appointments,
+  combinedApptSlots,
+  headers,
+  isNew,
 }: AppointmentsTableProps) {
   return (
     <div className="overflow-x-auto">
@@ -35,7 +36,11 @@ export default function AppointmentsTable({
         <tbody>
           {appointments && appointments.length > 0 ? (
             appointments.map((appointment) => (
-              <AppointmentRow key={appointment._id} appointment={appointment} />
+              <AppointmentRowView
+                key={appointment._id}
+                appointment={appointment}
+                isNew={isNew}
+              />
             ))
           ) : (
             <tr>
@@ -50,10 +55,22 @@ export default function AppointmentsTable({
         </tbody>
       </table>
       <div className="grid sm:grid-cols-2 gap-4 lg:hidden">
-        {appointments && appointments.length > 0 ? (
-          appointments.map((appointment) => (
-            <AppointmentRow key={appointment._id} appointment={appointment} />
-          ))
+        {combinedApptSlots && combinedApptSlots.length > 0 ? (
+          combinedApptSlots.map((item) =>
+            'reason' in item ? (
+              <BlockedSlotView
+                isCard={true}
+                key={item._id}
+                blockedSlot={item}
+              />
+            ) : (
+              <AppointmentCardView
+                key={item._id}
+                appointment={item}
+                isNew={isNew}
+              />
+            ),
+          )
         ) : (
           <div className="text-center text-lg py-5">No appointments found.</div>
         )}

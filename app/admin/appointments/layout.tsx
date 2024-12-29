@@ -9,7 +9,7 @@ export default function Layout({ children, modal }: LayoutProps) {
   return (
     <>
       {modal}
-      <div>{children}</div>
+      <div className="pt-16 min-h-screen">{children}</div>
     </>
   );
 }

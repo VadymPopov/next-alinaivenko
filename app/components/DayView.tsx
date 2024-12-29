@@ -7,11 +7,17 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import toast from 'react-hot-toast';
 
+import { format, parse } from 'date-fns';
+
+import { tableHeaders } from '../admin/appointments/page';
 import { filterDate } from '../utils/helpers';
+import AdminTitle from './AdminTitle';
 import AppointmentsTable from './AppointmentsTable';
+import { IBlockedSlot } from './WeekView';
 
 const DayView = () => {
   const [appointments, setAppointments] = useState<IAppointment[]>([]);
+  const [blockedSlots, setBlockedSlots] = useState<IBlockedSlot[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [blockedDates, setBlockedDates] = useState<string[]>([]);
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -45,6 +51,28 @@ const DayView = () => {
     fetchBlockedDates();
   }, [currentMonth, currentYear]);
 
+  useEffect(() => {
+    const fetchBlockedSlots = async () => {
+      try {
+        const response = await fetch(
+          `/api/admin/calendar/blocked-slots?date=${format(selectedDate, 'yyyy-MM-dd')}`,
+        );
+        if (!response.ok) throw new Error('Failed to fetch blocked slots');
+        const blockedSlots = await response.json();
+        setBlockedSlots(blockedSlots);
+      } catch (error) {
+        console.error(error);
+        toast.error(
+          error instanceof Error
+            ? error.message
+            : 'Error fetching blocked slots',
+        );
+      }
+    };
+
+    fetchBlockedSlots();
+  }, [selectedDate]);
+
   const onDateChange = async (date: Date) => {
     setSelectedDate(date);
     const day = String(date.getDate()).padStart(2, '0');
@@ -71,9 +99,15 @@ const DayView = () => {
     }
   };
 
+  const combinedApptSlots = [...blockedSlots, ...appointments].sort((a, b) => {
+    const dateA = parse(a.slot, 'hh:mma', new Date());
+    const dateB = parse(b.slot, 'hh:mma', new Date());
+    return dateA.getTime() - dateB.getTime();
+  });
+
   return (
-    <div>
-      <div className="w-full max-w-7xl mx-auto mt-4 schedule">
+    <div className="flex flex-col xl:flex-row mt-4 gap-5">
+      <div className="schedule flex justify-center">
         <DatePicker
           inline
           dateFormat="dd/MM/yyyy"
@@ -85,13 +119,15 @@ const DayView = () => {
           filterDate={(date: Date) => !filterDate(date, blockedDates)}
         />
       </div>
-      <div className="py-8 px-10 bg-mainLightColor rounded-3xl mb-10 shadow-lg">
-        <div className="flex justify-between border-b border-textColorDarkBg pb-5 mb-3">
-          <h2 className="text-accentColor font-semibold text-2xl">
-            Appointments
-          </h2>
+      <div className="w-full py-2.5 px-4 md:py-4 md:px-8 bg-mainLightColor rounded-3xl shadow-lg">
+        <div className="border-b border-textColorDarkBg pb-5 mb-5">
+          <AdminTitle title="Appointments" />
         </div>
-        <AppointmentsTable appointments={appointments} />
+        <AppointmentsTable
+          appointments={appointments}
+          headers={tableHeaders}
+          combinedApptSlots={combinedApptSlots}
+        />
       </div>
     </div>
   );

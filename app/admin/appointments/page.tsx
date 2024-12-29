@@ -24,6 +24,16 @@ const defaultDate = {
   year: new Date().getFullYear(),
 };
 
+export const tableHeaders = [
+  'Client',
+  'Email',
+  'Instagram',
+  'Service',
+  'Date',
+  'Slot',
+  'Duration',
+];
+
 export default function Appointments() {
   const [date, setDate] = useState<IDate>(defaultDate);
   const [query, setQuery] = useState<string>('');
@@ -55,23 +65,26 @@ export default function Appointments() {
   };
 
   return (
-    <div className="py-20 min-h-screen">
-      <div className="bg-mainLightColor rounded-3xl mb-10 shadow-lg">
+    <>
+      <div className="bg-mainLightColor rounded-3xl mb-5 shadow-lg">
         <AppointmentsSearchForm
           setAppointments={setAppointments}
           setDate={setDate}
         />
       </div>
 
-      <div className="py-8 px-10 bg-mainLightColor rounded-3xl mb-10 shadow-lg">
-        <div className="flex flex-wrap gap-2.5 justify-between border-b border-textColorDarkBg pb-3 mb-3 md:pb-5 md:mb-5">
+      <div className="py-2.5 px-4 md:py-4 md:px-8 bg-mainLightColor rounded-3xl shadow-lg">
+        <div className="flex flex-wrap gap-2.5 justify-between border-b border-textColorDarkBg pb-4 md:pb-5">
           <AdminTitle title={getFilterString(date)} />
           <SearchBar query={query} onSearch={handleChange} />
         </div>
-        <AppointmentsTable appointments={filteredAppointments} />
+        <AppointmentsTable
+          appointments={filteredAppointments}
+          headers={tableHeaders}
+        />
       </div>
 
       <Flyout appointments={filteredAppointments} date={date} />
-    </div>
+    </>
   );
 }

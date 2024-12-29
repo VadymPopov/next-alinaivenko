@@ -41,9 +41,5 @@ export default async function Page() {
     );
   }
 
-  return (
-    <div className="h-96 mb-4 w-96">
-      <DoughnutChart serviceData={serviceData} />
-    </div>
-  );
+  return <DoughnutChart serviceData={serviceData} />;
 }
