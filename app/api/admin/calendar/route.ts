@@ -23,10 +23,10 @@ export const GET = async (request: NextRequest) => {
       const availability = await Availability.findOne({ month, year });
 
       if (!availability) {
-        return NextResponse.json({ blockedDates: [] }, { status: 200 });
+        return NextResponse.json([], { status: 200 });
       }
 
-      return NextResponse.json(availability, { status: 200 });
+      return NextResponse.json(availability.blockedDates, { status: 200 });
     }
   } catch (error) {
     const errorMessage =

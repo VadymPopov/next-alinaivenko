@@ -1,21 +1,22 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { format } from 'date-fns';
+import clsx from 'clsx';
+import { format, parse, startOfDay } from 'date-fns';
 import { useRouter } from 'next/navigation';
 
+import useSlots from '../hooks/useSlots';
 import { useAppContext } from '../providers/BookingFormContext';
 import { validationSchemaSchedule } from '../schemas';
-import { findNextAvailableDate } from '../utils/findNextAvailableDate';
-import { pickDuration } from '../utils/helpers';
 import Button from './Button';
 import CalendarPicker from './CalendarPicker';
 import FieldSet from './FieldSet';
-import Loader from './Loader';
+import { MaxDate } from './SetMaxBookingDateForm';
+import SkeletonGrid from './SkeletonGrid';
 import SlotsPicker from './SlotsPicker';
 
 export interface IFormValues {
@@ -23,68 +24,61 @@ export interface IFormValues {
   slot: string;
 }
 
-export default function ScheduleForm() {
-  const [slots, setSlots] = useState([]);
-  const [initialDate, setInitialDate] = useState<Date | undefined>(undefined);
+export default function ScheduleForm({
+  availableDate,
+  initialSlots,
+  maxDate,
+  blockedDates,
+  duration,
+}: {
+  availableDate: string;
+  initialSlots: string[];
+  maxDate: MaxDate;
+  blockedDates: string[];
+  duration: number;
+}) {
   const router = useRouter();
-  const { service, appointmentInfo, setAppointmentInfo } = useAppContext();
-
-  useEffect(() => {
-    if (!appointmentInfo) {
-      router.replace('/booking');
-    }
-  });
-
-  useEffect(() => {
-    const fetchBlockedDates = async () => {
-      try {
-        const currentDate = new Date();
-        const currentMonth = currentDate.toLocaleString('default', {
-          month: 'long',
-        });
-        const currentYear = currentDate.toLocaleString('default', {
-          year: 'numeric',
-        });
-        const response = await fetch(
-          `/api/admin/calendar?month=${currentMonth}&year=${currentYear}`,
-        );
-        if (!response.ok) throw new Error('Failed to fetch blocked dates');
-        const data = await response.json();
-        const dates = data.blockedDates || [];
-        const nextDate = findNextAvailableDate(dates);
-        setInitialDate(nextDate);
-      } catch (error) {
-        console.error(error);
-        toast.error(
-          error instanceof Error
-            ? error.message
-            : 'Error fetching blocked dates',
-        );
-      }
-    };
-
-    fetchBlockedDates();
-  }, []);
+  const { appointmentInfo, setAppointmentInfo } = useAppContext();
 
   const methods = useForm({
     mode: 'all',
     resolver: yupResolver(validationSchemaSchedule),
     defaultValues: {
-      date: undefined,
+      date: availableDate
+        ? parse(availableDate, 'yyyy-MM-dd', new Date())
+        : new Date(),
       slot: '',
     },
   });
 
   const {
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     watch,
     control,
-    reset,
   } = methods;
 
   const selectedDate = watch('date');
-  const duration = pickDuration(service);
+  const date = format(startOfDay(selectedDate as Date), 'yyyy-MM-dd');
+  const isInitial = date === availableDate;
+
+  const { slots, isLoading, isError } = useSlots({
+    date,
+    isInitial,
+    duration,
+  });
+
+  if (isError) {
+    toast.error('Error fetching slots');
+    return (
+      <div>
+        <p>{selectedDate && format(selectedDate, 'MMMM dd, yyyy')}</p>
+        <div className="text-error text-center">
+          <p>Error fetching slots. Please try again later.</p>
+        </div>
+      </div>
+    );
+  }
 
   const onSubmitHandler = async (formData: IFormValues) => {
     const info = {
@@ -95,32 +89,8 @@ export default function ScheduleForm() {
     };
 
     router.push('/booking/payment');
-    console.log(info);
-
     setAppointmentInfo(info);
   };
-
-  useEffect(() => {
-    if (!selectedDate || selectedDate === initialDate) return;
-
-    (async () => {
-      const response = await fetch(
-        `/api/slots?date=${format(selectedDate, 'yyyy-MM-dd')}&duration=${duration}`,
-      );
-      const slots = await response.json();
-      setSlots(slots);
-    })();
-  }, [duration, selectedDate, initialDate]);
-
-  useEffect(() => {
-    if (initialDate) {
-      reset({ date: initialDate, slot: '' });
-    }
-  }, [initialDate, reset]);
-
-  if (!initialDate) {
-    return <Loader />;
-  }
 
   return (
     <FormProvider {...methods}>
@@ -134,21 +104,49 @@ export default function ScheduleForm() {
               name="date"
               control={control}
               error={errors.date?.message}
+              maxDate={maxDate}
+              blockedDates={blockedDates}
             />
             <div>
               <p>{selectedDate && format(selectedDate, 'MMMM dd, yyyy')}</p>
-              <SlotsPicker
-                name="slot"
-                control={control}
-                error={errors.slot?.message}
-                slots={slots}
-                selectedDate={selectedDate}
-              />
+              {isLoading ? (
+                <div
+                  className={clsx(
+                    'flex items-center justify-center',
+                    'transition-opacity duration-500',
+                    isLoading ? 'opacity-100' : 'opacity-0',
+                  )}
+                >
+                  <SkeletonGrid
+                    rows={3}
+                    columns={6}
+                    borderRadius={16}
+                    buttonWidth={90}
+                    buttonHeight={38}
+                    className="grid grid-cols-2 md:grid-cols-4 gap-3 my-5 sm:w-auto sm:grid-cols-3"
+                  />
+                </div>
+              ) : (
+                <div
+                  className={clsx(
+                    'transition-opacity duration-500',
+                    isLoading ? 'opacity-0' : 'opacity-100',
+                  )}
+                >
+                  <SlotsPicker
+                    name="slot"
+                    control={control}
+                    error={errors.slot?.message}
+                    slots={isInitial ? initialSlots : slots}
+                    selectedDate={selectedDate}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </FieldSet>
         <div className="flex justify-center items-center">
-          <Button type="submit" disabled={Object.keys(errors).length !== 0}>
+          <Button type="submit" disabled={!isValid || isLoading}>
             Next
           </Button>
         </div>

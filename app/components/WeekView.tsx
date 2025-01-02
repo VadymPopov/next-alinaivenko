@@ -1,7 +1,5 @@
 'use client';
 
-//refactor Week, Day, Table, combinedApptSlots
-// refactor fetch calls and find out better solution when we delete from collection
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { MdArrowForwardIos, MdOutlineArrowBackIos } from 'react-icons/md';

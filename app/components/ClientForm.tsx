@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import { useAppContext } from '../providers/BookingFormContext';
 import { validationSchemaClient } from '../schemas';
 import { getBase64 } from '../utils/getBase64';
+import { pickDuration } from '../utils/helpers';
 import Button from './Button';
 import FieldSet from './FieldSet';
 import FileInput from './FileInput';
@@ -27,6 +28,7 @@ interface FormValues {
 export default function ClientForm() {
   const router = useRouter();
   const { service, setAppointmentInfo, appointmentInfo } = useAppContext();
+  const duration = pickDuration(service);
 
   useEffect(() => {
     if (!service) {
@@ -64,7 +66,7 @@ export default function ClientForm() {
         ...formValues,
         images: imagesBase64,
       });
-      router.push('/booking/schedule');
+      router.push(`/booking/schedule?duration=${duration}`);
     } else {
       console.log('Validation failed');
     }

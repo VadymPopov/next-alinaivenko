@@ -1,7 +1,7 @@
 'use client';
 
 import CheckoutStripeForm from '@/app/components/CheckoutStripeForm';
-import SkeletonForm from '@/app/components/Skeleton';
+import SkeletonBox from '@/app/components/SkeletonBox';
 import { useAppContext } from '@/app/providers/BookingFormContext';
 
 import React, { useEffect, useState } from 'react';
@@ -47,7 +47,11 @@ export default function BookingPayment() {
   }, [appointmentInfo?.email, appointmentInfo?.name, service]);
 
   if (!stripePromise || !clientSecret) {
-    return <SkeletonForm />;
+    return (
+      <div className="flex justify-center mt-5">
+        <SkeletonBox className="w-[300px] h-[730px] rounded-[20px] mb-[20px] sm:w-[390px] lg:w-[470px]" />
+      </div>
+    );
   } else {
     return (
       <Elements stripe={stripePromise} options={{ clientSecret }}>

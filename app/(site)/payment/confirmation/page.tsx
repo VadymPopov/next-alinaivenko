@@ -1,7 +1,7 @@
 'use client';
 
 import CheckoutStripeForm from '@/app/components/CheckoutStripeForm';
-import SkeletonForm from '@/app/components/Skeleton';
+import SkeletonForm from '@/app/components/SkeletonBox';
 import { useAppContext } from '@/app/providers/BookingFormContext';
 
 import React, { useEffect, useState } from 'react';

@@ -1,7 +1,6 @@
 import connect from '@/app/lib/db';
 import BlockedSlot from '@/app/lib/models/blockedSlot';
 
-import { revalidatePath } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const GET = async (request: NextRequest) => {
@@ -78,8 +77,6 @@ export const DELETE = async (request: NextRequest) => {
         status: 404,
       });
     }
-
-    revalidatePath('/admin/dashboard');
 
     return NextResponse.json(
       {

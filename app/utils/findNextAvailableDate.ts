@@ -2,10 +2,18 @@ import { addDays } from 'date-fns';
 
 import { filterDate } from './helpers';
 
-export const findNextAvailableDate = (blockedDates: string[]) => {
-  let dateToCheck = new Date();
+interface AvailabilableDateParams {
+  date: Date;
+  blockedDates: string[];
+}
 
-  for (let i = 0; i < 30; i++) {
+export const findNextAvailableDate = ({
+  date = new Date(),
+  blockedDates,
+}: AvailabilableDateParams) => {
+  let dateToCheck = date;
+
+  for (let i = 0; i < 31; i++) {
     if (filterDate(dateToCheck, blockedDates)) {
       dateToCheck = addDays(dateToCheck, 1);
     } else {

@@ -1,18 +1,21 @@
 import connect from '@/app/lib/db';
-import Setting from '@/app/lib/models/setting';
+import MaxDate from '@/app/lib/models/maxDate';
 
 import { NextRequest, NextResponse } from 'next/server';
 
 export const GET = async () => {
   try {
     await connect();
-    const setting = await Setting.findOne();
+    const maxDate = await MaxDate.findOne();
 
-    if (!setting) {
-      return NextResponse.json({ date: '' }, { status: 200 });
+    if (!maxDate) {
+      return NextResponse.json(
+        { message: 'No max date found', date: null },
+        { status: 200 },
+      );
     }
 
-    return NextResponse.json(setting, { status: 200 });
+    return NextResponse.json(maxDate, { status: 200 });
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : 'Unknown error';
@@ -24,14 +27,22 @@ export const GET = async () => {
 export const POST = async (request: Request) => {
   try {
     const body = await request.json();
+
+    if (!body.date) {
+      return NextResponse.json(
+        { error: 'Date field is required' },
+        { status: 400 },
+      );
+    }
+
     await connect();
 
-    const newDate = new Setting(body);
+    const newDate = new MaxDate(body);
     await newDate.save();
 
     return NextResponse.json(
       { message: 'New date has been set', newDate },
-      { status: 200 },
+      { status: 201 },
     );
   } catch (error) {
     const errorMessage =
@@ -44,27 +55,32 @@ export const POST = async (request: Request) => {
 };
 
 export const PUT = async (request: NextRequest) => {
-  const searchParams = request.nextUrl.searchParams;
-  const id = searchParams.get('id');
-  const body = await request.json();
-
   try {
-    await connect();
-    const availability = await Setting.findById(id);
-    if (!availability) {
-      return new NextResponse('Bad request', {
-        status: 404,
-      });
+    const searchParams = request.nextUrl.searchParams;
+    const id = searchParams.get('id');
+    const body = await request.json();
+
+    if (!id || !body.date) {
+      return NextResponse.json(
+        { error: 'ID and Date fields are required' },
+        { status: 400 },
+      );
     }
 
-    const updatedAvailability = await Setting.findByIdAndUpdate(id, body, {
+    await connect();
+
+    const updatedMaxDate = await MaxDate.findByIdAndUpdate(id, body, {
       new: true,
     });
+
+    if (!updatedMaxDate) {
+      return new NextResponse('Max date not found', { status: 404 });
+    }
 
     return NextResponse.json(
       {
         message: 'New max date has been updated successfully',
-        updatedAvailability,
+        updatedMaxDate,
       },
       { status: 200 },
     );
