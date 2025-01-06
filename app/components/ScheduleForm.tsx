@@ -9,13 +9,13 @@ import clsx from 'clsx';
 import { format, parse, startOfDay } from 'date-fns';
 import { useRouter } from 'next/navigation';
 
+import { MaxDate } from '../hooks/useMaxBookingDate';
 import useSlots from '../hooks/useSlots';
 import { useAppContext } from '../providers/BookingFormContext';
 import { validationSchemaSchedule } from '../schemas';
 import Button from './Button';
 import CalendarPicker from './CalendarPicker';
 import FieldSet from './FieldSet';
-import { MaxDate } from './SetMaxBookingDateForm';
 import SkeletonGrid from './SkeletonGrid';
 import SlotsPicker from './SlotsPicker';
 
@@ -60,11 +60,10 @@ export default function ScheduleForm({
 
   const selectedDate = watch('date');
   const date = format(startOfDay(selectedDate as Date), 'yyyy-MM-dd');
-  const isInitial = date === availableDate;
 
   const { slots, isLoading, isError } = useSlots({
     date,
-    isInitial,
+    fallbackData: initialSlots,
     duration,
   });
 
@@ -137,7 +136,7 @@ export default function ScheduleForm({
                     name="slot"
                     control={control}
                     error={errors.slot?.message}
-                    slots={isInitial ? initialSlots : slots}
+                    slots={slots}
                     selectedDate={selectedDate}
                   />
                 </div>

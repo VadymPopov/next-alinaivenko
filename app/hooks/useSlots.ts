@@ -5,7 +5,7 @@ import { getFetcher } from '../lib/axiosInstance';
 interface UseSlotsParams {
   date: string;
   duration: number;
-  isInitial?: boolean;
+  fallbackData?: string[];
   isEditing?: boolean;
   id?: string;
 }
@@ -17,9 +17,9 @@ interface useSlotsResult {
 }
 
 export default function useSlots({
+  fallbackData,
   date,
   duration,
-  isInitial,
   isEditing,
   id,
 }: UseSlotsParams): useSlotsResult {
@@ -38,9 +38,17 @@ export default function useSlots({
     params.append('id', id);
   }
 
-  const url = !isInitial ? `/api/slots?${params.toString()}` : null;
+  const url = `/api/slots?${params.toString()}`;
 
-  const { data, error, isLoading } = useSWR<string[]>(url, getFetcher);
+  const { data, error, isLoading } = useSWR<string[]>(
+    date && duration ? url : null,
+    getFetcher,
+    {
+      fallbackData,
+      revalidateIfStale: true,
+      revalidateOnMount: false,
+    },
+  );
 
   return {
     slots: data || [],

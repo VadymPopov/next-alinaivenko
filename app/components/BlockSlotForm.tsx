@@ -1,13 +1,16 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { format } from 'date-fns';
 
+import useBlockedSlots from '../hooks/useBlockedSlots';
+import useSlots from '../hooks/useSlots';
 import { validationSchemaBlockSlot } from '../schemas';
+import { durationOptions, slotsOptions } from '../utils/helpers';
 import AdminTitle from './AdminTitle';
 import Button from './Button';
 import DatePickerField from './DatePickerField';
@@ -21,25 +24,8 @@ interface FormValues {
   reason?: string;
 }
 
-const durationOptions = Array.from({ length: 540 / 30 }, (_, i) => {
-  const value = (i + 1) * 30;
-  const hours = Math.floor(value / 60);
-  const minutes = value % 60;
-
-  const label =
-    hours > 0
-      ? `${hours}h${minutes > 0 ? ` ${minutes}min` : ''}`
-      : `${minutes}min`;
-
-  return {
-    value: value.toString(),
-    label,
-  };
-});
-
 export default function BlockSlotForm() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [slotsOptions, setSlotsOptions] = useState([]);
+  const { isLoading, error, addBlockedSlot } = useBlockedSlots();
 
   const methods = useForm({
     mode: 'all',
@@ -59,34 +45,20 @@ export default function BlockSlotForm() {
   const selectedDate = watch('date');
   const selectedDuration = watch('duration');
 
-  useEffect(() => {
-    (async () => {
-      if (!selectedDuration) return;
-      const response = await fetch(
-        `/api/slots?date=${format(selectedDate, 'yyyy-MM-dd')}&duration=${selectedDuration}`,
-      );
-      const slots = await response.json();
-      const slotsOptions = slots.map((slot: string) => ({
-        value: slot,
-        label: slot,
-      }));
-      setSlotsOptions(slotsOptions);
-    })();
-  }, [selectedDuration, selectedDate]);
+  const { slots } = useSlots({
+    date: format(selectedDate, 'yyyy-MM-dd'),
+    duration: Number(selectedDuration),
+  });
 
   const onSubmitHandler = async (formValues: FormValues) => {
     try {
-      setIsLoading(true);
+      const newBlockedSlot = {
+        ...formValues,
+        date: format(formValues.date, 'yyyy-MM-dd'),
+        reason: formValues.reason || '',
+      };
 
-      const res = await fetch('/api/admin/calendar/blocked-slots', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...formValues,
-          date: format(formValues.date, 'yyyy-MM-dd'),
-        }),
-      });
-      if (!res.ok) throw new Error(await res.text());
+      await addBlockedSlot(newBlockedSlot);
       toast.success('Selected slot was successfully blocked!', {
         duration: 3000,
       });
@@ -94,8 +66,6 @@ export default function BlockSlotForm() {
       toast.error(
         error instanceof Error ? error.message : 'Form submission failed.',
       );
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -119,14 +89,14 @@ export default function BlockSlotForm() {
             name="duration"
             control={control}
             label="Duration"
-            options={durationOptions}
+            options={durationOptions(540 / 30)}
             error={errors.duration?.message || ''}
           />
           <SelectField
             name="slot"
             control={control}
             label="Slot"
-            options={slotsOptions}
+            options={slotsOptions(slots)}
             error={errors.slot?.message || ''}
           />
           <InputField
@@ -147,6 +117,7 @@ export default function BlockSlotForm() {
             </Button>
           </div>
         </div>
+        {error && <p className="text-error font-medium">{error.message}</p>}
       </form>
     </FormProvider>
   );

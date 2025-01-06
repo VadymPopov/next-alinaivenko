@@ -1,11 +1,13 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 
+import { useMaxBookingDate } from '../hooks/useMaxBookingDate';
+import { MaxDate } from '../hooks/useMaxBookingDate';
 import { validationSchemaSetMaxBookingDate } from '../schemas';
 import AdminTitle from './AdminTitle';
 import Button from './Button';
@@ -15,41 +17,18 @@ interface FormValues {
   date: Date;
 }
 
-export interface MaxDate {
-  _id: string;
-  date: Date;
-}
-
-export default function SetMaxBookingDateForm() {
-  const [maxDate, setMaxDate] = useState<MaxDate>();
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchMaxDate = async () => {
-      try {
-        setIsLoading(true);
-        const response = await fetch(`/api/admin/calendar/max-date`);
-        if (!response.ok) throw new Error('Failed to fetch max date');
-        const data = await response.json();
-        setMaxDate(data);
-      } catch (error) {
-        console.error(error);
-        toast.error(
-          error instanceof Error ? error.message : 'Error fetching date.',
-        );
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchMaxDate();
-  }, []);
+export default function SetMaxBookingDateForm({
+  maxDate,
+}: {
+  maxDate: MaxDate;
+}) {
+  const { data, error, mutate, isLoading } = useMaxBookingDate(maxDate);
 
   const methods = useForm({
     mode: 'all',
     resolver: yupResolver(validationSchemaSetMaxBookingDate),
     defaultValues: {
-      date: new Date(),
+      date: data?.date || new Date(),
     },
   });
 
@@ -60,34 +39,13 @@ export default function SetMaxBookingDateForm() {
     formState: { errors },
   } = methods;
 
-  useEffect(() => {
-    if (maxDate) {
-      methods.reset({
-        date: maxDate?.date && new Date(maxDate.date),
-      });
-    }
-  }, [maxDate, methods]);
-
   const watchDate = watch('date');
 
   const onSubmitHandler = async (formValues: FormValues) => {
     try {
-      setIsLoading(true);
-      const id = maxDate?._id;
-      const method = id ? 'PUT' : 'POST';
+      const updatedData = { _id: data?._id || '', ...formValues };
 
-      const queryParams = new URLSearchParams();
-      if (id) queryParams.append('id', id);
-
-      const res = await fetch(
-        `/api/admin/calendar/max-date?${queryParams.toString()}`,
-        {
-          method,
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ...formValues }),
-        },
-      );
-      if (!res.ok) throw new Error(await res.text());
+      await mutate(updatedData);
       toast.success('Max booking date was successfully updated!', {
         duration: 3000,
       });
@@ -95,10 +53,16 @@ export default function SetMaxBookingDateForm() {
       toast.error(
         error instanceof Error ? error.message : 'Form submission failed.',
       );
-    } finally {
-      setIsLoading(false);
     }
   };
+
+  if (error) {
+    return (
+      <p className="text-error">
+        Failed to load max booking date. Please try again later.
+      </p>
+    );
+  }
 
   return (
     <FormProvider {...methods}>
@@ -123,7 +87,7 @@ export default function SetMaxBookingDateForm() {
               disabled={
                 Object.keys(errors).length !== 0 ||
                 isLoading ||
-                watchDate === maxDate?.date
+                watchDate === data?.date
               }
             >
               {isLoading ? 'Setting...' : 'Set'}

@@ -41,7 +41,9 @@ export async function getStudioInfo() {
   );
 
   if (!response.ok) {
-    throw new Error('Failed to fetch studio info');
+    throw new Error(
+      `Failed to fetch studio information: ${response.statusText}`,
+    );
   }
   return response.json();
 }

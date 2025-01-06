@@ -182,3 +182,38 @@ export const capitalizeFirstLetter = (string: string) => {
 export const getParsedDate = (dateStr: string) => {
   return parse(dateStr, 'yyyy-MM-dd', new Date());
 };
+
+export const arraysAreEqual = (arr1: Date[], arr2: Date[]) => {
+  if (arr1.length !== arr2.length) return false;
+  const sortedArr1 = arr1.map((date) => new Date(date).getTime()).sort();
+  const sortedArr2 = arr2.map((date) => new Date(date).getTime()).sort();
+  return sortedArr1.every((value, index) => value === sortedArr2[index]);
+};
+
+export const isNewDate = (date: Date, dates: Date[]) => {
+  return !dates.some((oldDate) => oldDate.getTime() === date.getTime());
+};
+
+export const durationOptions = (length: number) =>
+  Array.from({ length }, (_, i) => {
+    const value = (i + 1) * 30;
+    const hours = Math.floor(value / 60);
+    const minutes = value % 60;
+
+    const label =
+      hours > 0
+        ? `${hours}h${minutes > 0 ? ` ${minutes}min` : ''}`
+        : `${minutes}min`;
+
+    return {
+      value: value.toString(),
+      label,
+    };
+  });
+
+export const slotsOptions = (slots: string[]) => {
+  return slots.map((slot: string) => ({
+    value: slot,
+    label: slot,
+  }));
+};

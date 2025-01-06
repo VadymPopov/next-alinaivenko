@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 
+import useStudioInfo from '../hooks/useStudioInfo';
 import { validationSchemaStudioInfo } from '../schemas';
 import AdminTitle from './AdminTitle';
 import Button from './Button';
@@ -28,80 +29,43 @@ export interface IStudioInfo {
   longitude: string;
 }
 
-export default function StudioInfoForm() {
-  const [studioInfo, setStudioInfo] = useState<IStudioInfo>();
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchStudioInfo = async () => {
-      try {
-        setIsLoading(true);
-        const response = await fetch(`/api/admin/calendar/studio`);
-        if (!response.ok) throw new Error('Failed to fetch studio information');
-        const data = await response.json();
-        setStudioInfo(data);
-      } catch (error) {
-        console.error(error);
-        toast.error(
-          error instanceof Error
-            ? error.message
-            : 'Error fetching studio information.',
-        );
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchStudioInfo();
-  }, []);
+export default function StudioInfoForm({ studio }: { studio: IStudioInfo }) {
+  const { data, error, isLoading, updateStudioInfo, isValidating } =
+    useStudioInfo(studio);
 
   const methods = useForm({
     mode: 'all',
     resolver: yupResolver(validationSchemaStudioInfo),
     defaultValues: {
-      address: '',
-      city: '',
-      name: '',
-      longitude: '',
-      latitude: '',
+      address: data.address || '',
+      city: data.city || '',
+      name: data.name || '',
+      longitude: data.longitude || '',
+      latitude: data.latitude || '',
     },
   });
 
   const {
     handleSubmit,
     formState: { errors },
+    watch,
   } = methods;
 
-  useEffect(() => {
-    if (studioInfo) {
-      methods.reset({
-        address: studioInfo.address,
-        city: studioInfo.city,
-        name: studioInfo.name,
-        longitude: studioInfo.longitude,
-        latitude: studioInfo.latitude,
-      });
-    }
-  }, [studioInfo, methods]);
+  const formValues = watch();
+
+  const isDataEqualToFormValues = useMemo(() => {
+    return (
+      data?.address === formValues.address &&
+      data?.city === formValues.city &&
+      data?.name === formValues.name &&
+      data?.latitude === formValues.latitude &&
+      data?.longitude === formValues.longitude
+    );
+  }, [data, formValues]);
 
   const onSubmitHandler = async (formValues: FormValues) => {
     try {
-      setIsLoading(true);
-      const id = studioInfo?._id;
-      const method = id ? 'PUT' : 'POST';
-
-      const queryParams = new URLSearchParams();
-      if (id) queryParams.append('id', id);
-
-      const res = await fetch(
-        `/api/admin/calendar/studio?${queryParams.toString()}`,
-        {
-          method,
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ...formValues }),
-        },
-      );
-      if (!res.ok) throw new Error(await res.text());
+      await updateStudioInfo({ id: data._id, ...formValues });
       toast.success('Studio Information was successfully updated!', {
         duration: 3000,
       });
@@ -109,10 +73,12 @@ export default function StudioInfoForm() {
       toast.error(
         error instanceof Error ? error.message : 'Form submission failed.',
       );
-    } finally {
-      setIsLoading(false);
     }
   };
+
+  if (error) {
+    return <p className="text-error">Failed to load studio info.</p>;
+  }
 
   return (
     <FormProvider {...methods}>
@@ -121,9 +87,6 @@ export default function StudioInfoForm() {
         onSubmit={handleSubmit(onSubmitHandler)}
       >
         <AdminTitle title="Studio Address" />
-        {/* <h2 className="text-accentColor font-semibold text-2xl">
-          Studio Address
-        </h2> */}
         <div className="text-center">
           <InputField
             name="name"
@@ -168,10 +131,15 @@ export default function StudioInfoForm() {
           <div className="flex justify-center items-center">
             <Button
               type="submit"
-              isProcessing={isLoading}
-              disabled={Object.keys(errors).length !== 0 || isLoading}
+              isProcessing={isLoading || isValidating}
+              disabled={
+                isDataEqualToFormValues ||
+                Object.keys(errors).length !== 0 ||
+                isLoading ||
+                isValidating
+              }
             >
-              {isLoading ? 'Setting...' : 'Set'}
+              {isLoading || isValidating ? 'Setting...' : 'Set'}
             </Button>
           </div>
         </div>

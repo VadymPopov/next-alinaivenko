@@ -2,109 +2,91 @@
 
 import Button from '@/app/components/Button';
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import toast from 'react-hot-toast';
 
+import useSWR from 'swr';
+
+import { getFetcher } from '../lib/axiosInstance';
+import { updateBlockedDates } from '../lib/calendar';
+import { arraysAreEqual, isNewDate } from '../utils/helpers';
 import AdminTitle from './AdminTitle';
 
-export default function AvailabilityCalendar() {
-  const [selectedDates, setSelectedDates] = useState<Date[]>([]);
-  const [initialDates, setInitialDates] = useState<Date[]>([]);
+const CALENDAR_API = '/api/admin/calendar';
+
+export default function AvailabilityCalendar({
+  initialDates,
+}: {
+  initialDates: string[];
+}) {
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [loading, setLoading] = useState(false);
   const currentMonth = currentDate.toLocaleString('default', { month: 'long' });
   const currentYear = currentDate.toLocaleString('default', {
     year: 'numeric',
   });
 
-  useEffect(() => {
-    const fetchBlockedDates = async () => {
-      try {
-        const response = await fetch(
-          `/api/admin/calendar?month=${currentMonth}&year=${currentYear}`,
-        );
-        if (!response.ok) throw new Error('Failed to fetch blocked dates');
-        const data = await response.json();
-        const dates = data.blockedDates || [];
-        const now = new Date().toISOString().split('T')[0];
-        const futureOrEqualDates = dates.filter(
-          (dateString: string) =>
-            new Date(dateString).toISOString().split('T')[0] >= now,
-        );
-        setSelectedDates(futureOrEqualDates);
-        setInitialDates(futureOrEqualDates);
-      } catch (error) {
-        console.error(error);
-        toast.error(
-          error instanceof Error
-            ? error.message
-            : 'Error fetching blocked dates',
-        );
-      }
-    };
+  const calendarApiUrl = `${CALENDAR_API}?month=${currentMonth}&year=${currentYear}`;
 
-    fetchBlockedDates();
-  }, [currentMonth, currentYear]);
+  const { data, mutate, error, isLoading } = useSWR<string[]>(
+    calendarApiUrl,
+    getFetcher,
+    {
+      fallback: initialDates,
+    },
+  );
+
+  const dates = useMemo(
+    () => data?.map((date) => new Date(date)) || [],
+    [data],
+  );
+
+  const [selectedDates, setSelectedDates] = useState<Date[]>([]);
+
+  useEffect(() => {
+    setSelectedDates(dates);
+  }, [dates]);
+
+  const handleDateChange = useCallback(
+    (dates: Date[] | null) => setSelectedDates(dates || []),
+    [],
+  );
+
+  const handleMonthChange = useCallback((date: Date) => {
+    setCurrentDate(date);
+  }, []);
 
   const handleSave = async () => {
     if (!selectedDates.length) return;
 
-    setLoading(true);
-
     try {
-      const response = await fetch(
-        `/api/admin/calendar?isExists=true&month=${currentMonth}&year=${currentYear}`,
+      await updateBlockedDates(
+        selectedDates,
+        mutate,
+        currentMonth,
+        currentYear,
       );
-      const { exists } = await response.json();
-      const method = exists ? 'PUT' : 'POST';
-
-      const formattedDates = selectedDates
-        .filter((date) => !isNaN(new Date(date).getTime()))
-        .map((date) => new Date(date).toISOString())
-        .sort();
-
-      await fetch(
-        `/api/admin/calendar${exists ? `?month=${currentMonth}&year=${currentYear}` : ''}`,
-        {
-          method,
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            year: currentYear,
-            month: currentMonth,
-            blockedDates: formattedDates,
-          }),
-        },
-      );
-
       toast.success('Blocked dates saved successfully!', {
         duration: 3000,
       });
-      setInitialDates(selectedDates.sort((a, b) => a - b));
     } catch (error) {
       console.error(error);
       toast.error(
         error instanceof Error ? error.message : 'Error saving blocked dates',
       );
-    } finally {
-      setLoading(false);
     }
   };
 
-  const isNewDate = (date: Date) =>
-    !initialDates.some(
-      (oldDate) => new Date(oldDate).getTime() === new Date(date).getTime(),
+  const hasChanges = arraysAreEqual(selectedDates, dates);
+
+  if (error) {
+    return (
+      <p className="text-error">
+        Failed to load blocked dates. Please try again later.
+      </p>
     );
-
-  const arraysAreEqual = (arr1: Date[], arr2: Date[]) => {
-    if (arr1.length !== arr2.length) return false;
-    const sortedArr1 = arr1.map((date) => new Date(date).getTime()).sort();
-    const sortedArr2 = arr2.map((date) => new Date(date).getTime()).sort();
-    return sortedArr1.every((value, index) => value === sortedArr2[index]);
-  };
-
-  const hasChanges = !arraysAreEqual(selectedDates, initialDates);
+  }
 
   return (
     <div className="py-2.5 px-4 md:py-4 md:px-8">
@@ -117,8 +99,8 @@ export default function AvailabilityCalendar() {
             selectsMultiple
             showPopperArrow={false}
             selectedDates={selectedDates}
-            onChange={(dates) => setSelectedDates(dates as Date[])}
-            onMonthChange={(date: Date) => setCurrentDate(date)}
+            onChange={handleDateChange}
+            onMonthChange={handleMonthChange}
           />
         </div>
         <div className="flex items-center justify-center">
@@ -137,14 +119,14 @@ export default function AvailabilityCalendar() {
                   <li
                     key={index}
                     className={`text-sm md:text-lg font-medium text-mainDarkColor ${
-                      isNewDate(date) && 'flex'
+                      isNewDate(date, dates) && 'flex'
                     }`}
                   >
                     {new Date(date).toLocaleDateString('default', {
                       day: '2-digit',
                       month: 'long',
                     })}
-                    {isNewDate(date) && (
+                    {isNewDate(date, dates) && (
                       <span className="rounded-lg px-1 py-0.5 block ml-0.5 mb-2 text-xs text-[#0077B6] bg-[#D0EFFF]">
                         New
                       </span>
@@ -161,9 +143,9 @@ export default function AvailabilityCalendar() {
         <Button
           onClick={handleSave}
           type="submit"
-          disabled={loading || !hasChanges}
+          disabled={isLoading || hasChanges}
         >
-          {loading ? 'Saving...' : 'Save'}
+          {isLoading ? 'Saving...' : 'Save'}
         </Button>
       </div>
     </div>
