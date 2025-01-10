@@ -77,7 +77,7 @@ export default function PaymentForm() {
           />
         </FieldSet>
         <div className="flex justify-center items-center">
-          <Button type="submit" disabled={Object.keys(errors).length !== 0}>
+          <Button type="submit" disabled={!!Object.keys(errors).length}>
             Next
           </Button>
         </div>

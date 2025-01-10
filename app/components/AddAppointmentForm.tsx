@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
@@ -9,7 +9,12 @@ import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 
+import { serviceOptions } from '../constants/constants';
+import useAppointments from '../hooks/useAppointments';
+import useSlots from '../hooks/useSlots';
+import { serviceType } from '../providers/BookingFormContext';
 import { validationSchemaAddAppointment } from '../schemas';
+import { durationOptions, getParsedDate, slotsOptions } from '../utils/helpers';
 import Button from './Button';
 import DatePickerField from './DatePickerField';
 import FieldSet from './FieldSet';
@@ -28,42 +33,17 @@ interface FormValues {
   duration: string;
 }
 
-const serviceOptions = [
-  { value: 'Small Tattoo', label: 'Small Tattoo' },
-  { value: 'Large Tattoo', label: 'Large Tattoo' },
-  { value: 'Touch-up', label: 'Touch-up' },
-  { value: 'Permanent Makeup', label: 'Permanent Makeup' },
-];
-
-const durationOptions = Array.from({ length: 540 / 30 }, (_, i) => {
-  const value = (i + 1) * 30;
-  const hours = Math.floor(value / 60);
-  const minutes = value % 60;
-
-  const label =
-    hours > 0
-      ? `${hours}h${minutes > 0 ? ` ${minutes}min` : ''}`
-      : `${minutes}min`;
-
-  return {
-    value: value.toString(),
-    label,
-  };
-});
-
 export default function AddAppointmentForm() {
-  const [isProcessing, setIsProcessing] = useState(false);
   const searchParams = useSearchParams();
   const slot = searchParams.get('slot');
   const date = searchParams.get('date');
 
-  const [slotsOptions, setSlotsOptions] = useState([]);
   const router = useRouter();
   const methods = useForm({
     mode: 'all',
     resolver: yupResolver(validationSchemaAddAppointment),
     defaultValues: {
-      date: date ? new Date(date) : new Date(),
+      date: date ? getParsedDate(date) : new Date(),
       slot: slot ? slot : undefined,
     },
   });
@@ -83,31 +63,36 @@ export default function AddAppointmentForm() {
   const selectedDate = watch('date');
   const selectedDuration = watch('duration');
 
-  useEffect(() => {
-    (async () => {
-      if (!selectedDuration) return;
-      const response = await fetch(
-        `/api/slots?date=${format(selectedDate, 'yyyy-MM-dd')}&duration=${selectedDuration}`,
-      );
-      const slots = await response.json();
-      const slotsOptions = slots.map((slot: string) => ({
-        value: slot,
-        label: slot,
-      }));
-      setSlotsOptions(slotsOptions);
-    })();
-  }, [selectedDuration, selectedDate]);
+  const { slots } = useSlots({
+    date: format(selectedDate, 'yyyy-MM-dd'),
+    duration: Number(selectedDuration),
+  });
+
+  const memoizedSlots = useMemo(() => slotsOptions(slots), [slots]);
+  const { isValidating, addAppointment } = useAppointments();
 
   const onSubmitHandler = async (formValues: FormValues) => {
+    const { phone, date, duration, instagram, description, service } =
+      formValues;
     try {
-      const res = await fetch('/api/admin/appointments', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+      await addAppointment({
+        url: '/api/admin/appointments',
+        newAppt: {
           ...formValues,
-        }),
+          phone: phone || '',
+          service: service as serviceType,
+          instagram: instagram || '',
+          description: description || '',
+          date: format(date, 'yyyy-MM-dd'),
+          duration: Number(duration),
+          deposit: {
+            amount: 0,
+            tax: 0,
+            fee: 0,
+            total: 0,
+          },
+        },
       });
-      if (!res.ok) throw new Error(await res.text());
       toast.success('An appointment was successfully added!', {
         duration: 3000,
       });
@@ -116,8 +101,6 @@ export default function AddAppointmentForm() {
       toast.error(
         error instanceof Error ? error.message : 'Form submission failed.',
       );
-    } finally {
-      setIsProcessing(false);
     }
   };
 
@@ -179,14 +162,14 @@ export default function AddAppointmentForm() {
             name="duration"
             control={control}
             label="Duration"
-            options={durationOptions}
+            options={durationOptions(18)}
             error={errors.duration?.message || ''}
           />
           <SelectField
             name="slot"
             control={control}
             label="Slot"
-            options={slotsOptions}
+            options={memoizedSlots}
             error={errors.slot?.message || ''}
           />
         </FieldSet>
@@ -201,10 +184,10 @@ export default function AddAppointmentForm() {
         <div className="flex justify-center items-center">
           <Button
             type="submit"
-            isProcessing={isProcessing}
-            disabled={Object.keys(errors).length !== 0 || isProcessing}
+            isProcessing={isValidating}
+            disabled={!!Object.keys(errors).length || isValidating}
           >
-            {isProcessing ? 'Adding...' : 'Add'}
+            {isValidating ? 'Adding...' : 'Add'}
           </Button>
         </div>
       </form>

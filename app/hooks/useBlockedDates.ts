@@ -2,6 +2,7 @@ import { isAfter, parseISO, startOfDay } from 'date-fns';
 import useSWR from 'swr';
 
 import { getFetcher, postFetcher, putFetcher } from '../lib/axiosInstance';
+import { handleOptimisticMutate } from '../utils/mutateHelper';
 
 const CALENDAR_API = '/api/admin/calendar';
 
@@ -52,10 +53,12 @@ export default function useBlockedDates(
       const fetcher = method === 'POST' ? postFetcher : putFetcher;
       await fetcher(url, body);
 
-      mutate(formattedDates, {
-        optimisticData: formattedDates,
-        revalidate: true,
-        rollbackOnError: true,
+      handleOptimisticMutate(mutate, (cachedData) => {
+        const existingDates = cachedData || [];
+        const updatedDates = Array.from(
+          new Set([...existingDates, ...formattedDates]),
+        );
+        return updatedDates.sort();
       });
     } catch (error) {
       console.error('Error updating blocked dates:', error);

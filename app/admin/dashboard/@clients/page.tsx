@@ -1,6 +1,7 @@
 import AdminTitle from '@/app/components/AdminTitle';
 import { IAppointment } from '@/app/components/AppointmentDetails';
 import AppointmentsTable from '@/app/components/AppointmentsTable';
+import { newApptTableHeaders } from '@/app/constants/constants';
 import connect from '@/app/lib/db';
 import Appointment from '@/app/lib/models/appointment';
 
@@ -39,15 +40,6 @@ async function getRecentAppointments() {
   }
 }
 
-const newTableHeaders = [
-  'Client',
-  'Email',
-  'Deposit',
-  'Service',
-  'Date',
-  'Slot',
-];
-
 export default async function page() {
   const appointments = await getRecentAppointments();
   return (
@@ -58,7 +50,7 @@ export default async function page() {
       <AppointmentsTable
         combinedApptSlots={appointments}
         appointments={appointments}
-        headers={newTableHeaders}
+        headers={newApptTableHeaders}
         isNew={true}
       />
     </div>

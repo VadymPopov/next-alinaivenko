@@ -26,11 +26,8 @@ export function useMaxBookingDate(fallbackData: MaxDate) {
     const url = `${CALENDAR_API}${queryString}`;
 
     try {
-      if (method === 'POST') {
-        await postFetcher(url, updatedData);
-      } else {
-        await putFetcher(url, updatedData);
-      }
+      const fetcher = method === 'POST' ? postFetcher : putFetcher;
+      await fetcher(url, updatedData);
 
       mutate(updatedData, {
         optimisticData: updatedData,

@@ -75,6 +75,21 @@ export const calculateStripeFee = (amount: number) => {
   return Number(fee.toFixed(2));
 };
 
+export const calculateTotals = (
+  paymentAmount?: number,
+  paymentFee?: number,
+  tip?: number,
+) => {
+  const parsedPaymentAmount = parseFloat(paymentAmount?.toString() || '') || 0;
+  const parsedPaymentFee = parseFloat(paymentFee?.toString() || '') || 0;
+  const parsedTip = parseFloat(tip?.toString() || '') || 0;
+
+  const tax = parsedPaymentAmount * 0.13;
+  const total = parsedPaymentAmount + tax + parsedPaymentFee + parsedTip;
+
+  return { tax: Number(tax.toFixed(2)), total: Number(total.toFixed(2)) };
+};
+
 export const getDepositBreakdown = (service: serviceType | null) => {
   const amount = calculatePrice(service) || 0;
   const tax = Number((amount * 0.13).toFixed(2)) || 0;
@@ -101,30 +116,9 @@ export const getPaymentBreakdown = (amount: number, tip: number) => {
   };
 };
 
-export const monthMap: { [key: string]: number } = {
-  January: 1,
-  February: 2,
-  March: 3,
-  April: 4,
-  May: 5,
-  June: 6,
-  July: 7,
-  August: 8,
-  September: 9,
-  October: 10,
-  November: 11,
-  December: 12,
-};
-
-export const getMonthNumberFromName = (monthName: string): number => {
-  return monthMap[monthName] || 0;
-};
-
-export const generateDays = (year?: number, month?: string) => {
+export const generateDays = (year?: number, month?: number) => {
   if (!year || !month) return [];
-
-  const monthNumber = getMonthNumberFromName(month);
-  const daysInMonth = new Date(year, monthNumber, 0).getDate();
+  const daysInMonth = new Date(year, month, 0).getDate();
   return Array.from({ length: daysInMonth }, (_, i) => ({
     value: String(i + 1).padStart(2, '0'),
     label: String(i + 1),

@@ -90,7 +90,7 @@ export default function ProfileForm({ id }: { id?: string }) {
           error={errors.confirmPassword?.message || ''}
         />
         <div className="flex justify-center items-center">
-          <Button type="submit" disabled={Object.keys(errors).length !== 0}>
+          <Button type="submit" disabled={!!Object.keys(errors).length}>
             Update
           </Button>
         </div>

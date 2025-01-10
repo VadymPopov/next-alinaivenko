@@ -1,6 +1,8 @@
 import useSWR from 'swr';
 
-import { getFetcher, postFetcher } from '../lib/axiosInstance';
+import { IBlockedSlot } from '../components/WeekView';
+import { deleteFetcher, getFetcher, postFetcher } from '../lib/axiosInstance';
+import { handleOptimisticMutate } from '../utils/mutateHelper';
 
 const BLOCKED_SLOTS_API = '/api/admin/calendar/blocked-slots';
 
@@ -29,7 +31,8 @@ export default function useBlockedSlots(
     mutate,
     error,
     isLoading,
-  } = useSWR(shouldFetch ? url : null, getFetcher, {
+    isValidating,
+  } = useSWR<IBlockedSlot[] | undefined>(shouldFetch ? url : null, getFetcher, {
     revalidateOnMount: false,
     revalidateIfStale: true,
   });
@@ -37,17 +40,17 @@ export default function useBlockedSlots(
   const addBlockedSlot = async (newSlot: {
     date: string;
     slot: string;
-    duration: string;
+    duration: number;
     reason: string;
   }) => {
-    try {
-      await postFetcher(BLOCKED_SLOTS_API, newSlot);
+    const tempSlot: IBlockedSlot = { _id: '', ...newSlot };
 
-      mutate(newSlot, {
-        optimisticData: newSlot,
-        revalidate: true,
-        rollbackOnError: true,
-      });
+    try {
+      handleOptimisticMutate(mutate, (cachedData) =>
+        cachedData ? [...cachedData, tempSlot] : [tempSlot],
+      );
+      await postFetcher(BLOCKED_SLOTS_API, newSlot);
+      mutate();
     } catch (error) {
       console.error('Error adding blocked slot:', error);
       throw new Error(
@@ -56,10 +59,32 @@ export default function useBlockedSlots(
     }
   };
 
+  const deleteBlockedSlot = async (id: string) => {
+    const blockedSlotApiUrl = `${BLOCKED_SLOTS_API}?id=${id}`;
+
+    try {
+      handleOptimisticMutate(
+        mutate,
+        (cachedData) => cachedData?.filter((slot) => slot._id !== id) || [],
+      );
+      await deleteFetcher(blockedSlotApiUrl);
+      mutate();
+    } catch (error) {
+      console.error('Error deleting blocked slot:', error);
+      throw new Error(
+        error instanceof Error
+          ? error.message
+          : 'Failed to delete blocked slot',
+      );
+    }
+  };
+
   return {
     slots,
     isLoading,
+    isValidating,
     error,
     addBlockedSlot,
+    deleteBlockedSlot,
   };
 }

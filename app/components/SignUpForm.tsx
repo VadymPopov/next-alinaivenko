@@ -89,7 +89,7 @@ export default function SignUpForm() {
           error={errors.role?.message || ''}
         />
         <div className="flex justify-center items-center">
-          <Button type="submit" disabled={Object.keys(errors).length !== 0}>
+          <Button type="submit" disabled={!!Object.keys(errors).length}>
             Sign Up
           </Button>
         </div>

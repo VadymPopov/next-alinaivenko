@@ -1,8 +1,8 @@
 import connect from '@/app/lib/db';
 import Appointment from '@/app/lib/models/appointment';
+import Studio from '@/app/lib/models/studio';
 import { sendEmail } from '@/app/lib/nodemailer/sendEmail';
 
-import { revalidatePath } from 'next/cache';
 import { NextResponse } from 'next/server';
 
 export const GET = async (
@@ -50,7 +50,17 @@ export const PUT = async (
       new: true,
     });
 
-    await sendEmail({ data: body, updated: true });
+    if (
+      body.date !== appointment.date ||
+      body.slot !== appointment.slot ||
+      body.duration !== appointment.duration
+    ) {
+      const studio = await Studio.findOne();
+      await sendEmail({
+        data: { ...body, address: studio?.address || '' },
+        updated: true,
+      });
+    }
 
     return NextResponse.json(
       {
@@ -83,8 +93,6 @@ export const DELETE = async (
         status: 404,
       });
     }
-
-    revalidatePath('/admin/appointments');
 
     return NextResponse.json(
       {

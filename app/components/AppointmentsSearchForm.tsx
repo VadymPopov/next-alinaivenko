@@ -5,9 +5,9 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { MdSearch } from 'react-icons/md';
 
 import { IDate } from '../admin/appointments/page';
-import { generateDays, monthMap } from '../utils/helpers';
+import { monthOptions } from '../constants/constants';
+import { generateDays } from '../utils/helpers';
 import AdminTitle from './AdminTitle';
-import { IAppointment } from './AppointmentDetails';
 import Button from './Button';
 import InputField from './InputField';
 import SelectField from './Select';
@@ -18,21 +18,14 @@ type daysOptionsType = {
 };
 
 interface FormValues {
-  day?: string;
-  month?: string;
+  day?: number;
+  month?: number;
   year?: number;
 }
 
-const monthOptions = Object.keys(monthMap).map((month) => ({
-  value: String(monthMap[month]).padStart(2, '0'),
-  label: month,
-}));
-
 export default function AppointmentsSearchForm({
-  setAppointments,
   setDate,
 }: {
-  setAppointments: React.Dispatch<React.SetStateAction<IAppointment[]>>;
   setDate: React.Dispatch<React.SetStateAction<IDate>>;
 }) {
   const [daysOptions, setDaysOptions] = useState<daysOptionsType[]>([]);
@@ -40,8 +33,6 @@ export default function AppointmentsSearchForm({
   const methods = useForm<FormValues>({
     mode: 'all',
     defaultValues: {
-      day: '',
-      month: '',
       year: new Date().getFullYear(),
     },
   });
@@ -52,6 +43,7 @@ export default function AppointmentsSearchForm({
   const month = watch('month');
 
   useEffect(() => {
+    if (!month || !year) return;
     const updatedDays = generateDays(year, month);
     setDaysOptions(updatedDays);
   }, [year, month]);
@@ -59,28 +51,10 @@ export default function AppointmentsSearchForm({
   const onSubmitHandler = async (formValues: FormValues) => {
     const { day, month, year } = formValues;
     setDate({
-      day: Number(day),
-      month: Number(month),
+      day,
+      month,
       year,
     });
-    try {
-      const queryParams = new URLSearchParams();
-
-      if (day) queryParams.append('day', day);
-      if (month) queryParams.append('month', month);
-      if (year) queryParams.append('year', year.toString());
-
-      const query = queryParams.toString();
-      const response = await fetch(`/api/appointments?${query}`);
-      const appointments = await response.json();
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
-      }
-
-      setAppointments(appointments);
-    } catch (error) {
-      console.error('Failed to fetch appointments:', error);
-    }
   };
 
   return (

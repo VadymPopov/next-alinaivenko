@@ -9,7 +9,7 @@ import toast from 'react-hot-toast';
 
 import { format, parse } from 'date-fns';
 
-import { tableHeaders } from '../admin/appointments/page';
+import { apptTableHeaders } from '../constants/constants';
 import { filterDate } from '../utils/helpers';
 import AdminTitle from './AdminTitle';
 import AppointmentsTable from './AppointmentsTable';
@@ -125,7 +125,7 @@ const DayView = () => {
         </div>
         <AppointmentsTable
           appointments={appointments}
-          headers={tableHeaders}
+          headers={apptTableHeaders}
           combinedApptSlots={combinedApptSlots}
         />
       </div>

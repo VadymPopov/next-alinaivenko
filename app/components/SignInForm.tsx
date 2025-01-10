@@ -75,7 +75,7 @@ export default function SignInForm() {
           <div className="text-error mb-4 text-sm">{authError}</div>
         )}
         <div className="flex justify-center items-center">
-          <Button type="submit" disabled={Object.keys(errors).length !== 0}>
+          <Button type="submit" disabled={!!Object.keys(errors).length}>
             Sign In <MdLogin size={24} className="ml-2.5" />
           </Button>
         </div>

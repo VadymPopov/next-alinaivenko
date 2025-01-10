@@ -1,9 +1,9 @@
 'use client';
 
-import { format, parse } from 'date-fns';
+import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 
-import { formatCurrency } from '../utils/helpers';
+import { formatCurrency, getParsedDate } from '../utils/helpers';
 import { formatDuration } from '../utils/helpers';
 import { IAppointment } from './AppointmentDetails';
 import ServiceLabel from './ServiceLabel';
@@ -27,7 +27,7 @@ export default function AppointmentRow({
     deposit,
   } = appointment;
   const router = useRouter();
-  const parsedDate = parse(date, 'yyyy-MM-dd', new Date());
+  const parsedDate = getParsedDate(date);
 
   return (
     <tr

@@ -1,16 +1,15 @@
 'use client';
 
 import AdminTitle from '@/app/components/AdminTitle';
-import { IAppointment } from '@/app/components/AppointmentDetails';
 import AppointmentsSearchForm from '@/app/components/AppointmentsSearchForm';
 import AppointmentsTable from '@/app/components/AppointmentsTable';
 import Flyout from '@/app/components/Flyout';
 import SearchBar from '@/app/components/SearchBar';
+import { apptTableHeaders } from '@/app/constants/constants';
+import useAppointments from '@/app/hooks/useAppointments';
 import { getFilterString } from '@/app/utils/helpers';
 
-import React, { useEffect, useMemo, useState } from 'react';
-
-import { format } from 'date-fns';
+import React, { useMemo, useState } from 'react';
 
 export interface IDate {
   year?: number;
@@ -24,53 +23,38 @@ const defaultDate = {
   year: new Date().getFullYear(),
 };
 
-export const tableHeaders = [
-  'Client',
-  'Email',
-  'Instagram',
-  'Service',
-  'Date',
-  'Slot',
-  'Duration',
-];
-
 export default function Appointments() {
   const [date, setDate] = useState<IDate>(defaultDate);
   const [query, setQuery] = useState<string>('');
-  const [appointments, setAppointments] = useState<IAppointment[]>([]);
 
-  useEffect(() => {
-    (async () => {
-      const response = await fetch(
-        `/api/appointments?date=${format(new Date(), 'yyyy-MM-dd')}`,
-        {
-          cache: 'no-store',
-        },
-      );
-      const appointments = await response.json();
-      setAppointments(appointments);
-    })();
-  }, []);
+  const { isLoading, appointments, error } = useAppointments(date);
 
   const filteredAppointments = useMemo(() => {
-    return appointments.filter(
-      (appointment) =>
-        appointment.name.toLowerCase().includes(query.toLowerCase()) ||
-        appointment.email.toLowerCase().includes(query.toLowerCase()),
-    );
+    return appointments
+      ? appointments?.filter(
+          (appointment) =>
+            appointment.name.toLowerCase().includes(query.toLowerCase()) ||
+            appointment.email.toLowerCase().includes(query.toLowerCase()),
+        )
+      : [];
   }, [appointments, query]);
 
   const handleChange = (searchTerm: string) => {
     setQuery(searchTerm);
   };
 
+  if (error) {
+    return (
+      <p className="text-error">
+        Failed to load appointments. Please try again later.
+      </p>
+    );
+  }
+
   return (
     <>
       <div className="bg-mainLightColor rounded-3xl mb-5 shadow-lg">
-        <AppointmentsSearchForm
-          setAppointments={setAppointments}
-          setDate={setDate}
-        />
+        <AppointmentsSearchForm setDate={setDate} />
       </div>
 
       <div className="py-2.5 px-4 md:py-4 md:px-8 bg-mainLightColor rounded-3xl shadow-lg">
@@ -79,8 +63,9 @@ export default function Appointments() {
           <SearchBar query={query} onSearch={handleChange} />
         </div>
         <AppointmentsTable
+          isLoading={isLoading}
           appointments={filteredAppointments}
-          headers={tableHeaders}
+          headers={apptTableHeaders}
         />
       </div>
 

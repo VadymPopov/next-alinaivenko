@@ -83,7 +83,7 @@ export default function InputField({
               )}
             />
           )}
-          {value && !error && type !== 'checkbox' && !admin && (
+          {value?.toString() && !error && type !== 'checkbox' && !admin && (
             <span
               className="absolute top-1/2 right-2 translate-y-[-50%]"
               aria-label="Valid input"

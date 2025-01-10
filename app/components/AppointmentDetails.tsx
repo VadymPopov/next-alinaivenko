@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 import {
   MdDeleteOutline,
   MdOutlineArrowBackIos,
@@ -10,6 +11,7 @@ import {
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 
+import useAppointments from '../hooks/useAppointments';
 import AppointmentView from './AppointmentView';
 import Button from './Button';
 import EditAppointmentForm from './EditAppointmentForm';
@@ -38,6 +40,7 @@ export interface IAppointment {
     tip: number;
     total: number;
   };
+  paymentIntentId?: string;
 }
 
 export default function AppointmentDetails({
@@ -47,6 +50,7 @@ export default function AppointmentDetails({
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [deleteFlag, setDeleteFlag] = useState(false);
+  const { deleteAppointment } = useAppointments();
 
   const router = useRouter();
 
@@ -55,16 +59,17 @@ export default function AppointmentDetails({
   };
 
   const handleDeleteClick = async () => {
-    await fetch(`/api/appointments/${appointment._id}`, {
-      method: 'DELETE',
+    await deleteAppointment(appointment._id);
+    toast.success('An appointment was successfully deleted!', {
+      duration: 3000,
     });
     router.replace('/admin/appointments');
   };
 
   return (
-    <div className="min-h-screen bg-bgColor flex flex-col items-center py-10 px-4">
+    <div className="min-h-screen bg-bgColor flex flex-col items-center py-10 px-4 ">
       <Button
-        styles="fixed top-24 left-80 px-5 py-3 text-xs"
+        styles="fixed top-24 left-80 px-5 py-3 text-xs bg-bgColor shadow-xl"
         onClick={() => router.back()}
       >
         <MdOutlineArrowBackIos />

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
@@ -8,7 +8,17 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 
+import { serviceOptions } from '../constants/constants';
+import useAppointments from '../hooks/useAppointments';
+import useSlots from '../hooks/useSlots';
 import { validationSchemaEditAppointment } from '../schemas';
+import {
+  calculateTotals,
+  durationOptions,
+  getParsedDate,
+  slotsOptions,
+} from '../utils/helpers';
+import { calculateStripeFee } from '../utils/helpers';
 import { IAppointment } from './AppointmentDetails';
 import Button from './Button';
 import DatePickerField from './DatePickerField';
@@ -23,7 +33,7 @@ interface FormValues {
   name: string;
   email: string;
   date: Date;
-  service: string;
+  service: 'Small Tattoo' | 'Large Tattoo' | 'Touch-up' | 'Permanent Makeup';
   slot: string;
   duration: string;
   depositAmount?: number;
@@ -34,60 +44,47 @@ interface FormValues {
   paymentTax?: number;
   paymentTotal?: number;
   paymentFee?: number;
+  tip?: number;
 }
-
-const serviceOptions = [
-  { value: 'Small Tattoo', label: 'Small Tattoo' },
-  { value: 'Large Tattoo', label: 'Large Tattoo' },
-  { value: 'Touch-up', label: 'Touch-up' },
-  { value: 'Permanent Makeup', label: 'Permanent Makeup' },
-];
-
-const durationOptions = Array.from({ length: 540 / 30 }, (_, i) => {
-  const value = (i + 1) * 30;
-  const hours = Math.floor(value / 60);
-  const minutes = value % 60;
-
-  const label =
-    hours > 0
-      ? `${hours}h${minutes > 0 ? ` ${minutes}min` : ''}`
-      : `${minutes}min`;
-
-  return {
-    value: value.toString(),
-    label,
-  };
-});
 
 export default function EditAppointmentForm({
   appointment,
 }: {
   appointment: IAppointment;
 }) {
-  const [isProcessing, setIsProcessing] = useState(false);
-
-  const [slotsOptions, setSlotsOptions] = useState([]);
   const router = useRouter();
+  const {
+    name,
+    email,
+    date,
+    service,
+    duration,
+    slot,
+    deposit,
+    payment,
+    _id,
+    paymentIntentId,
+  } = appointment || {};
 
   const methods = useForm<FormValues>({
     mode: 'all',
     resolver: yupResolver(validationSchemaEditAppointment),
     defaultValues: {
-      ...appointment,
-      name: appointment?.name,
-      email: appointment?.email,
-      date: appointment?.date ? new Date(appointment.date) : new Date(),
-      service: appointment?.service,
-      duration: String(appointment?.duration),
-      slot: appointment?.slot,
-      depositAmount: appointment?.deposit?.amount,
-      depositTax: appointment?.deposit?.tax,
-      depositFee: appointment?.deposit?.fee,
-      depositTotal: appointment?.deposit?.total,
-      paymentAmount: appointment?.payment?.total || 0,
-      paymentTax: appointment?.payment?.tax || 0,
-      paymentFee: appointment?.payment?.fee || 0,
-      paymentTotal: appointment?.payment?.total || 0,
+      name,
+      email,
+      date: date ? getParsedDate(date) : new Date(),
+      service,
+      duration: String(duration),
+      slot,
+      depositAmount: deposit?.amount,
+      depositTax: deposit?.tax,
+      depositFee: deposit?.fee,
+      depositTotal: deposit?.total,
+      paymentAmount: payment?.total,
+      paymentTax: payment?.tax,
+      paymentFee: payment?.fee,
+      paymentTotal: payment?.total,
+      tip: payment?.tip,
     },
   });
 
@@ -95,49 +92,46 @@ export default function EditAppointmentForm({
     handleSubmit,
     control,
     watch,
+    setValue,
     formState: { errors },
   } = methods;
 
   const selectedDate = watch('date');
   const selectedDuration = watch('duration');
+  const paymentAmount = watch('paymentAmount');
+  const paymentFee = watch('paymentFee');
+  const tip = watch('tip');
+
+  const totals = useMemo(
+    () => calculateTotals(paymentAmount, paymentFee, tip),
+    [paymentAmount, paymentFee, tip],
+  );
 
   useEffect(() => {
-    (async () => {
-      if (!selectedDuration || !selectedDate || !appointment._id) return;
-      const response = await fetch(
-        `/api/slots?date=${format(selectedDate, 'yyyy-MM-dd')}&duration=${selectedDuration}&isEditing=true&id=${appointment._id}`,
-      );
-      const slots = await response.json();
-      const slotsOptions = slots.map((slot: string) => ({
-        value: slot,
-        label: slot,
-      }));
-      setSlotsOptions(slotsOptions);
-    })();
-  }, [selectedDuration, selectedDate, appointment._id]);
+    setValue('paymentFee', calculateStripeFee(paymentAmount || 0));
+    setValue('paymentTax', totals.tax);
+    setValue('paymentTotal', totals.total);
+  }, [totals, setValue, paymentAmount]);
 
-  useEffect(() => {
-    if (appointment) {
-      methods.reset({
-        ...appointment,
-        date: appointment?.date ? new Date(appointment.date) : new Date(),
-        duration: String(appointment?.duration),
-      });
-    }
-  }, [appointment, methods]);
+  const { slots } = useSlots({
+    date: format(selectedDate, 'yyyy-MM-dd'),
+    duration: Number(selectedDuration),
+    isEditing: true,
+    id: appointment._id,
+  });
+
+  const memoizedSlots = useMemo(() => slotsOptions(slots), [slots]);
+
+  const { isValidating, updateAppointment } = useAppointments();
 
   const onSubmitHandler = async (formValues: FormValues) => {
-    setIsProcessing(true);
     try {
-      const res = await fetch(`/api/appointments/${appointment._id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...formValues,
-          date: format(formValues.date, 'MMMM dd, yyyy'),
-        }),
+      await updateAppointment({
+        _id,
+        ...formValues,
+        paymentIntentId,
+        date: format(formValues.date, 'yyyy-MM-dd'),
       });
-      if (!res.ok) throw new Error(await res.text());
       toast.success('An appointment was successfully updated!', {
         duration: 3000,
       });
@@ -146,8 +140,6 @@ export default function EditAppointmentForm({
       toast.error(
         error instanceof Error ? error.message : 'Form submission failed.',
       );
-    } finally {
-      setIsProcessing(false);
     }
   };
 
@@ -161,7 +153,7 @@ export default function EditAppointmentForm({
             type="text"
             placeholder="Enter First and Last Name"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            error={errors.name?.message || ''}
+            error={errors.name?.message}
           />
           <InputField
             name="email"
@@ -169,7 +161,7 @@ export default function EditAppointmentForm({
             placeholder="Enter Email"
             title="Email must contain an “@” symbol before the domain"
             label="Email"
-            error={errors.email?.message || ''}
+            error={errors.email?.message}
           />
           <InputField
             name="phone"
@@ -178,7 +170,7 @@ export default function EditAppointmentForm({
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
             label="Phone number"
             optional={true}
-            error={errors.phone?.message || ''}
+            error={errors.phone?.message}
           />
           <InputField
             name="instagram"
@@ -203,21 +195,21 @@ export default function EditAppointmentForm({
             control={control}
             label="Service"
             options={serviceOptions}
-            error={errors.service?.message || ''}
+            error={errors.service?.message}
           />
           <SelectField
             name="duration"
             control={control}
             label="Duration"
-            options={durationOptions}
-            error={errors.duration?.message || ''}
+            options={durationOptions(18)}
+            error={errors.duration?.message}
           />
           <SelectField
             name="slot"
             control={control}
             label="Slot"
-            options={slotsOptions}
-            error={errors.slot?.message || ''}
+            options={memoizedSlots}
+            error={errors.slot?.message}
           />
         </FieldSet>
 
@@ -227,24 +219,36 @@ export default function EditAppointmentForm({
             placeholder="Enter deposit amount"
             label="Amount"
             type="number"
+            min={0}
+            step="any"
+            defaultValue={0}
           />
           <InputField
             name="depositTax"
             placeholder="Enter deposit tax"
             label="Tax"
             type="number"
+            min={0}
+            step="any"
+            defaultValue={0}
           />
           <InputField
             name="depositFee"
             placeholder="Enter deposit fee"
             label="Fee"
             type="number"
+            min={0}
+            step="any"
+            defaultValue={0}
           />
           <InputField
             name="depositTotal"
             placeholder="Enter total deposit amount"
             label="Total"
             type="number"
+            min={0}
+            step="any"
+            defaultValue={0}
           />
         </FieldSet>
 
@@ -254,24 +258,45 @@ export default function EditAppointmentForm({
             placeholder="Enter payment amount"
             label="Amount"
             type="number"
+            min={0}
+            step="any"
+            defaultValue={0}
           />
           <InputField
             name="paymentTax"
             placeholder="Enter payment tax"
             label="Tax"
             type="number"
+            min={0}
+            step="any"
+            defaultValue={0}
           />
           <InputField
             name="paymentFee"
             placeholder="Enter payment fee"
             label="Fee"
             type="number"
+            min={0}
+            step="any"
+            defaultValue={0}
+          />
+          <InputField
+            name="tip"
+            placeholder="Enter tip"
+            label="Tip"
+            type="number"
+            min={0}
+            step="any"
+            defaultValue={0}
           />
           <InputField
             name="paymentTotal"
             placeholder="Enter total payment amount"
             label="Total"
             type="number"
+            min={0}
+            step="any"
+            defaultValue={0}
           />
         </FieldSet>
 
@@ -286,10 +311,10 @@ export default function EditAppointmentForm({
         <div className="flex justify-center items-center">
           <Button
             type="submit"
-            isProcessing={isProcessing}
-            disabled={Object.keys(errors).length !== 0 || isProcessing}
+            isProcessing={isValidating}
+            disabled={!!Object.keys(errors).length || isValidating}
           >
-            {isProcessing ? 'Saving...' : 'Save'}
+            {isValidating ? 'Saving...' : 'Save'}
           </Button>
         </div>
       </form>

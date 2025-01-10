@@ -25,7 +25,7 @@ export default function AppointmentView({
             <strong>Email:</strong> {appointment.email}
           </p>
           <p>
-            <strong>Phone:</strong> {appointment.phone}
+            <strong>Phone:</strong> {appointment.phone || 'N/A'}
           </p>
           <p>
             <strong>Instagram:</strong> {appointment.instagram || 'N/A'}

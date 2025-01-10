@@ -6,6 +6,7 @@ import { MdClose } from 'react-icons/md';
 import clsx from 'clsx';
 import { format } from 'date-fns';
 
+import useBlockedSlots from '../hooks/useBlockedSlots';
 import { useSidebar } from '../providers/SidebarContext';
 import { convertToTimeRange } from '../utils/convertToTimeRange';
 import { formatDuration, getParsedDate } from '../utils/helpers';
@@ -30,11 +31,10 @@ export default function BlockedSlotView({
   const { isExtended } = useSidebar();
   const [deleteFlag, setDeleteFlag] = useState(false);
   const { _id, date, slot, duration, reason } = blockedSlot;
+  const { deleteBlockedSlot } = useBlockedSlots();
 
   const handleDeleteClick = async () => {
-    await fetch(`/api/admin/calendar/blocked-slots?id=${_id}`, {
-      method: 'DELETE',
-    });
+    await deleteBlockedSlot(_id);
   };
 
   return (

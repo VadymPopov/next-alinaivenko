@@ -60,7 +60,7 @@ export default function CustomTipForm({
             <div>
               <Button
                 type="submit"
-                disabled={Object.keys(errors).length !== 0}
+                disabled={!!Object.keys(errors).length}
                 styles="p-2.5 rounded-2xl"
               >
                 <MdDone size={24} />

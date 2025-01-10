@@ -134,7 +134,7 @@ export default function StudioInfoForm({ studio }: { studio: IStudioInfo }) {
               isProcessing={isLoading || isValidating}
               disabled={
                 isDataEqualToFormValues ||
-                Object.keys(errors).length !== 0 ||
+                !!Object.keys(errors).length ||
                 isLoading ||
                 isValidating
               }

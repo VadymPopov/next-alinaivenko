@@ -85,7 +85,7 @@ export default function SetMaxBookingDateForm({
               type="submit"
               isProcessing={isLoading}
               disabled={
-                Object.keys(errors).length !== 0 ||
+                !!Object.keys(errors).length ||
                 isLoading ||
                 watchDate === data?.date
               }

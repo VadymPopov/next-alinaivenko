@@ -25,7 +25,7 @@ interface FormValues {
 }
 
 export default function BlockSlotForm() {
-  const { isLoading, error, addBlockedSlot } = useBlockedSlots();
+  const { isValidating, error, addBlockedSlot } = useBlockedSlots();
 
   const methods = useForm({
     mode: 'all',
@@ -52,10 +52,12 @@ export default function BlockSlotForm() {
 
   const onSubmitHandler = async (formValues: FormValues) => {
     try {
+      const { date, duration, reason } = formValues;
       const newBlockedSlot = {
         ...formValues,
-        date: format(formValues.date, 'yyyy-MM-dd'),
-        reason: formValues.reason || '',
+        duration: Number(duration),
+        date: format(date, 'yyyy-MM-dd'),
+        reason: reason || '',
       };
 
       await addBlockedSlot(newBlockedSlot);
@@ -89,7 +91,7 @@ export default function BlockSlotForm() {
             name="duration"
             control={control}
             label="Duration"
-            options={durationOptions(540 / 30)}
+            options={durationOptions(18)}
             error={errors.duration?.message || ''}
           />
           <SelectField
@@ -110,10 +112,10 @@ export default function BlockSlotForm() {
           <div className="flex justify-center items-center">
             <Button
               type="submit"
-              isProcessing={isLoading}
-              disabled={Object.keys(errors).length !== 0 || isLoading}
+              isProcessing={isValidating}
+              disabled={!!Object.keys(errors).length || isValidating}
             >
-              {isLoading ? 'Adding...' : 'Add'}
+              {isValidating ? 'Adding...' : 'Add'}
             </Button>
           </div>
         </div>

@@ -9,6 +9,7 @@ import BlockedSlotView from './BlockedSlotView';
 import { IBlockedSlot } from './WeekView';
 
 interface AppointmentsTableProps {
+  isLoading?: boolean;
   appointments: IAppointment[];
   combinedApptSlots?: (IAppointment | IBlockedSlot)[];
   headers: string[];
@@ -16,6 +17,7 @@ interface AppointmentsTableProps {
 }
 
 export default function AppointmentsTable({
+  isLoading,
   appointments,
   combinedApptSlots,
   headers,
@@ -34,23 +36,36 @@ export default function AppointmentsTable({
           </tr>
         </thead>
         <tbody>
-          {appointments && appointments.length > 0 ? (
-            appointments.map((appointment) => (
-              <AppointmentRowView
-                key={appointment._id}
-                appointment={appointment}
-                isNew={isNew}
-              />
-            ))
-          ) : (
+          {isLoading ? (
             <tr>
               <td
                 colSpan={headers.length}
                 className="text-center py-5 text-lg "
               >
-                No appointments found.
+                Loading ...
               </td>
             </tr>
+          ) : (
+            <>
+              {appointments && appointments.length > 0 ? (
+                appointments.map((appointment) => (
+                  <AppointmentRowView
+                    key={appointment._id}
+                    appointment={appointment}
+                    isNew={isNew}
+                  />
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan={headers.length}
+                    className="text-center py-5 text-lg "
+                  >
+                    No appointments found.
+                  </td>
+                </tr>
+              )}
+            </>
           )}
         </tbody>
       </table>

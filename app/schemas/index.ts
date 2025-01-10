@@ -254,7 +254,12 @@ export const validationSchemaEditAppointment = Yup.object().shape({
   instagram: Yup.string().trim().optional(),
   description: Yup.string().trim().optional(),
   slot: Yup.string().required('Time is required'),
-  service: Yup.string().required('Service is required'),
+  service: Yup.string()
+    .oneOf(
+      ['Small Tattoo', 'Large Tattoo', 'Touch-up', 'Permanent Makeup'],
+      'Invalid service type',
+    )
+    .required('Service is required'),
   date: Yup.date().required('Date is required'),
   duration: Yup.string().required('Duration is required'),
   depositAmount: Yup.number().optional(),
@@ -265,6 +270,7 @@ export const validationSchemaEditAppointment = Yup.object().shape({
   paymentTax: Yup.number().optional(),
   paymentTotal: Yup.number().optional(),
   paymentFee: Yup.number().optional(),
+  tip: Yup.number().optional(),
 });
 
 export const validationSchemaSetMaxBookingDate = Yup.object().shape({
