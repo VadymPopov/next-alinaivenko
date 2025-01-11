@@ -4,24 +4,22 @@ import React from 'react';
 import { MdAdd } from 'react-icons/md';
 
 import clsx from 'clsx';
-import { format, parse } from 'date-fns';
+import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 
-import { filterDate } from '../utils/helpers';
+import {
+  filterDate,
+  getCombinedApptSlots,
+  getTimeSlots,
+} from '../utils/helpers';
+import { IAppointment } from './AppointmentDetails';
 import BlockedSlotView from './BlockedSlotView';
 import { IBlockedSlot } from './WeekView';
 import WeekViewAppointment from './WeekViewAppointment';
 
 interface DayColumnProps {
   day: Date;
-  appointments: {
-    _id: string;
-    name: string;
-    date: string;
-    slot: string;
-    duration: number;
-    service: string;
-  }[];
+  appointments: IAppointment[];
   slotHeight: number;
   blockedDates: string[];
   blockedSlots: IBlockedSlot[];
@@ -35,19 +33,11 @@ export default function DayColumn({
   blockedSlots,
 }: DayColumnProps) {
   const timeSlots = React.useMemo(() => {
-    const slots: string[] = [];
-    for (let i = 0; i < 18; i++) {
-      const hour = 11 + Math.floor(i / 2);
-      const minute = i % 2 === 0 ? '00' : '30';
-      const period = hour < 12 ? 'am' : 'pm';
-      const formattedHour = hour > 12 ? hour - 12 : hour;
-      slots.push(`${formattedHour}:${minute}${period}`);
-    }
-    return slots;
+    return getTimeSlots();
   }, []);
+
   const date = new Date(day);
   const isBlocked = filterDate(date, blockedDates);
-
   const router = useRouter();
 
   return (
@@ -81,12 +71,7 @@ export default function DayColumn({
             </div>
           </div>
         ))}
-        {[...blockedSlots, ...appointments]
-          .sort((a, b) => {
-            const dateA = parse(a.slot, 'hh:mma', new Date());
-            const dateB = parse(b.slot, 'hh:mma', new Date());
-            return dateA.getTime() - dateB.getTime();
-          })
+        {getCombinedApptSlots(blockedSlots, appointments)
           .filter((appt) => format(day, 'yyyy-MM-dd') === appt.date)
           .map((appt) => {
             const [time, period] = appt.slot.split(/(am|pm)/i);

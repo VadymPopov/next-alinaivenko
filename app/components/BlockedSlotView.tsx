@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 import { MdClose } from 'react-icons/md';
 
 import clsx from 'clsx';
@@ -35,6 +36,9 @@ export default function BlockedSlotView({
 
   const handleDeleteClick = async () => {
     await deleteBlockedSlot(_id);
+    toast.success('Blocked slot was successfully deleted!', {
+      duration: 3000,
+    });
   };
 
   return (

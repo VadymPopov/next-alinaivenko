@@ -5,10 +5,10 @@ import { Control, Controller } from 'react-hook-form';
 
 import { startOfDay } from 'date-fns';
 
+import { MaxDate } from '../hooks/useMaxBookingDate';
 import { findNextAvailableDate } from '../utils/findNextAvailableDate';
 import { filterDate } from '../utils/helpers';
 import { IFormValues } from './ScheduleForm';
-import { MaxDate } from './SetMaxBookingDateForm';
 
 interface CalendarPickerProps {
   name: keyof IFormValues;

@@ -1,6 +1,8 @@
 import { format, parse } from 'date-fns';
 
 import { IDate } from '../admin/appointments/page';
+import { IAppointment } from '../components/AppointmentDetails';
+import { IBlockedSlot } from '../components/WeekView';
 import { serviceType } from '../providers/BookingFormContext';
 
 export const calculatePrice = (selectedProcedure: serviceType | null) => {
@@ -210,4 +212,28 @@ export const slotsOptions = (slots: string[]) => {
     value: slot,
     label: slot,
   }));
+};
+
+export const getCombinedApptSlots = (
+  blockedSlots: IBlockedSlot[],
+  appointments: IAppointment[],
+) => {
+  const slots = [...blockedSlots, ...appointments];
+  return slots.sort((a, b) => {
+    const dateA = parse(a.slot, 'hh:mma', new Date());
+    const dateB = parse(b.slot, 'hh:mma', new Date());
+    return dateA.getTime() - dateB.getTime();
+  });
+};
+
+export const getTimeSlots = () => {
+  const slots: string[] = [];
+  for (let i = 0; i < 18; i++) {
+    const hour = 11 + Math.floor(i / 2);
+    const minute = i % 2 === 0 ? '00' : '30';
+    const period = hour < 12 ? 'am' : 'pm';
+    const formattedHour = hour > 12 ? hour - 12 : hour;
+    slots.push(`${formattedHour}:${minute}${period}`);
+  }
+  return slots;
 };

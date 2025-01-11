@@ -1,6 +1,5 @@
 import useSWR from 'swr';
 
-import { IDate } from '../admin/appointments/page';
 import { IAppointment } from '../components/AppointmentDetails';
 import {
   deleteFetcher,
@@ -37,6 +36,7 @@ interface IAppointmentEdit {
 interface NewAppointment extends Omit<IAppointment, '_id'> {}
 
 const APPOINTMENTS_API = '/api/appointments';
+const ADMIN_APPOINTMENTS_API = '/api/admin/appointments';
 
 function mapToMongoAppointment(appointment: IAppointmentEdit) {
   return {
@@ -67,24 +67,54 @@ function mapToMongoAppointment(appointment: IAppointmentEdit) {
   };
 }
 
-export default function useAppointments(date?: IDate) {
-  const { day, month, year } = date || {};
-  const queryParams = new URLSearchParams();
+interface UseAppointmentsParams {
+  date?: string;
+  day?: number;
+  month?: number;
+  year?: number;
+  start?: string;
+  end?: string;
+}
 
+const buildQueryParams = ({
+  date,
+  day,
+  month,
+  year,
+  start,
+  end,
+}: UseAppointmentsParams): string => {
+  const queryParams = new URLSearchParams();
   if (day) queryParams.append('day', day.toString());
   if (month) queryParams.append('month', month.toString());
   if (year) queryParams.append('year', year.toString());
+  if (date) queryParams.append('date', date);
+  if (start) queryParams.append('start', start);
+  if (end) queryParams.append('end', end);
+  return queryParams.toString();
+};
 
-  const apptsApiUrl = `${APPOINTMENTS_API}?${queryParams.toString()}`;
+export default function useAppointments({
+  date,
+  day,
+  month,
+  year,
+  start,
+  end,
+}: UseAppointmentsParams = {}) {
+  const queryParams = buildQueryParams({ date, day, month, year, start, end });
+
+  const apptsApiUrl = `${start && end ? ADMIN_APPOINTMENTS_API : APPOINTMENTS_API}?${queryParams}`;
+  const shouldFetch = Boolean(date || day || month || year || start || end);
 
   const {
-    data: appointments,
+    data: appointments = [],
     mutate,
     error,
     isLoading,
     isValidating,
   } = useSWR<IAppointment[] | undefined>(
-    date ? apptsApiUrl : null,
+    shouldFetch ? apptsApiUrl : null,
     getFetcher,
     {
       revalidateIfStale: true,
@@ -92,13 +122,19 @@ export default function useAppointments(date?: IDate) {
     },
   );
 
-  const addAppointment = async (newAppt: NewAppointment) => {
+  const addAppointment = async ({
+    url,
+    newAppt,
+  }: {
+    url: string;
+    newAppt: NewAppointment;
+  }) => {
     const tempAppointment: IAppointment = { _id: '', ...newAppt };
     try {
       handleOptimisticMutate(mutate, (cachedData) =>
         cachedData ? [...cachedData, tempAppointment] : [tempAppointment],
       );
-      await postFetcher(APPOINTMENTS_API, newAppt);
+      await postFetcher(url, newAppt);
       mutate();
     } catch (error) {
       console.error('Error adding new appointment:', error);

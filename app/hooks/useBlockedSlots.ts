@@ -1,3 +1,4 @@
+import { format } from 'date-fns';
 import useSWR from 'swr';
 
 import { IBlockedSlot } from '../components/WeekView';
@@ -6,25 +7,32 @@ import { handleOptimisticMutate } from '../utils/mutateHelper';
 
 const BLOCKED_SLOTS_API = '/api/admin/calendar/blocked-slots';
 
-export default function useBlockedSlots(
-  date?: string,
-  start?: string,
-  end?: string,
-) {
+interface UseBlockedSlotsParams {
+  date?: string;
+  start?: Date;
+  end?: Date;
+}
+
+const buildQueryParams = ({
+  date,
+  start,
+  end,
+}: UseBlockedSlotsParams): string => {
+  const queryParams = new URLSearchParams();
+  if (date) queryParams.append('date', date);
+  if (start) queryParams.append('start', format(start, 'yyyy-MM-dd'));
+  if (end) queryParams.append('end', format(end, 'yyyy-MM-dd'));
+  return queryParams.toString();
+};
+
+export default function useBlockedSlots({
+  date,
+  start,
+  end,
+}: UseBlockedSlotsParams = {}) {
   const shouldFetch = Boolean(date || (start && end));
-  const params = new URLSearchParams();
-
-  if (date) {
-    params.append('date', date);
-  }
-
-  if (start) {
-    params.append('start', start);
-  }
-  if (end) {
-    params.append('end', end);
-  }
-  const url = `${BLOCKED_SLOTS_API}?${params.toString()}`;
+  const queryParams = buildQueryParams({ date, start, end });
+  const apiUrl = `${BLOCKED_SLOTS_API}?${queryParams}`;
 
   const {
     data: slots,
@@ -32,10 +40,14 @@ export default function useBlockedSlots(
     error,
     isLoading,
     isValidating,
-  } = useSWR<IBlockedSlot[] | undefined>(shouldFetch ? url : null, getFetcher, {
-    revalidateOnMount: false,
-    revalidateIfStale: true,
-  });
+  } = useSWR<IBlockedSlot[] | undefined>(
+    shouldFetch ? apiUrl : null,
+    getFetcher,
+    {
+      revalidateOnMount: false,
+      revalidateIfStale: true,
+    },
+  );
 
   const addBlockedSlot = async (newSlot: {
     date: string;

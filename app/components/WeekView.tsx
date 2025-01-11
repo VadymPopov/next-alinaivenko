@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
+import React, { useState } from 'react';
 import { MdArrowForwardIos, MdOutlineArrowBackIos } from 'react-icons/md';
 
 import clsx from 'clsx';
@@ -10,14 +9,15 @@ import {
   addDays,
   format,
   isSameDay,
-  parse,
   setHours,
   startOfWeek,
   sub,
 } from 'date-fns';
 
-import { filterDate } from '../utils/helpers';
-import { IAppointment } from './AppointmentDetails';
+import useAppointments from '../hooks/useAppointments';
+import useBlockedDates from '../hooks/useBlockedDates';
+import useBlockedSlots from '../hooks/useBlockedSlots';
+import { filterDate, getCombinedApptSlots } from '../utils/helpers';
 import BlockedSlotView from './BlockedSlotView';
 import DayColumn from './DayColumn';
 import WeekViewAppointment from './WeekViewAppointment';
@@ -31,94 +31,20 @@ export interface IBlockedSlot {
 }
 
 const WeekView = () => {
-  const [appointments, setAppointments] = useState<IAppointment[]>([]);
-  const [blockedSlots, setBlockedSlots] = useState<IBlockedSlot[]>([]);
+  const [currentDate, setCurrentDate] = useState(new Date());
   const [week, setWeek] = useState(new Date());
-  const weekStart = React.useMemo(
+  const start = React.useMemo(
     () => startOfWeek(week, { weekStartsOn: 0 }),
     [week],
   );
-  const [blockedDates, setBlockedDates] = useState<string[]>([]);
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const currentMonth = currentDate.toLocaleString('default', {
-    month: 'long',
+  const end = addDays(start, 6);
+
+  const { slots: blockedSlots = [] } = useBlockedSlots({ start, end });
+  const { dates: blockedDates = [] } = useBlockedDates(currentDate);
+  const { appointments = [] } = useAppointments({
+    start: format(start, 'yyyy-MM-dd'),
+    end: format(end, 'yyyy-MM-dd'),
   });
-  const currentYear = currentDate.toLocaleString('default', {
-    year: 'numeric',
-  });
-
-  useEffect(() => {
-    const fetchBlockedDates = async () => {
-      try {
-        const response = await fetch(
-          `/api/admin/calendar?month=${currentMonth}&year=${currentYear}`,
-        );
-        if (!response.ok) throw new Error('Failed to fetch blocked dates');
-        const data = await response.json();
-        const dates = data.blockedDates || [];
-        setBlockedDates(dates);
-      } catch (error) {
-        console.error(error);
-        toast.error(
-          error instanceof Error
-            ? error.message
-            : 'Error fetching blocked dates',
-        );
-      }
-    };
-
-    fetchBlockedDates();
-  }, [currentMonth, currentYear]);
-
-  useEffect(() => {
-    const fetchAppointments = async () => {
-      const weekStart = startOfWeek(week, { weekStartsOn: 0 });
-      const weekEnd = addDays(weekStart, 6);
-
-      try {
-        const response = await fetch(
-          `/api/admin/appointments?start=${format(weekStart, 'yyyy-MM-dd')}&end=${format(weekEnd, 'yyyy-MM-dd')}`,
-        );
-        if (!response.ok) throw new Error('Failed to fetch appointments');
-        const appointments = await response.json();
-        setAppointments(appointments);
-      } catch (error) {
-        console.error(error);
-        toast.error(
-          error instanceof Error
-            ? error.message
-            : 'Error fetching blocked dates',
-        );
-      }
-    };
-
-    fetchAppointments();
-  }, [week]);
-
-  useEffect(() => {
-    const fetchBlockedSlots = async () => {
-      const weekStart = startOfWeek(week, { weekStartsOn: 0 });
-      const weekEnd = addDays(weekStart, 6);
-
-      try {
-        const response = await fetch(
-          `/api/admin/calendar/blocked-slots?start=${format(weekStart, 'yyyy-MM-dd')}&end=${format(weekEnd, 'yyyy-MM-dd')}`,
-        );
-        if (!response.ok) throw new Error('Failed to fetch blocked slots');
-        const blockedSlots = await response.json();
-        setBlockedSlots(blockedSlots);
-      } catch (error) {
-        console.error(error);
-        toast.error(
-          error instanceof Error
-            ? error.message
-            : 'Error fetching blocked slots',
-        );
-      }
-    };
-
-    fetchBlockedSlots();
-  }, [week]);
 
   const hours = React.useMemo(
     () => Array.from({ length: 10 }, (_, i) => setHours(new Date(), 11 + i)),
@@ -143,7 +69,7 @@ const WeekView = () => {
     <div className="w-full  mt-4">
       <div className="text-center mb-4 flex justify-end items-center gap-4 sticky">
         <h2 className="text-lg md:text-2xl font-bold">
-          {format(weekStart, 'MMMM, yyyy')}
+          {format(start, 'MMMM, yyyy')}
         </h2>
 
         <div className="flex justify-center items-center gap-2">
@@ -173,16 +99,16 @@ const WeekView = () => {
 
       <div className="md:ml-[108px] md:grid grid-cols-7 gap-4 flex flex-col ">
         {Array.from({ length: 7 }).map((_, i) => {
-          const day = addDays(weekStart, i);
+          const day = addDays(start, i);
           const isSame = isSameDay(day, new Date());
           const formattedDay = format(day, 'yyyy-MM-dd');
-          const filteredAppt = [...blockedSlots, ...appointments]
-            .sort((a, b) => {
-              const dateA = parse(a.slot, 'hh:mma', new Date());
-              const dateB = parse(b.slot, 'hh:mma', new Date());
-              return dateA.getTime() - dateB.getTime();
-            })
-            .filter((appt) => formattedDay === appt.date);
+          const combinedApptSlots = getCombinedApptSlots(
+            blockedSlots,
+            appointments,
+          );
+          const filteredAppt = combinedApptSlots.filter(
+            (appt) => formattedDay === appt.date,
+          );
 
           const date = new Date(day);
           const isBlocked = filterDate(date, blockedDates);
@@ -269,7 +195,7 @@ const WeekView = () => {
         {Array.from({ length: 7 }).map((_, i) => (
           <DayColumn
             key={i}
-            day={addDays(weekStart, i)}
+            day={addDays(start, i)}
             appointments={appointments}
             slotHeight={slotHeight}
             blockedDates={blockedDates}

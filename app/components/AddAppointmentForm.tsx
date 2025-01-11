@@ -14,7 +14,7 @@ import useAppointments from '../hooks/useAppointments';
 import useSlots from '../hooks/useSlots';
 import { serviceType } from '../providers/BookingFormContext';
 import { validationSchemaAddAppointment } from '../schemas';
-import { durationOptions, getParsedDate, slotsOptions } from '../utils/helpers';
+import { durationOptions, slotsOptions } from '../utils/helpers';
 import Button from './Button';
 import DatePickerField from './DatePickerField';
 import FieldSet from './FieldSet';
@@ -43,7 +43,7 @@ export default function AddAppointmentForm() {
     mode: 'all',
     resolver: yupResolver(validationSchemaAddAppointment),
     defaultValues: {
-      date: date ? getParsedDate(date) : new Date(),
+      date: date ? new Date(date) : new Date(),
       slot: slot ? slot : undefined,
     },
   });
@@ -64,8 +64,8 @@ export default function AddAppointmentForm() {
   const selectedDuration = watch('duration');
 
   const { slots } = useSlots({
-    date: format(selectedDate, 'yyyy-MM-dd'),
-    duration: Number(selectedDuration),
+    date: format(selectedDate || date, 'yyyy-MM-dd'),
+    duration: Number(selectedDuration) || 30,
   });
 
   const memoizedSlots = useMemo(() => slotsOptions(slots), [slots]);

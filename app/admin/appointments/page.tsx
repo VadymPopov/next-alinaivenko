@@ -27,7 +27,11 @@ export default function Appointments() {
   const [date, setDate] = useState<IDate>(defaultDate);
   const [query, setQuery] = useState<string>('');
 
-  const { isLoading, appointments, error } = useAppointments(date);
+  const { isLoading, appointments, error } = useAppointments({
+    day: date.day,
+    month: date.month,
+    year: date.year,
+  });
 
   const filteredAppointments = useMemo(() => {
     return appointments
