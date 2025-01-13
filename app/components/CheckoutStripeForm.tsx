@@ -1,6 +1,6 @@
 'use client';
 
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent } from 'react';
 
 import {
   PaymentElement,
@@ -10,6 +10,7 @@ import {
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 
+import { useConfirmPayment } from '../hooks/useConfirmPayment';
 import {
   IAppointmentInfo,
   IPaymentInfo,
@@ -35,8 +36,7 @@ export default function CheckoutStripeForm({
   body,
   service,
 }: AppointmentCheckoutProps | PaymentCheckoutProps) {
-  const [message, setMessage] = useState<string | undefined>('');
-  const [isProcessing, setIsProcessing] = useState(false);
+  const { isProcessing, message, confirmPayment } = useConfirmPayment();
   const router = useRouter();
 
   const stripe = useStripe();
@@ -44,45 +44,17 @@ export default function CheckoutStripeForm({
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-
-    if (!stripe || !elements) {
-      return;
-    }
-    setIsProcessing(true);
-
-    const { error, paymentIntent } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        return_url: `${window.location.origin}`,
-      },
-      redirect: 'if_required',
+    const { success } = await confirmPayment(stripe, elements, {
+      isBooking,
+      body,
+      service,
     });
 
-    if (
-      (error && error.type === 'card_error') ||
-      (error && error.type === 'validation_error')
-    ) {
-      setMessage(error.message);
-    } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-      await fetch(
-        isBooking ? '/api/appointments' : '/api/payment-confirmation',
-        {
-          method: isBooking ? 'POST' : 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            ...body,
-            service,
-            paymentIntentId: paymentIntent.id,
-          }),
-        },
-      );
+    if (success) {
       router.replace(
         isBooking ? '/payment-succeeded?type=booking' : '/payment-succeeded',
       );
-    } else {
-      setMessage('Unexpected state');
     }
-    setIsProcessing(false);
   };
 
   return (

@@ -8,6 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/navigation';
 
 import usePasswordStrength from '../hooks/usePasswordStrength';
+import { postFetcher } from '../lib/axiosInstance';
 import { validationSchemaProfileForm } from '../schemas';
 import Button from './Button';
 import InputField from './InputField';
@@ -21,6 +22,7 @@ export default function ProfileForm({ id }: { id?: string }) {
   const { strengthColor, passwordStrength, validatePasswordStrength } =
     usePasswordStrength();
   const router = useRouter();
+
   const methods = useForm({
     mode: 'all',
     resolver: yupResolver(validationSchemaProfileForm),
@@ -32,15 +34,17 @@ export default function ProfileForm({ id }: { id?: string }) {
     formState: { errors },
   } = methods;
 
+  const password = watch('password');
+
+  useEffect(() => {
+    validatePasswordStrength(password);
+  }, [password, validatePasswordStrength]);
+
   const onSubmitHandler = async (formValues: FormValues) => {
-    const { password } = formValues;
     try {
-      const res = await fetch(`/api/users?id=${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password }),
+      await postFetcher(`/api/users?id=${id}`, {
+        password: formValues.password,
       });
-      if (!res.ok) throw new Error(await res.text());
 
       toast.success('Password has been updated successfully!', {
         duration: 3000,
@@ -52,12 +56,6 @@ export default function ProfileForm({ id }: { id?: string }) {
       );
     }
   };
-
-  const password = watch('password');
-
-  useEffect(() => {
-    validatePasswordStrength(password);
-  }, [password, validatePasswordStrength]);
 
   return (
     <FormProvider {...methods}>

@@ -1,16 +1,13 @@
 'use client';
 
-import {
-  IWaiverFormData,
-  useWaiverFormContext,
-} from '@/app/providers/WaiverFormContext';
+import { useWaiverSubmission } from '@/app/hooks/useWaiverFormSubmission';
+import { useWaiverFormContext } from '@/app/providers/WaiverFormContext';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 
 import { validationSchemaWaiverStepSeven } from '../../schemas';
@@ -19,35 +16,6 @@ import FieldSet from '../FieldSet';
 import InputField from '../InputField';
 import SignatureField from '../SignatureField';
 import Text from '../Text';
-
-interface UnfilteredValues extends IWaiverFormData {
-  lot: string;
-  isClientUnder18: boolean;
-  clientSignature: string;
-  parentalConsent: boolean;
-  parentalName: string;
-  parentGovernmentId: string;
-  parentalSignature: string;
-}
-
-interface FilteredValues {
-  name: string;
-  email: string;
-  phone?: string | null;
-  governmentId: string;
-  dob: string;
-  address: string;
-  bodyPart: string;
-  design: string;
-  service: string;
-  lot: string;
-  appointmentDate: string;
-  isClientUnder18: boolean;
-  clientSignature?: string;
-  parentalSignature?: string;
-  parentalName?: string;
-  parentGovernmentId?: string;
-}
 
 export interface StepSevenData {
   lot: string;
@@ -58,33 +26,32 @@ export interface StepSevenData {
   parentGovernmentId?: string;
   parentalSignature?: string;
 }
-
-const prepareFilteredValues = (values: UnfilteredValues): FilteredValues => ({
-  name: values.name,
-  email: values.email,
-  phone: values.phone,
-  governmentId: values.governmentId,
-  dob: values.dob,
-  address: values.address,
-  bodyPart: values.bodyPart,
-  design: values.design,
-  service: values.service,
-  lot: values.lot,
-  appointmentDate: format(values.appointmentDate as string, 'yyyy-MM-dd'),
-  isClientUnder18: values.isClientUnder18,
-  ...(values.isClientUnder18
-    ? {
-        parentalSignature: values.parentalSignature,
-        parentalName: values.parentalName,
-        parentGovernmentId: values.parentGovernmentId,
-      }
-    : { clientSignature: values.clientSignature }),
-});
+//   name: values.name,
+//   email: values.email,
+//   phone: values.phone,
+//   governmentId: values.governmentId,
+//   dob: values.dob,
+//   address: values.address,
+//   bodyPart: values.bodyPart,
+//   design: values.design,
+//   service: values.service,
+//   lot: values.lot,
+//   appointmentDate: format(values.appointmentDate as string, 'yyyy-MM-dd'),
+//   isClientUnder18: values.isClientUnder18,
+//   ...(values.isClientUnder18
+//     ? {
+//         parentalSignature: values.parentalSignature,
+//         parentalName: values.parentalName,
+//         parentGovernmentId: values.parentGovernmentId,
+//       }
+//     : { clientSignature: values.clientSignature }),
+// });
 
 export default function StepSeven() {
   const { updateFormData, isClientUnder18, formData } = useWaiverFormContext();
-  const [isProcessing, setIsProcessing] = useState(false);
   const router = useRouter();
+
+  const { isProcessing, submitForm } = useWaiverSubmission();
 
   const methods = useForm({
     mode: 'all',
@@ -98,35 +65,26 @@ export default function StepSeven() {
     formState: { errors },
   } = methods;
 
-  const sendWaiverForm = async (data: FilteredValues) => {
-    const res = await fetch('/api/waiverform', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    });
-    if (!res.ok) throw new Error(await res.text());
-    return res;
-  };
-
   const onSubmitHandler = async (formValues: StepSevenData) => {
     updateFormData(formValues);
-    setIsProcessing(true);
 
-    try {
-      const filteredValues = prepareFilteredValues({
-        ...formValues,
-        ...formData,
-        isClientUnder18,
+    const result = await submitForm({
+      ...formValues,
+      ...formData,
+      isClientUnder18,
+    });
+
+    if (result.success) {
+      toast.success('The form was successfully submitted!', {
+        duration: 3000,
       });
-      await sendWaiverForm(filteredValues);
-      toast.success('The form was successfully submitted!', { duration: 3000 });
       router.replace('/faq');
-    } catch (error) {
+    } else {
       toast.error(
-        error instanceof Error ? error.message : 'Form submission failed.',
+        result.error instanceof Error
+          ? result.error.message
+          : 'Form submission failed.',
       );
-    } finally {
-      setIsProcessing(false);
     }
   };
 

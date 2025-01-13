@@ -2,9 +2,10 @@
 
 import CheckoutStripeForm from '@/app/components/CheckoutStripeForm';
 import SkeletonBox from '@/app/components/SkeletonBox';
+import { usePaymentIntent } from '@/app/hooks/usePaymentIntent';
 import { useAppContext } from '@/app/providers/BookingFormContext';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
@@ -15,52 +16,39 @@ const stripePromise = loadStripe(
 );
 
 export default function BookingPayment() {
-  const [clientSecret, setClientSecret] = useState(null);
   const { service, appointmentInfo } = useAppContext();
   const router = useRouter();
 
   useEffect(() => {
     if (!service) {
-      router.replace('/booking/service');
+      router.replace('/booking');
     }
   });
 
-  useEffect(() => {
-    (async () => {
-      if (!service) {
-        return;
-      }
+  const { clientSecret, isLoading, error } = usePaymentIntent({
+    body: service && appointmentInfo ? { service, ...appointmentInfo } : null,
+    endpoint: '/api/create-payment-intent?type=booking',
+  });
 
-      const res = await fetch('/api/create-payment-intent?type=booking', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: appointmentInfo?.name,
-          email: appointmentInfo?.email,
-          service,
-        }),
-      });
-
-      const data = await res.json();
-      setClientSecret(data.clientSecret);
-    })();
-  }, [appointmentInfo?.email, appointmentInfo?.name, service]);
-
-  if (!stripePromise || !clientSecret) {
+  if (isLoading || !stripePromise || !clientSecret) {
     return (
       <div className="flex justify-center mt-5">
         <SkeletonBox className="w-[300px] h-[730px] rounded-[20px] mb-[20px] sm:w-[390px] lg:w-[470px]" />
       </div>
     );
-  } else {
-    return (
-      <Elements stripe={stripePromise} options={{ clientSecret }}>
-        <CheckoutStripeForm
-          body={appointmentInfo!}
-          isBooking={true}
-          service={service}
-        />
-      </Elements>
-    );
   }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  return (
+    <Elements stripe={stripePromise} options={{ clientSecret }}>
+      <CheckoutStripeForm
+        body={appointmentInfo!}
+        isBooking={true}
+        service={service}
+      />
+    </Elements>
+  );
 }

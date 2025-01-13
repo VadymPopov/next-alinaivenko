@@ -1,10 +1,11 @@
 'use client';
 
 import CheckoutStripeForm from '@/app/components/CheckoutStripeForm';
-import SkeletonForm from '@/app/components/SkeletonBox';
+import SkeletonBox from '@/app/components/SkeletonBox';
+import { usePaymentIntent } from '@/app/hooks/usePaymentIntent';
 import { useAppContext } from '@/app/providers/BookingFormContext';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
@@ -15,7 +16,6 @@ const stripePromise = loadStripe(
 );
 
 export default function PostPayment() {
-  const [clientSecret, setClientSecret] = useState(null);
   const { paymentInfo } = useAppContext();
   const router = useRouter();
 
@@ -25,39 +25,32 @@ export default function PostPayment() {
     }
   });
 
-  useEffect(() => {
-    (async () => {
-      if (!paymentInfo?.amount) {
-        return;
-      }
-
-      const res = await fetch('/api/create-payment-intent', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+  const { clientSecret, isLoading, error } = usePaymentIntent({
+    body: paymentInfo
+      ? {
           name: paymentInfo?.name,
           email: paymentInfo?.email,
           total: paymentInfo?.total,
-        }),
-      });
+        }
+      : null,
+    endpoint: '/api/create-payment-intent',
+  });
 
-      const data = await res.json();
-      setClientSecret(data.clientSecret);
-    })();
-  }, [
-    paymentInfo?.amount,
-    paymentInfo?.email,
-    paymentInfo?.name,
-    paymentInfo?.total,
-  ]);
-
-  if (!stripePromise || !clientSecret) {
-    return <SkeletonForm />;
-  } else {
+  if (isLoading || !stripePromise || !clientSecret) {
     return (
-      <Elements stripe={stripePromise} options={{ clientSecret }}>
-        <CheckoutStripeForm body={paymentInfo!} isBooking={false} />
-      </Elements>
+      <div className="flex justify-center mt-5">
+        <SkeletonBox className="w-[300px] h-[730px] rounded-[20px] mb-[20px] sm:w-[390px] lg:w-[470px]" />
+      </div>
     );
   }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  return (
+    <Elements stripe={stripePromise} options={{ clientSecret }}>
+      <CheckoutStripeForm body={paymentInfo!} isBooking={false} />
+    </Elements>
+  );
 }
