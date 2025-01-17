@@ -1,7 +1,7 @@
-import Section from '@/app/components/Section';
-import Suptitle from '@/app/components/Suptitle';
-import Text from '@/app/components/Text';
-import Title from '@/app/components/Title';
+import Section from '@/components/ui/Section';
+import Suptitle from '@/components/ui/Suptitle';
+import Text from '@/components/ui/Text';
+import Title from '@/components/ui/Title';
 
 import React from 'react';
 

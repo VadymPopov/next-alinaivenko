@@ -1,4 +1,4 @@
-import TipPicker from '@/app/components/TipPicker';
+import TipPicker from '@/components/site/TipPicker';
 
 import React from 'react';
 

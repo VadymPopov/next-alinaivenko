@@ -1,4 +1,4 @@
-import AppointmentDetails from '@/app/components/AppointmentDetails';
+import AppointmentDetails from '@/components/admin/AppointmentDetails';
 
 async function getAppointment(id: string) {
   const response = await fetch(

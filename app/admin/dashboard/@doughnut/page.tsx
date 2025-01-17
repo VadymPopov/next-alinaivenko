@@ -1,6 +1,6 @@
-import DoughnutChart from '@/app/components/DoughnutChart';
-import connect from '@/app/lib/db';
-import Appointment from '@/app/lib/models/appointment';
+import DoughnutChart from '@/components/admin/DoughnutChart';
+import Appointment from '@/db/models/Appointment';
+import connect from '@/db/mongodb';
 
 const serviceTypes = [
   'Small Tattoo',

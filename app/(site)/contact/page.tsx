@@ -1,6 +1,6 @@
-import EmbeddedMap from '@/app/components/EmbeddedMap';
-import Section from '@/app/components/Section';
-import Title from '@/app/components/Title';
+import EmbeddedMap from '@/components/site/EmbeddedMap';
+import Section from '@/components/ui/Section';
+import Title from '@/components/ui/Title';
 
 import React from 'react';
 import {

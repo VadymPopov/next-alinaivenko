@@ -1,4 +1,4 @@
-import Completion from '@/app/components/Completion';
+import Completion from '@/components/site/Completion';
 
 import React from 'react';
 

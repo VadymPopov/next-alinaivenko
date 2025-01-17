@@ -1,9 +1,9 @@
 'use client';
 
-import CheckoutStripeForm from '@/app/components/CheckoutStripeForm';
-import SkeletonBox from '@/app/components/SkeletonBox';
-import { usePaymentIntent } from '@/app/hooks/usePaymentIntent';
-import { useAppContext } from '@/app/providers/BookingFormContext';
+import CheckoutStripeForm from '@/components/site/CheckoutStripeForm';
+import SkeletonBox from '@/components/ui/SkeletonBox';
+import { usePaymentIntent } from '@/hooks/usePaymentIntent';
+import { useAppContext } from '@/providers/BookingFormContext';
 
 import React, { useEffect } from 'react';
 

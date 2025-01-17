@@ -1,9 +1,9 @@
-import connect from '@/app/lib/db';
-import Appointment from '@/app/lib/models/appointment';
-import Studio from '@/app/lib/models/studio';
-import { sendEmail } from '@/app/lib/nodemailer/sendEmail';
-import { getReceipt } from '@/app/lib/stripe/getReceipt';
-import convertToDate from '@/app/utils/convertToDate';
+import Appointment from '@/db/models/Appointment';
+import Studio from '@/db/models/Studio';
+import connect from '@/db/mongodb';
+import { sendEmail } from '@/lib/nodemailer/sendEmail';
+import { getReceipt } from '@/lib/stripe/getReceipt';
+import convertToDate from '@/utils/convertToDate';
 
 import { format } from 'date-fns';
 import { type NextRequest, NextResponse } from 'next/server';

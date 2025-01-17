@@ -1,9 +1,9 @@
-import AdminTitle from '@/app/components/AdminTitle';
-import { IAppointment } from '@/app/components/AppointmentDetails';
-import AppointmentsTable from '@/app/components/AppointmentsTable';
-import { newApptTableHeaders } from '@/app/constants/constants';
-import connect from '@/app/lib/db';
-import Appointment from '@/app/lib/models/appointment';
+import AdminTitle from '@/components/admin/AdminTitle';
+import { IAppointment } from '@/components/admin/AppointmentDetails';
+import AppointmentsTable from '@/components/admin/AppointmentsTable';
+import { NEW_APPT_TABLE_HEADERS } from '@/constants/constants';
+import Appointment from '@/db/models/Appointment';
+import connect from '@/db/mongodb';
 
 import { Types } from 'mongoose';
 
@@ -50,7 +50,7 @@ export default async function page() {
       <AppointmentsTable
         combinedApptSlots={appointments}
         appointments={appointments}
-        headers={newApptTableHeaders}
+        headers={NEW_APPT_TABLE_HEADERS}
         isNew={true}
       />
     </div>

@@ -1,13 +1,13 @@
 'use client';
 
-import AdminTitle from '@/app/components/AdminTitle';
-import AppointmentsSearchForm from '@/app/components/AppointmentsSearchForm';
-import AppointmentsTable from '@/app/components/AppointmentsTable';
-import Flyout from '@/app/components/Flyout';
-import SearchBar from '@/app/components/SearchBar';
-import { apptTableHeaders } from '@/app/constants/constants';
-import useAppointments from '@/app/hooks/useAppointments';
-import { getFilterString } from '@/app/utils/helpers';
+import AdminTitle from '@/components/admin/AdminTitle';
+import AppointmentsSearchForm from '@/components/admin/AppointmentsSearchForm';
+import AppointmentsTable from '@/components/admin/AppointmentsTable';
+import Flyout from '@/components/admin/Flyout';
+import SearchBar from '@/components/ui/SearchBar';
+import { APPT_TABLE_HEADERS } from '@/constants/constants';
+import useAppointments from '@/hooks/useAppointments';
+import { getFilterString } from '@/utils/helpers';
 
 import React, { useMemo, useState } from 'react';
 
@@ -69,7 +69,7 @@ export default function Appointments() {
         <AppointmentsTable
           isLoading={isLoading}
           appointments={filteredAppointments}
-          headers={apptTableHeaders}
+          headers={APPT_TABLE_HEADERS}
         />
       </div>
 

@@ -1,13 +1,13 @@
-import Footer from '@/app/components/Footer';
-import Navigation from '@/app/components/Navigation';
-import '@/app/datepicker.css';
-import '@/app/globals.css';
+import Footer from '@/components/site/Footer';
+import Navigation from '@/components/site/Navigation';
+import '@/styles/datepicker.css';
+import '@/styles/globals.css';
 
 import { Toaster } from 'react-hot-toast';
 
 import { Metadata } from 'next';
 
-import { AppProvider } from '../providers/BookingFormContext';
+import { AppProvider } from '../../providers/BookingFormContext';
 
 export const metadata: Metadata = {
   title: {

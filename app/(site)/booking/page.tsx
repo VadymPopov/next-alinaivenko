@@ -1,4 +1,4 @@
-import Services from '@/app/components/ServicesPicker';
+import Services from '@/components/site/ServicesPicker';
 
 import React from 'react';
 

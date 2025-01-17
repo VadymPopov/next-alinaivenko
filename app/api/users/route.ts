@@ -1,5 +1,5 @@
-import connect from '@/app/lib/db';
-import User from '@/app/lib/models/user';
+import User from '@/db/models/User';
+import connect from '@/db/mongodb';
 
 import bcrypt from 'bcrypt';
 import { type NextRequest, NextResponse } from 'next/server';

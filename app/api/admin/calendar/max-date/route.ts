@@ -1,5 +1,5 @@
-import connect from '@/app/lib/db';
-import MaxDate from '@/app/lib/models/maxDate';
+import MaxDate from '@/db/models/MaxDate';
+import connect from '@/db/mongodb';
 
 import { NextRequest, NextResponse } from 'next/server';
 

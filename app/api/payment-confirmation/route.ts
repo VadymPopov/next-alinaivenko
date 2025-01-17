@@ -1,7 +1,7 @@
-import connect from '@/app/lib/db';
-import Appointment from '@/app/lib/models/appointment';
-import { sendEmail } from '@/app/lib/nodemailer/sendPaymentConfirmationEmail';
-import { getReceipt } from '@/app/lib/stripe/getReceipt';
+import Appointment from '@/db/models/Appointment';
+import connect from '@/db/mongodb';
+import { sendEmail } from '@/lib/nodemailer/sendPaymentConfirmationEmail';
+import { getReceipt } from '@/lib/stripe/getReceipt';
 
 import { format } from 'date-fns';
 import { NextResponse } from 'next/server';

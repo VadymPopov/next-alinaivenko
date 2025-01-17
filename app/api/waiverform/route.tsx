@@ -1,4 +1,4 @@
-import { sendEmail } from '@/app/lib/nodemailer/sendWaiverFormEmail';
+import { sendEmail } from '@/lib/nodemailer/sendWaiverFormEmail';
 
 import { NextResponse } from 'next/server';
 

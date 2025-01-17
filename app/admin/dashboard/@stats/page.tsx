@@ -1,6 +1,6 @@
-import StatCard from '@/app/components/StatCard';
-import connect from '@/app/lib/db';
-import Appointment from '@/app/lib/models/appointment';
+import StatCard from '@/components/admin/StatCard';
+import Appointment from '@/db/models/Appointment';
+import connect from '@/db/mongodb';
 
 import { endOfMonth, format, startOfMonth } from 'date-fns';
 

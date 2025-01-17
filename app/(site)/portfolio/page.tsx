@@ -1,6 +1,6 @@
-import Loader from '@/app/components/Loader';
-import Section from '@/app/components/Section';
-import Title from '@/app/components/Title';
+import Loader from '@/components/ui/Loader';
+import Section from '@/components/ui/Section';
+import Title from '@/components/ui/Title';
 import { freshArray } from '@/public/images/fresh';
 import { healedArray } from '@/public/images/healed';
 import { permanentArray } from '@/public/images/permanent';
@@ -11,7 +11,7 @@ import { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
-const Swiper = dynamic(() => import('@/app/components/Swiper'), {
+const Swiper = dynamic(() => import('@/components/site/Swiper'), {
   ssr: false,
   loading: () => <Loader />,
 });

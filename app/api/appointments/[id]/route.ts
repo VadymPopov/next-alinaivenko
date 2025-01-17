@@ -1,7 +1,7 @@
-import connect from '@/app/lib/db';
-import Appointment from '@/app/lib/models/appointment';
-import Studio from '@/app/lib/models/studio';
-import { sendEmail } from '@/app/lib/nodemailer/sendEmail';
+import Appointment from '@/db/models/Appointment';
+import Studio from '@/db/models/Studio';
+import connect from '@/db/mongodb';
+import { sendEmail } from '@/lib/nodemailer/sendEmail';
 
 import { NextResponse } from 'next/server';
 

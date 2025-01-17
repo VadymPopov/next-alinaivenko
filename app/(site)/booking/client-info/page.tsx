@@ -1,4 +1,4 @@
-import ClientForm from '@/app/components/ClientForm';
+import ClientForm from '@/components/site/ClientForm';
 
 import React from 'react';
 

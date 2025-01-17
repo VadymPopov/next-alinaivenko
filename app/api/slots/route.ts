@@ -1,6 +1,6 @@
-import connect from '@/app/lib/db';
-import Appointment from '@/app/lib/models/appointment';
-import BlockedSlot from '@/app/lib/models/blockedSlot';
+import Appointment from '@/db/models/Appointment';
+import BlockedSlot from '@/db/models/BlockedSlot';
+import connect from '@/db/mongodb';
 
 import { type NextRequest, NextResponse } from 'next/server';
 

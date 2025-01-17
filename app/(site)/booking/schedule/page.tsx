@@ -1,10 +1,11 @@
-import ScheduleForm from '@/app/components/ScheduleForm';
+import ScheduleForm from '@/components/site/ScheduleForm';
 
 import React from 'react';
 
 async function getMaxDate() {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/calendar/max-date`,
+    { cache: 'no-store' },
   );
   if (!response.ok)
     throw new Error(`Failed to fetch max date: ${response.statusText}`);
@@ -14,6 +15,7 @@ async function getMaxDate() {
 async function getFirstAvailableDate(duration: string) {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/calendar/available-date?duration=${duration}`,
+    { cache: 'no-store' },
   );
   if (!response.ok) {
     throw new Error(`Failed to fetch available date: ${response.statusText}`);

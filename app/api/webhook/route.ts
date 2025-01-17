@@ -1,5 +1,5 @@
-import connect from '@/app/lib/db';
-import Appointment from '@/app/lib/models/appointment';
+import Appointment from '@/db/models/Appointment';
+import connect from '@/db/mongodb';
 
 import { type NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';

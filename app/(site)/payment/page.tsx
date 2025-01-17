@@ -1,4 +1,4 @@
-import PaymentForm from '@/app/components/PaymentForm';
+import PaymentForm from '@/components/site/PaymentForm';
 
 import React from 'react';
 

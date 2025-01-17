@@ -1,13 +1,14 @@
-import AvailabilityCalendar from '@/app/components/AvailabilityCalendar';
-import BlockSlotForm from '@/app/components/BlockSlotForm';
-import SetMaxBookingDateForm from '@/app/components/SetMaxBookingDateForm';
-import StudioInfoForm from '@/app/components/StudioInfoForm';
+import AvailabilityCalendar from '@/components/admin/AvailabilityCalendar';
+import BlockSlotForm from '@/components/admin/BlockSlotForm';
+import SetMaxBookingDateForm from '@/components/admin/SetMaxBookingDateForm';
+import StudioInfoForm from '@/components/admin/StudioInfoForm';
 
 import React, { Suspense, use } from 'react';
 
 async function getMaxDate() {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/calendar/max-date`,
+    { cache: 'no-store' },
   );
   if (!response.ok)
     throw new Error(`Failed to fetch max date: ${response.statusText}`);
@@ -22,6 +23,7 @@ async function getBlockedDates() {
   });
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/calendar/?month=${currentMonth}&year=${currentYear}`,
+    { cache: 'no-store' },
   );
   if (!response.ok) {
     throw new Error(`Failed to fetch blocked dates: ${response.statusText}`);

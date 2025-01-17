@@ -1,12 +1,12 @@
+import Button from '@/components/ui/Button';
+import Section from '@/components/ui/Section';
+import Suptitle from '@/components/ui/Suptitle';
+import Text from '@/components/ui/Text';
+import Title from '@/components/ui/Title';
+
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-
-import Button from '../components/Button';
-import Section from '../components/Section';
-import Suptitle from '../components/Suptitle';
-import Text from '../components/Text';
-import Title from '../components/Title';
 
 export const metadata: Metadata = {
   title: 'Home',

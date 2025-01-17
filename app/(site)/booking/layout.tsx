@@ -1,7 +1,7 @@
-import { ProcessSteps } from '@/app/components/ProcessSteps';
-import Section from '@/app/components/Section';
-import Text from '@/app/components/Text';
-import Title from '@/app/components/Title';
+import { ProcessSteps } from '@/components/site/ProcessSteps';
+import Section from '@/components/ui/Section';
+import Text from '@/components/ui/Text';
+import Title from '@/components/ui/Title';
 
 const links = [
   { label: 'Service', href: '/booking' },

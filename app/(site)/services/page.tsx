@@ -1,7 +1,7 @@
-import Section from '@/app/components/Section';
-import ServiceCard from '@/app/components/ServiceCard';
-import Text from '@/app/components/Text';
-import Title from '@/app/components/Title';
+import ServiceCard from '@/components/site/ServiceCard';
+import Section from '@/components/ui/Section';
+import Text from '@/components/ui/Text';
+import Title from '@/components/ui/Title';
 
 import React from 'react';
 

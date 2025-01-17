@@ -1,6 +1,6 @@
-import Text from '@/app/components/Text';
-import Title from '@/app/components/Title';
-import WaiverForm from '@/app/components/WaiverForm/WaiverForm';
+import WaiverForm from '@/components/site/WaiverForm/WaiverForm';
+import Text from '@/components/ui/Text';
+import Title from '@/components/ui/Title';
 
 import React from 'react';
 

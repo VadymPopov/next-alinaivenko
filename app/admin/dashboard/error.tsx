@@ -1,6 +1,6 @@
 'use client';
 
-import Button from '@/app/components/Button';
+import Button from '@/components/ui/Button';
 
 import React from 'react';
 

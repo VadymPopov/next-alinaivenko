@@ -1,18 +1,17 @@
-import Header from '@/app/components/AdminHeader';
-import Sidebar from '@/app/components/Sidebar';
-import '@/app/datepicker.css';
-import '@/app/globals.css';
-import { getSession } from '@/auth';
+import Header from '@/components/admin/AdminHeader';
+import MainContent from '@/components/admin/AdminMain';
+import Sidebar from '@/components/admin/Sidebar';
+import { getSession } from '@/lib/auth';
+import AuthProvider from '@/providers/SessionProvider';
+import { SidebarProvider } from '@/providers/SidebarContext';
+import '@/styles/datepicker.css';
+import '@/styles/globals.css';
 
 import React, { ReactNode } from 'react';
 import { Toaster } from 'react-hot-toast';
 
 import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
-
-import MainContent from '../components/AdminMain';
-import AuthProvider from '../providers/SessionProvider';
-import { SidebarProvider } from '../providers/SidebarContext';
 
 type Props = {
   children: ReactNode;

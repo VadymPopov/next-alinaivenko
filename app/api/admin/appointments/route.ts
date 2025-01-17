@@ -1,6 +1,6 @@
-import connect from '@/app/lib/db';
-import Appointment from '@/app/lib/models/appointment';
-import convertToDate from '@/app/utils/convertToDate';
+import Appointment from '@/db/models/Appointment';
+import connect from '@/db/mongodb';
+import convertToDate from '@/utils/convertToDate';
 
 import { format } from 'date-fns';
 import { type NextRequest, NextResponse } from 'next/server';

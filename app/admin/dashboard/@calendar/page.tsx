@@ -1,7 +1,7 @@
 'use client';
 
-import DayView from '@/app/components/DayView';
-import WeekView from '@/app/components/WeekView';
+import DayView from '@/components/admin/DayView';
+import WeekView from '@/components/admin/WeekView';
 
 import React, { useState } from 'react';
 

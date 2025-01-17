@@ -1,5 +1,5 @@
-import connect from '@/app/lib/db';
-import BlockedSlot from '@/app/lib/models/blockedSlot';
+import BlockedSlot from '@/db/models/BlockedSlot';
+import connect from '@/db/mongodb';
 
 import { NextRequest, NextResponse } from 'next/server';
 
