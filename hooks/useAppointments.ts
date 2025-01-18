@@ -6,7 +6,7 @@ import {
   getFetcher,
   postFetcher,
   putFetcher,
-} from '../lib/axiosInstance';
+} from '../lib/axiosFetchers';
 import { serviceType } from '../providers/BookingFormContext';
 import { handleOptimisticMutate } from '../utils/mutateHelper';
 

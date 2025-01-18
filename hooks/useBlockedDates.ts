@@ -1,7 +1,7 @@
 import { isAfter, parseISO, startOfDay } from 'date-fns';
 import useSWR from 'swr';
 
-import { getFetcher, postFetcher, putFetcher } from '../lib/axiosInstance';
+import { getFetcher, postFetcher, putFetcher } from '../lib/axiosFetchers';
 import { handleOptimisticMutate } from '../utils/mutateHelper';
 
 const CALENDAR_API = '/api/admin/calendar';

@@ -51,3 +51,17 @@ export const SIDEBAR_MENU = [
   { path: '/admin/appointments', label: 'Appointments', icon: MdWork },
   { path: '/admin/calendar', label: 'Calendar', icon: MdOutlineEditCalendar },
 ];
+
+export const SERVICE_TYPES = [
+  'Small Tattoo',
+  'Large Tattoo',
+  'Permanent Makeup',
+  'Touch-up',
+];
+
+export const BOOKING_LINKS = [
+  { label: 'Service', href: '/booking' },
+  { label: 'Client', href: '/booking/client-info' },
+  { label: 'Time', href: '/booking/schedule' },
+  { label: 'Payment', href: '/booking/payment' },
+];

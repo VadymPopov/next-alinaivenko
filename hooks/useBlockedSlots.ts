@@ -2,7 +2,7 @@ import { format } from 'date-fns';
 import useSWR from 'swr';
 
 import { IBlockedSlot } from '../components/admin/WeekView';
-import { deleteFetcher, getFetcher, postFetcher } from '../lib/axiosInstance';
+import { deleteFetcher, getFetcher, postFetcher } from '../lib/axiosFetchers';
 import { handleOptimisticMutate } from '../utils/mutateHelper';
 
 const BLOCKED_SLOTS_API = '/api/admin/calendar/blocked-slots';

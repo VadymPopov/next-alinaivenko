@@ -2,8 +2,8 @@
 
 import AdminTitle from '@/components/admin/AdminTitle';
 import Button from '@/components/ui/Button';
-import { getFetcher } from '@/lib/axiosInstance';
-import { updateBlockedDates } from '@/lib/calendar';
+import { getFetcher } from '@/lib/axiosFetchers';
+import { updateBlockedDates } from '@/services/calendar';
 import { arraysAreEqual, isNewDate } from '@/utils/helpers';
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';

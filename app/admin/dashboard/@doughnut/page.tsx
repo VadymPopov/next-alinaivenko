@@ -1,37 +1,10 @@
 import DoughnutChart from '@/components/admin/DoughnutChart';
-import Appointment from '@/db/models/Appointment';
-import connect from '@/db/mongodb';
+import { getDatabyServiceType } from '@/services/doughnut';
 
-const serviceTypes = [
-  'Small Tattoo',
-  'Large Tattoo',
-  'Permanent Makeup',
-  'Touch-up',
-];
+import React, { Suspense, use } from 'react';
 
-async function getDatabyServiceType() {
-  try {
-    await connect();
-
-    const results = await Appointment.aggregate([
-      { $group: { _id: '$service', count: { $sum: 1 } } },
-      { $project: { _id: 0, service: '$_id', count: 1 } },
-    ]);
-
-    const response = serviceTypes.map((type) => {
-      const found = results.find((item) => item.service === type);
-      return { service: type, count: found ? found.count : 0 };
-    });
-
-    return response;
-  } catch (error) {
-    console.error('Error counting documents:', error);
-    return serviceTypes.map((type) => ({ service: type, count: 0 }));
-  }
-}
-
-export default async function Page() {
-  const serviceData = await getDatabyServiceType();
+export default function Page() {
+  const serviceData = use(getDatabyServiceType());
 
   if (serviceData.every((item) => item.count === 0)) {
     return (
@@ -41,5 +14,9 @@ export default async function Page() {
     );
   }
 
-  return <DoughnutChart serviceData={serviceData} />;
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      <DoughnutChart serviceData={serviceData} />
+    </Suspense>
+  );
 }

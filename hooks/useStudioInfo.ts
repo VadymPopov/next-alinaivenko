@@ -1,7 +1,7 @@
 import useSWR from 'swr';
 
 import { IStudioInfo } from '../components/admin/StudioInfoForm';
-import { getFetcher, postFetcher, putFetcher } from '../lib/axiosInstance';
+import { getFetcher, postFetcher, putFetcher } from '../lib/axiosFetchers';
 
 const STUDIO_API = '/api/admin/calendar/studio';
 

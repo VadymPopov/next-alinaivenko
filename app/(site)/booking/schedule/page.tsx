@@ -1,51 +1,20 @@
 import ScheduleForm from '@/components/site/ScheduleForm';
+import { getMaxDate } from '@/services/calendar';
+import { getFirstAvailableDate } from '@/services/schedule';
 
-import React from 'react';
+import React, { Suspense, use } from 'react';
 
-async function getMaxDate() {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/calendar/max-date`,
-    { cache: 'no-store' },
-  );
-  if (!response.ok)
-    throw new Error(`Failed to fetch max date: ${response.statusText}`);
-  return response.json();
-}
-
-async function getFirstAvailableDate(duration: string) {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/calendar/available-date?duration=${duration}`,
-    { cache: 'no-store' },
-  );
-  if (!response.ok) {
-    throw new Error(`Failed to fetch available date: ${response.statusText}`);
-  }
-  return response.json();
-}
-
-export default async function Schedule({
+export default function Schedule({
   searchParams,
 }: {
-  searchParams: Promise<{ [key: string]: string }>;
+  searchParams: { [key: string]: string };
 }) {
-  const { duration = '60' } = await searchParams;
-
-  let availableDate, maxDate;
-
-  try {
-    [availableDate, maxDate] = await Promise.all([
-      getFirstAvailableDate(duration),
-      getMaxDate(),
-    ]);
-  } catch (error) {
-    console.error('Error fetching schedule data:', error);
-    const errorMessage =
-      error instanceof Error ? error.message : 'Error fetching schedule data';
-    throw new Error(`${errorMessage}`);
-  }
+  const { duration = '60' } = searchParams;
+  const availableDate = use(getFirstAvailableDate(duration));
+  const maxDate = use(getMaxDate());
 
   return (
-    <>
+    <Suspense fallback={<p>Loading...</p>}>
       <ScheduleForm
         availableDate={availableDate.date}
         initialSlots={availableDate.slots}
@@ -53,6 +22,6 @@ export default async function Schedule({
         blockedDates={availableDate.blockedDates}
         duration={Number(duration)}
       />
-    </>
+    </Suspense>
   );
 }

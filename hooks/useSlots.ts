@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 
-import { getFetcher } from '../lib/axiosInstance';
+import { getFetcher } from '../lib/axiosFetchers';
 
 interface UseSlotsParams {
   date: string;

@@ -2,13 +2,7 @@ import { ProcessSteps } from '@/components/site/ProcessSteps';
 import Section from '@/components/ui/Section';
 import Text from '@/components/ui/Text';
 import Title from '@/components/ui/Title';
-
-const links = [
-  { label: 'Service', href: '/booking' },
-  { label: 'Client', href: '/booking/client-info' },
-  { label: 'Time', href: '/booking/schedule' },
-  { label: 'Payment', href: '/booking/payment' },
-];
+import { BOOKING_LINKS } from '@/constants/constants';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -37,7 +31,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </Text>
         </div>
       </div>
-      <ProcessSteps links={links} />
+      <ProcessSteps links={BOOKING_LINKS} />
 
       <div>{children}</div>
     </Section>

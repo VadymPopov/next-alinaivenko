@@ -3,7 +3,7 @@
 import Button from '@/components/ui/Button';
 import InputField from '@/components/ui/InputField';
 import usePasswordStrength from '@/hooks/usePasswordStrength';
-import { postFetcher } from '@/lib/axiosInstance';
+import { postFetcher } from '@/lib/axiosFetchers';
 import { validationSchemaProfileForm } from '@/schemas';
 
 import React, { useEffect } from 'react';

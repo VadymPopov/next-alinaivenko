@@ -1,37 +1,38 @@
+import toast from 'react-hot-toast';
+
 import axios from 'axios';
 
-axios.defaults.baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+const axiosInstance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+});
 
-export const getFetcher = async <T>(url: string): Promise<T> => {
-  const { data } = await axios.get<T>(url);
-  return data;
-};
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response) {
+      switch (error.response.status) {
+        case 401:
+          toast.error('Unauthorized. Please log in.');
+          break;
+        case 403:
+          toast.error('Forbidden. You do not have access.');
+          break;
+        case 404:
+          toast.error('Resource not found.');
+          break;
+        case 500:
+          toast.error('Server error. Please try again later.');
+          break;
+        default:
+          toast.error(error.response.data?.message || 'An error occurred.');
+      }
+    } else if (error.request) {
+      toast.error('Network error. Please check your connection.');
+    } else {
+      toast.error('An unexpected error occurred.');
+    }
+    return Promise.reject(error);
+  },
+);
 
-export const postFetcher = async <T, D = unknown>(
-  url: string,
-  body: D,
-): Promise<T> => {
-  const { data } = await axios.post<T>(url, body);
-  return data;
-};
-
-export const putFetcher = async <T, D = unknown>(
-  url: string,
-  body: D,
-): Promise<T> => {
-  const { data } = await axios.put<T>(url, body);
-  return data;
-};
-
-export const patchFetcher = async <T, D = unknown>(
-  url: string,
-  body: D,
-): Promise<T> => {
-  const { data } = await axios.patch<T>(url, body);
-  return data;
-};
-
-export const deleteFetcher = async <T>(url: string): Promise<T> => {
-  const { data } = await axios.delete<T>(url);
-  return data;
-};
+export default axiosInstance;

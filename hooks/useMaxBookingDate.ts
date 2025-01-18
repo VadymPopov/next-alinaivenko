@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 
-import { getFetcher, postFetcher, putFetcher } from '../lib/axiosInstance';
+import { getFetcher, postFetcher, putFetcher } from '../lib/axiosFetchers';
 
 export interface MaxDate {
   _id?: string;

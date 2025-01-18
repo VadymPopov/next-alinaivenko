@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { format } from 'date-fns';
 
-import { postFetcher } from '../lib/axiosInstance';
+import { postFetcher } from '../lib/axiosFetchers';
 import { IWaiverFormData } from '../providers/WaiverFormContext';
 
 interface UnfilteredValues extends IWaiverFormData {

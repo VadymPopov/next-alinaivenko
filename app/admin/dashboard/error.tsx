@@ -1,19 +1,15 @@
 'use client';
 
-import Button from '@/components/ui/Button';
+import ErrorBoundary from '@/components/ui/ErrorBoundary';
 
 import React from 'react';
 
-export interface ErrorComponentProps {
+export default function Error({
+  error,
+  reset,
+}: {
   error: Error;
   reset: () => void;
-}
-
-export default function ErrorComponent({ error, reset }: ErrorComponentProps) {
-  return (
-    <div>
-      <p>{`Something went wrong. ${error.message}`}</p>
-      <Button onClick={() => reset()}>Try again</Button>
-    </div>
-  );
+}) {
+  return <ErrorBoundary error={error} reset={reset} />;
 }
