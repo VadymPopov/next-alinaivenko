@@ -2,6 +2,8 @@
 
 import BlockedSlotView from '@/components/admin/BlockedSlotView';
 import WeekViewAppointment from '@/components/admin/WeekViewAppointment';
+import { Appointment } from '@/types';
+import { BlockedSlot } from '@/types';
 
 import React from 'react';
 import { MdAdd } from 'react-icons/md';
@@ -15,15 +17,13 @@ import {
   getCombinedApptSlots,
   getTimeSlots,
 } from '../../utils/helpers';
-import { IAppointment } from './AppointmentDetails';
-import { IBlockedSlot } from './WeekView';
 
 interface DayColumnProps {
   day: Date;
-  appointments: IAppointment[];
+  appointments: Appointment[];
   slotHeight: number;
   blockedDates: string[];
-  blockedSlots: IBlockedSlot[];
+  blockedSlots: BlockedSlot[];
 }
 
 export default function DayColumn({

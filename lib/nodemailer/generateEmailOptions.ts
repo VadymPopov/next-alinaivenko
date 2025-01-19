@@ -1,4 +1,4 @@
-interface generateEmailOptionsI {
+interface generateEmailOptionsParams {
   to: string;
   subject: string;
   htmlContent: string;
@@ -15,7 +15,7 @@ export function generateEmailOptions({
   htmlContent,
   attachments = [],
   logoPath,
-}: generateEmailOptionsI) {
+}: generateEmailOptionsParams) {
   return {
     from: 'inkedbyalina@gmail.com',
     to,

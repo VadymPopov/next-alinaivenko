@@ -1,10 +1,10 @@
-import { IAppointment } from '@/components/admin/AppointmentDetails';
 import Appointment from '@/db/models/Appointment';
 import connect from '@/db/mongodb';
+import { Appointment as AppointmentType } from '@/types';
 
 import { Types } from 'mongoose';
 
-interface AppointmentDocument extends Omit<IAppointment, '_id'> {
+interface AppointmentDocument extends Omit<AppointmentType, '_id'> {
   _id: Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;

@@ -3,16 +3,13 @@
 import Button from '@/components/ui/Button';
 import InputField from '@/components/ui/InputField';
 import { validationSchemaCustomTip } from '@/schemas';
+import { CustomTipFormValues } from '@/types';
 
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { MdDone } from 'react-icons/md';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-
-interface FormValues {
-  amount: number;
-}
 
 interface CustomTipFormProps {
   setTip: React.Dispatch<React.SetStateAction<number>>;
@@ -25,13 +22,13 @@ export default function CustomTipForm({
   showCustomTipForm,
   setShowCustomTipForm,
 }: CustomTipFormProps) {
-  const onSubmitHandler = (values: FormValues) => {
+  const onSubmitHandler = (values: CustomTipFormValues) => {
     const { amount } = values;
     setTip(amount);
     setShowCustomTipForm(false);
   };
 
-  const methods = useForm<FormValues>({
+  const methods = useForm<CustomTipFormValues>({
     mode: 'all',
     resolver: yupResolver(validationSchemaCustomTip),
   });

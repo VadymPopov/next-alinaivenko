@@ -1,6 +1,6 @@
-import { addDays } from 'date-fns';
+import { filterDate } from '@/utils/helpers';
 
-import { filterDate } from './helpers';
+import { addDays } from 'date-fns';
 
 interface AvailabilableDateParams {
   date: Date;

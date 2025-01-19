@@ -4,34 +4,22 @@ import AdminTitle from '@/components/admin/AdminTitle';
 import Button from '@/components/ui/Button';
 import InputField from '@/components/ui/InputField';
 import SelectField from '@/components/ui/Select';
-import { MONTH_OPTIONS } from '@/constants/constants';
+import { MONTH_OPTIONS } from '@/constants';
+import { Options, SearchDate } from '@/types';
 import { generateDays } from '@/utils/helpers';
 
 import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { MdSearch } from 'react-icons/md';
 
-import { IDate } from '../../app/admin/appointments/page';
-
-type daysOptionsType = {
-  label: string;
-  value: string;
-};
-
-interface FormValues {
-  day?: number;
-  month?: number;
-  year?: number;
-}
-
 export default function AppointmentsSearchForm({
   setDate,
 }: {
-  setDate: React.Dispatch<React.SetStateAction<IDate>>;
+  setDate: React.Dispatch<React.SetStateAction<SearchDate>>;
 }) {
-  const [daysOptions, setDaysOptions] = useState<daysOptionsType[]>([]);
+  const [daysOptions, setDaysOptions] = useState<Options[]>([]);
 
-  const methods = useForm<FormValues>({
+  const methods = useForm<SearchDate>({
     mode: 'all',
     defaultValues: {
       year: new Date().getFullYear(),
@@ -49,7 +37,7 @@ export default function AppointmentsSearchForm({
     setDaysOptions(updatedDays);
   }, [year, month]);
 
-  const onSubmitHandler = async (formValues: FormValues) => {
+  const onSubmitHandler = async (formValues: SearchDate) => {
     const { day, month, year } = formValues;
     setDate({
       day,

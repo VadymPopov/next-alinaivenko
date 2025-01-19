@@ -1,7 +1,7 @@
 'use client';
 
-import { IAppointment } from '@/components/admin/AppointmentDetails';
 import ServiceLabel from '@/components/ui/ServiceLabel';
+import { Appointment } from '@/types';
 import { formatCurrency, formatDuration } from '@/utils/helpers';
 
 import React from 'react';
@@ -9,7 +9,7 @@ import React from 'react';
 export default function AppointmentView({
   appointment,
 }: {
-  appointment: IAppointment;
+  appointment: Appointment;
 }) {
   return (
     <div>

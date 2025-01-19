@@ -3,16 +3,14 @@
 import AppointmentCardView from '@/components/admin/AppointmentCardView';
 import AppointmentRowView from '@/components/admin/AppointmentRowView';
 import BlockedSlotView from '@/components/admin/BlockedSlotView';
+import { Appointment, BlockedSlot } from '@/types';
 
 import React from 'react';
 
-import { IAppointment } from './AppointmentDetails';
-import { IBlockedSlot } from './WeekView';
-
 interface AppointmentsTableProps {
   isLoading?: boolean;
-  appointments: IAppointment[];
-  combinedApptSlots?: (IAppointment | IBlockedSlot)[];
+  appointments: Appointment[];
+  combinedApptSlots?: (Appointment | BlockedSlot)[];
   headers: string[];
   isNew?: boolean;
 }

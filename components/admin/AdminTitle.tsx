@@ -1,9 +1,9 @@
 import clsx from 'clsx';
 
-type TitleProps = {
+interface TitleProps {
   className?: string;
   title: string;
-};
+}
 
 export default function AdminTitle({ title, className }: TitleProps) {
   return (

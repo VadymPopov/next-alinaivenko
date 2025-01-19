@@ -22,14 +22,6 @@ import {
   sub,
 } from 'date-fns';
 
-export interface IBlockedSlot {
-  _id: string;
-  date: string;
-  slot: string;
-  duration: number;
-  reason: string;
-}
-
 const WeekView = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [week, setWeek] = useState(new Date());

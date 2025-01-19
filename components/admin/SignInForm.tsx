@@ -3,6 +3,7 @@
 import Button from '@/components/ui/Button';
 import InputField from '@/components/ui/InputField';
 import { validationSchemaSignIn } from '@/schemas';
+import { SignInFormValues } from '@/types';
 
 import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -10,11 +11,6 @@ import { MdLogin } from 'react-icons/md';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { signIn } from 'next-auth/react';
-
-interface FormValues {
-  email: string;
-  password: string;
-}
 
 export default function SignInForm() {
   const [authError, setAuthError] = useState<string | null>(null);
@@ -34,7 +30,7 @@ export default function SignInForm() {
     setFocus('email');
   }, [setFocus]);
 
-  const onSubmitHandler = async (formValues: FormValues) => {
+  const onSubmitHandler = async (formValues: SignInFormValues) => {
     const { email, password } = formValues;
 
     const result = await signIn('credentials', {

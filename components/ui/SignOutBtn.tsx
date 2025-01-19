@@ -1,10 +1,10 @@
+import { useSidebar } from '@/providers/SidebarContext';
+
 import React from 'react';
 import { MdLogout } from 'react-icons/md';
 
 import clsx from 'clsx';
 import { signOut } from 'next-auth/react';
-
-import { useSidebar } from '../../providers/SidebarContext';
 
 export default function SignOutBtn() {
   const { isExtended } = useSidebar();

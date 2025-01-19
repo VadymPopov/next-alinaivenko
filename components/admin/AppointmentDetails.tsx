@@ -4,6 +4,7 @@ import AppointmentView from '@/components/admin/AppointmentView';
 import EditAppointmentForm from '@/components/admin/EditAppointmentForm';
 import Button from '@/components/ui/Button';
 import useAppointments from '@/hooks/useAppointments';
+import { Appointment } from '@/types';
 
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
@@ -16,37 +17,10 @@ import {
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 
-export interface IAppointment {
-  _id: string;
-  name: string;
-  email: string;
-  phone: string;
-  service: 'Small Tattoo' | 'Large Tattoo' | 'Touch-up' | 'Permanent Makeup';
-  date: string;
-  slot: string;
-  duration: number;
-  description: string;
-  instagram: string;
-  deposit: {
-    amount: number;
-    tax: number;
-    fee: number;
-    total: number;
-  };
-  payment?: {
-    amount: number;
-    tax: number;
-    fee: number;
-    tip: number;
-    total: number;
-  };
-  paymentIntentId?: string;
-}
-
 export default function AppointmentDetails({
   appointment,
 }: {
-  appointment: IAppointment;
+  appointment: Appointment;
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [deleteFlag, setDeleteFlag] = useState(false);

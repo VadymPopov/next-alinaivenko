@@ -1,14 +1,13 @@
 'use client';
 
 import AppointmentRow from '@/components/admin/AppointmentRowView';
-import { NEW_APPT_TABLE_HEADERS } from '@/constants/constants';
+import { NEW_APPT_TABLE_HEADERS } from '@/constants';
+import { Appointment } from '@/types';
 
 import React from 'react';
 
-import { IAppointment } from './AppointmentDetails';
-
 interface AppointmentsTableProps {
-  appointments: IAppointment[];
+  appointments: Appointment[];
 }
 
 export default function NewAppointmentsTable({

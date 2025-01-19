@@ -5,6 +5,7 @@ import InputField from '@/components/ui/InputField';
 import usePasswordStrength from '@/hooks/usePasswordStrength';
 import { postFetcher } from '@/lib/axiosFetchers';
 import { validationSchemaProfileForm } from '@/schemas';
+import { ProfileFormValues } from '@/types';
 
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -12,11 +13,6 @@ import toast from 'react-hot-toast';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/navigation';
-
-interface FormValues {
-  password: string;
-  confirmPassword: string;
-}
 
 export default function ProfileForm({ id }: { id?: string }) {
   const { strengthColor, passwordStrength, validatePasswordStrength } =
@@ -40,7 +36,7 @@ export default function ProfileForm({ id }: { id?: string }) {
     validatePasswordStrength(password);
   }, [password, validatePasswordStrength]);
 
-  const onSubmitHandler = async (formValues: FormValues) => {
+  const onSubmitHandler = async (formValues: ProfileFormValues) => {
     try {
       await postFetcher(`/api/users?id=${id}`, {
         password: formValues.password,

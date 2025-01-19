@@ -2,7 +2,7 @@ import { ProcessSteps } from '@/components/site/ProcessSteps';
 import Section from '@/components/ui/Section';
 import Text from '@/components/ui/Text';
 import Title from '@/components/ui/Title';
-import { BOOKING_LINKS } from '@/constants/constants';
+import { BOOKING_LINKS } from '@/constants';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

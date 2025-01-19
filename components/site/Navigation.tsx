@@ -3,46 +3,12 @@
 import BurgerBtn from '@/components/ui/BurgerBtn';
 import Menu from '@/components/ui/Menu';
 import SlidingMenu from '@/components/ui/SlidingMenu';
+import { SITE_MENU } from '@/constants';
 import { useMenu } from '@/hooks/useMenu';
 
 import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
-
-const menu = [
-  {
-    path: '/portfolio',
-    label: 'Portfolio',
-  },
-  {
-    path: '/services',
-    label: 'Services and Prices',
-  },
-  {
-    path: '/aftercare',
-    label: 'Aftercare',
-  },
-  {
-    path: '/waiverform',
-    label: 'Waiver',
-  },
-  {
-    path: '/booking',
-    label: 'Booking',
-  },
-  {
-    path: '/faq',
-    label: 'FAQ',
-  },
-  {
-    path: '/contact',
-    label: 'Contact',
-  },
-  {
-    path: '/payment',
-    label: 'Payment',
-  },
-];
 
 export default function Navigation() {
   const { onClose, isOpen, toggleMenu } = useMenu();
@@ -69,7 +35,7 @@ export default function Navigation() {
             />
           </Link>
           <div className="hidden lg:flex">
-            <Menu menu={menu} />
+            <Menu menu={SITE_MENU} />
           </div>
           <BurgerBtn
             isOpen={isOpen}
@@ -82,7 +48,7 @@ export default function Navigation() {
           isOpen={isOpen}
           className={isOpen ? 'opacity-100' : 'opacity-0 fixed'}
         >
-          <Menu onClick={toggleMenu} menu={menu} />
+          <Menu onClick={toggleMenu} menu={SITE_MENU} />
         </SlidingMenu>
       </nav>
     </header>

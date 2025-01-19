@@ -1,11 +1,7 @@
+import { getFetcher, postFetcher, putFetcher } from '@/lib/axiosFetchers';
+import { MaxDate } from '@/types';
+
 import useSWR from 'swr';
-
-import { getFetcher, postFetcher, putFetcher } from '../lib/axiosFetchers';
-
-export interface MaxDate {
-  _id?: string;
-  date: Date;
-}
 
 const CALENDAR_API = '/api/admin/calendar/max-date';
 

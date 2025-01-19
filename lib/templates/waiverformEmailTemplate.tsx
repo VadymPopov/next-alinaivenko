@@ -1,4 +1,4 @@
-interface waiverFormEmailI {
+interface WaiverFormEmailParams {
   name: string;
   email: string;
   phone?: string;
@@ -12,7 +12,7 @@ export function generateWaiverFormEmail({
   phone,
   address,
   appointmentDate,
-}: waiverFormEmailI) {
+}: WaiverFormEmailParams) {
   return `
   <div style="
     font-family: Arial, sans-serif;

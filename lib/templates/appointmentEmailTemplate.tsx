@@ -1,6 +1,6 @@
 import { formatCurrency } from '@/utils/helpers';
 
-interface generateAppointmentEmailI {
+interface ApptEmailParams {
   name: string;
   email: string;
   phone?: string;
@@ -35,7 +35,7 @@ export function generateAppointmentEmail({
   client,
   deposit,
   receiptUrl,
-}: generateAppointmentEmailI) {
+}: ApptEmailParams) {
   return `
   <div style="font-family: Arial, sans-serif; background-color: #000; padding: 40px 20px; max-width: 600px; margin: 0 auto; border-radius: 10px;">
     <img src="cid:logo" alt="Ivenko Alina Logo" style="width: 60px; margin: 0 auto 20px auto; display: block; border-radius: 50%; object-fit: cover; border: 2px solid #fff;" />

@@ -1,3 +1,4 @@
+import ImagesPreview from '@/components/ui/ImagesPreview';
 import { useImageUpload } from '@/hooks/useImageUpload';
 
 import { InputHTMLAttributes } from 'react';
@@ -5,8 +6,6 @@ import { useFormContext } from 'react-hook-form';
 import { SlCloudUpload } from 'react-icons/sl';
 
 import clsx from 'clsx';
-
-import ImagesPreview from './ImagesPreview';
 
 interface FileInputProps
   extends InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {

@@ -5,17 +5,12 @@ import AppointmentsSearchForm from '@/components/admin/AppointmentsSearchForm';
 import AppointmentsTable from '@/components/admin/AppointmentsTable';
 import Flyout from '@/components/admin/Flyout';
 import SearchBar from '@/components/ui/SearchBar';
-import { APPT_TABLE_HEADERS } from '@/constants/constants';
+import { APPT_TABLE_HEADERS } from '@/constants';
 import useAppointments from '@/hooks/useAppointments';
+import { SearchDate } from '@/types';
 import { getFilterString } from '@/utils/helpers';
 
 import React, { useMemo, useState } from 'react';
-
-export interface IDate {
-  year?: number;
-  month?: number;
-  day?: number;
-}
 
 const defaultDate = {
   day: new Date().getDate(),
@@ -24,7 +19,7 @@ const defaultDate = {
 };
 
 export default function Appointments() {
-  const [date, setDate] = useState<IDate>(defaultDate);
+  const [date, setDate] = useState<SearchDate>(defaultDate);
   const [query, setQuery] = useState<string>('');
 
   const { isLoading, appointments, error } = useAppointments({

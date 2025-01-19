@@ -5,6 +5,7 @@ import Button from '@/components/ui/Button';
 import InputField from '@/components/ui/InputField';
 import useStudioInfo from '@/hooks/useStudioInfo';
 import { validationSchemaStudioInfo } from '@/schemas';
+import { StudioFormValues, StudioInfo } from '@/types';
 
 import React, { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -12,24 +13,7 @@ import toast from 'react-hot-toast';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 
-interface FormValues {
-  address: string;
-  city: string;
-  name: string;
-  latitude: string;
-  longitude: string;
-}
-
-export interface IStudioInfo {
-  _id: string;
-  address: string;
-  city: string;
-  name: string;
-  latitude: string;
-  longitude: string;
-}
-
-export default function StudioInfoForm({ studio }: { studio: IStudioInfo }) {
+export default function StudioInfoForm({ studio }: { studio: StudioInfo }) {
   const { data, error, isLoading, updateStudioInfo, isValidating } =
     useStudioInfo(studio);
 
@@ -63,7 +47,7 @@ export default function StudioInfoForm({ studio }: { studio: IStudioInfo }) {
     );
   }, [data, formValues]);
 
-  const onSubmitHandler = async (formValues: FormValues) => {
+  const onSubmitHandler = async (formValues: StudioFormValues) => {
     try {
       await updateStudioInfo({ id: data._id, ...formValues });
       toast.success('Studio Information was successfully updated!', {

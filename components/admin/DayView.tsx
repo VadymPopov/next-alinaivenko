@@ -2,7 +2,7 @@
 
 import AdminTitle from '@/components/admin/AdminTitle';
 import AppointmentsTable from '@/components/admin/AppointmentsTable';
-import { APPT_TABLE_HEADERS } from '@/constants/constants';
+import { APPT_TABLE_HEADERS } from '@/constants';
 import useAppointments from '@/hooks/useAppointments';
 import useBlockedDates from '@/hooks/useBlockedDates';
 import useBlockedSlots from '@/hooks/useBlockedSlots';

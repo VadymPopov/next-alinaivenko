@@ -1,10 +1,10 @@
 'use client';
 
+import ButtonLoader from '@/components/ui/ButtonLoader';
+
 import React, { ReactNode } from 'react';
 
 import clsx from 'clsx';
-
-import ButtonLoader from './ButtonLoader';
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {

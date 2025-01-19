@@ -1,7 +1,7 @@
-import useSWR from 'swr';
+import { getFetcher, postFetcher, putFetcher } from '@/lib/axiosFetchers';
+import { StudioInfo } from '@/types';
 
-import { IStudioInfo } from '../components/admin/StudioInfoForm';
-import { getFetcher, postFetcher, putFetcher } from '../lib/axiosFetchers';
+import useSWR from 'swr';
 
 const STUDIO_API = '/api/admin/calendar/studio';
 
@@ -47,7 +47,7 @@ export default function useStudioInfo(fallbackData?: {
   };
 
   return {
-    data: data as IStudioInfo,
+    data: data as StudioInfo,
     error,
     isLoading,
     updateStudioInfo,

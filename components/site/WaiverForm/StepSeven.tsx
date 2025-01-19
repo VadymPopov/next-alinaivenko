@@ -8,6 +8,7 @@ import Text from '@/components/ui/Text';
 import { useWaiverSubmission } from '@/hooks/useWaiverFormSubmission';
 import { useWaiverFormContext } from '@/providers/WaiverFormContext';
 import { validationSchemaWaiverStepSeven } from '@/schemas';
+import { StepSevenFormValues } from '@/types';
 
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -15,36 +16,6 @@ import toast from 'react-hot-toast';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/navigation';
-
-export interface StepSevenData {
-  lot: string;
-  agreement?: boolean;
-  clientSignature?: string;
-  parentalConsent?: boolean;
-  parentalName?: string;
-  parentGovernmentId?: string;
-  parentalSignature?: string;
-}
-//   name: values.name,
-//   email: values.email,
-//   phone: values.phone,
-//   governmentId: values.governmentId,
-//   dob: values.dob,
-//   address: values.address,
-//   bodyPart: values.bodyPart,
-//   design: values.design,
-//   service: values.service,
-//   lot: values.lot,
-//   appointmentDate: format(values.appointmentDate as string, 'yyyy-MM-dd'),
-//   isClientUnder18: values.isClientUnder18,
-//   ...(values.isClientUnder18
-//     ? {
-//         parentalSignature: values.parentalSignature,
-//         parentalName: values.parentalName,
-//         parentGovernmentId: values.parentGovernmentId,
-//       }
-//     : { clientSignature: values.clientSignature }),
-// });
 
 export default function StepSeven() {
   const { updateFormData, isClientUnder18, formData } = useWaiverFormContext();
@@ -64,7 +35,7 @@ export default function StepSeven() {
     formState: { errors },
   } = methods;
 
-  const onSubmitHandler = async (formValues: StepSevenData) => {
+  const onSubmitHandler = async (formValues: StepSevenFormValues) => {
     updateFormData(formValues);
 
     const result = await submitForm({
@@ -171,7 +142,7 @@ export default function StepSeven() {
             <h3 className="font-bold text-lg tracking-wider text-mainDarkColor text-start my-2.5 mx-0 md:my-5">
               Parental/Guardian Signature:
             </h3>
-            <SignatureField<StepSevenData>
+            <SignatureField<StepSevenFormValues>
               name="parentalSignature"
               error={errors.parentalSignature?.message || ''}
               control={control}

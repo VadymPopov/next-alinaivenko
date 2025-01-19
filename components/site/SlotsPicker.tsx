@@ -1,4 +1,4 @@
-import { IFormValues } from '@/components/site/ScheduleForm';
+import { ScheduleFormValues } from '@/types';
 import { isTimeWithinLastHour } from '@/utils/timeComparison';
 
 import React, { useState } from 'react';
@@ -7,8 +7,8 @@ import { Control, Controller } from 'react-hook-form';
 import clsx from 'clsx';
 
 interface SlotsPickerProps {
-  name: keyof IFormValues;
-  control: Control<IFormValues>;
+  name: keyof ScheduleFormValues;
+  control: Control<ScheduleFormValues>;
   error?: string;
   slots: string[];
   selectedDate: Date;

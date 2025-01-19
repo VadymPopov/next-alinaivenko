@@ -1,16 +1,13 @@
+import { Options } from '@/types';
+
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { FcCheckmark } from 'react-icons/fc';
 import Select from 'react-select';
 
 import clsx from 'clsx';
 
-interface Option {
-  value: string;
-  label: string;
-}
-
 interface SelectFieldProps<T extends FieldValues> {
-  options?: Option[];
+  options?: Options[];
   label?: string;
   name: Path<T>;
   error?: string;

@@ -5,10 +5,10 @@ import SlotsPicker from '@/components/site/SlotsPicker';
 import Button from '@/components/ui/Button';
 import FieldSet from '@/components/ui/FieldSet';
 import SkeletonGrid from '@/components/ui/SkeletonGrid';
-import { MaxDate } from '@/hooks/useMaxBookingDate';
 import useSlots from '@/hooks/useSlots';
-import { useAppContext } from '@/providers/BookingFormContext';
+import { useAppContext } from '@/providers/AppContext';
 import { validationSchemaSchedule } from '@/schemas';
+import { MaxDate, ScheduleFormValues } from '@/types';
 
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -18,11 +18,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import clsx from 'clsx';
 import { format, parse, startOfDay } from 'date-fns';
 import { useRouter } from 'next/navigation';
-
-export interface IFormValues {
-  date: Date;
-  slot: string;
-}
 
 export default function ScheduleForm({
   availableDate,
@@ -79,7 +74,7 @@ export default function ScheduleForm({
     );
   }
 
-  const onSubmitHandler = async (formData: IFormValues) => {
+  const onSubmitHandler = async (formData: ScheduleFormValues) => {
     const info = {
       ...appointmentInfo,
       date: formData.date,

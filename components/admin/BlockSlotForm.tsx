@@ -8,6 +8,7 @@ import SelectField from '@/components/ui/Select';
 import useBlockedSlots from '@/hooks/useBlockedSlots';
 import useSlots from '@/hooks/useSlots';
 import { validationSchemaBlockSlot } from '@/schemas';
+import { BlockSlotFormValues } from '@/types';
 import { durationOptions, slotsOptions } from '@/utils/helpers';
 
 import React from 'react';
@@ -16,13 +17,6 @@ import toast from 'react-hot-toast';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { format } from 'date-fns';
-
-interface FormValues {
-  date: Date;
-  slot: string;
-  duration: string;
-  reason?: string;
-}
 
 export default function BlockSlotForm() {
   const { isValidating, error, addBlockedSlot } = useBlockedSlots();
@@ -50,7 +44,7 @@ export default function BlockSlotForm() {
     duration: Number(selectedDuration),
   });
 
-  const onSubmitHandler = async (formValues: FormValues) => {
+  const onSubmitHandler = async (formValues: BlockSlotFormValues) => {
     try {
       const { date, duration, reason } = formValues;
       const newBlockedSlot = {
@@ -79,7 +73,7 @@ export default function BlockSlotForm() {
       >
         <AdminTitle title="Block slot" />
         <div className="text-center">
-          <DatePickerField<FormValues>
+          <DatePickerField<BlockSlotFormValues>
             name="date"
             label="Date"
             control={control}

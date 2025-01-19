@@ -3,7 +3,7 @@
 import CheckoutStripeForm from '@/components/site/CheckoutStripeForm';
 import SkeletonBox from '@/components/ui/SkeletonBox';
 import { usePaymentIntent } from '@/hooks/usePaymentIntent';
-import { useAppContext } from '@/providers/BookingFormContext';
+import { useAppContext } from '@/providers/AppContext';
 
 import React, { useEffect } from 'react';
 

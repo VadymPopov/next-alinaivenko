@@ -1,71 +1,17 @@
-import useSWR from 'swr';
-
-import { IAppointment } from '../components/admin/AppointmentDetails';
 import {
   deleteFetcher,
   getFetcher,
   postFetcher,
   putFetcher,
-} from '../lib/axiosFetchers';
-import { serviceType } from '../providers/BookingFormContext';
-import { handleOptimisticMutate } from '../utils/mutateHelper';
+} from '@/lib/axiosFetchers';
+import { Appointment, AppointmentEdited, NewAppointment } from '@/types';
+import { mapToMongoAppointment } from '@/utils/helpers';
+import { handleOptimisticMutate } from '@/utils/mutateHelper';
 
-interface IAppointmentEdit {
-  _id: string;
-  phone?: string | null;
-  instagram?: string;
-  description?: string;
-  name: string;
-  email: string;
-  date: string;
-  service: serviceType;
-  slot: string;
-  duration: string;
-  depositAmount?: number;
-  depositTax?: number;
-  depositFee?: number;
-  depositTotal?: number;
-  paymentAmount?: number;
-  paymentTax?: number;
-  paymentTotal?: number;
-  paymentFee?: number;
-  tip?: number;
-  paymentIntentId?: string;
-}
-
-interface NewAppointment extends Omit<IAppointment, '_id'> {}
+import useSWR from 'swr';
 
 const APPOINTMENTS_API = '/api/appointments';
 const ADMIN_APPOINTMENTS_API = '/api/admin/appointments';
-
-function mapToMongoAppointment(appointment: IAppointmentEdit) {
-  return {
-    _id: appointment._id,
-    name: appointment.name,
-    email: appointment.email,
-    phone: appointment.phone || '',
-    service: appointment.service,
-    date: appointment.date,
-    slot: appointment.slot,
-    duration: Number(appointment.duration),
-    description: appointment.description || '',
-    instagram: appointment.instagram || '',
-    paymentIntentId: appointment.paymentIntentId || '',
-    deposit: {
-      amount: appointment.depositAmount || 0,
-      tax: appointment.depositTax || 0,
-      fee: appointment.depositFee || 0,
-      total: appointment.depositTotal || 0,
-    },
-    payment: {
-      amount: appointment.paymentAmount || 0,
-      tip: appointment.tip || 0,
-      fee: appointment.paymentFee || 0,
-      tax: appointment.paymentTax || 0,
-      total: appointment.paymentTotal || 0,
-    },
-  };
-}
 
 interface UseAppointmentsParams {
   date?: string;
@@ -113,7 +59,7 @@ export default function useAppointments({
     error,
     isLoading,
     isValidating,
-  } = useSWR<IAppointment[] | undefined>(
+  } = useSWR<Appointment[] | undefined>(
     shouldFetch ? apptsApiUrl : null,
     getFetcher,
     {
@@ -129,7 +75,7 @@ export default function useAppointments({
     url: string;
     newAppt: NewAppointment;
   }) => {
-    const tempAppointment: IAppointment = { _id: '', ...newAppt };
+    const tempAppointment: Appointment = { _id: '', ...newAppt };
     try {
       handleOptimisticMutate(mutate, (cachedData) =>
         cachedData ? [...cachedData, tempAppointment] : [tempAppointment],
@@ -165,7 +111,7 @@ export default function useAppointments({
     }
   };
 
-  const updateAppointment = async (updatedAppt: IAppointmentEdit) => {
+  const updateAppointment = async (updatedAppt: AppointmentEdited) => {
     const apptApiUrl = `${APPOINTMENTS_API}/${updatedAppt._id}`;
     const updatedData = mapToMongoAppointment(updatedAppt);
 

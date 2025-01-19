@@ -1,16 +1,12 @@
+import { AppointmentInfo, PaymentInfo, serviceType } from '@/types';
+
 import { useState } from 'react';
 
 import { PaymentIntentResult, Stripe, StripeElements } from '@stripe/stripe-js';
 
-import {
-  IAppointmentInfo,
-  IPaymentInfo,
-  serviceType,
-} from '../providers/BookingFormContext';
-
 interface UseConfirmPaymentProps {
   isBooking: boolean;
-  body: IAppointmentInfo | IPaymentInfo;
+  body: AppointmentInfo | PaymentInfo;
   service?: serviceType | null;
 }
 

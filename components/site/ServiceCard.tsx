@@ -1,14 +1,15 @@
 'use client';
 
 import Button from '@/components/ui/Button';
-import { serviceType, useAppContext } from '@/providers/BookingFormContext';
+import { useAppContext } from '@/providers/AppContext';
+import { serviceType } from '@/types';
 
 import React from 'react';
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-interface IServiceCard {
+interface ServiceCardProps {
   imgURL: string;
   title: serviceType;
   price: string;
@@ -24,7 +25,7 @@ export default function ServiceCard({
   deposit,
   size,
   duration,
-}: IServiceCard) {
+}: ServiceCardProps) {
   const { setService } = useAppContext();
 
   const router = useRouter();

@@ -1,5 +1,6 @@
 import Button from '@/components/ui/Button';
 import { useSidebar } from '@/providers/SidebarContext';
+import { Appointment, SearchDate } from '@/types';
 import { downloadCSV, generateCSV } from '@/utils/csvUtils';
 import { getDateString } from '@/utils/helpers';
 
@@ -9,15 +10,12 @@ import { MdAdd, MdDownload } from 'react-icons/md';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 
-import { IDate } from '../../app/admin/appointments/page';
-import { IAppointment } from './AppointmentDetails';
-
 export default function Flyout({
   appointments,
   date,
 }: {
-  appointments: IAppointment[];
-  date: IDate;
+  appointments: Appointment[];
+  date: SearchDate;
 }) {
   const { isExtended } = useSidebar();
   const router = useRouter();

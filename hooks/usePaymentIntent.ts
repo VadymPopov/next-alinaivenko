@@ -1,6 +1,6 @@
-import useSWR from 'swr';
+import { postFetcher } from '@/lib/axiosFetchers';
 
-import { postFetcher } from '../lib/axiosFetchers';
+import useSWR from 'swr';
 
 interface UsePaymentIntentProps<T> {
   body?: T | null;

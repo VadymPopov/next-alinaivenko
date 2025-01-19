@@ -7,18 +7,12 @@ import InputField from '@/components/ui/InputField';
 import SelectField from '@/components/ui/Select';
 import { useWaiverFormContext } from '@/providers/WaiverFormContext';
 import { validationSchemaWaiverStepTwo } from '@/schemas';
+import { StepTwoFormValues } from '@/types';
 
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-
-export interface StepTwoData {
-  service: string;
-  bodyPart: string;
-  design: string;
-  appointmentDate: string;
-}
 
 export default function StepTwo({ nextStep }: { nextStep: () => void }) {
   const { updateFormData, formData } = useWaiverFormContext();
@@ -41,7 +35,7 @@ export default function StepTwo({ nextStep }: { nextStep: () => void }) {
     formState: { errors },
   } = methods;
 
-  const onSubmitHandler = (formValues: StepTwoData) => {
+  const onSubmitHandler = (formValues: StepTwoFormValues) => {
     updateFormData(formValues);
     nextStep();
   };
@@ -82,7 +76,7 @@ export default function StepTwo({ nextStep }: { nextStep: () => void }) {
             label="The design is described as follows (including style, theme, elements, or specific instructions):"
             error={errors.design?.message || ''}
           />
-          <DatePickerField<StepTwoData>
+          <DatePickerField<StepTwoFormValues>
             name="appointmentDate"
             control={control}
             label="Appointment Date"

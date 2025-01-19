@@ -1,6 +1,6 @@
-import { IAppointment } from '../components/admin/AppointmentDetails';
+import { Appointment } from '@/types';
 
-export const generateCSV = (appointments: IAppointment[]) => {
+export const generateCSV = (appointments: Appointment[]) => {
   type FormattedRow = {
     Name: string;
     Date: string;

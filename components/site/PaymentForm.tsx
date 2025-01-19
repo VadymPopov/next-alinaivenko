@@ -3,8 +3,9 @@
 import Button from '@/components/ui/Button';
 import FieldSet from '@/components/ui/FieldSet';
 import InputField from '@/components/ui/InputField';
-import { useAppContext } from '@/providers/BookingFormContext';
+import { useAppContext } from '@/providers/AppContext';
 import { validationSchemaPaymentForm } from '@/schemas';
+import { PaymentFormValues } from '@/types';
 
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -12,22 +13,16 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/navigation';
 
-interface FormValues {
-  amount: number;
-  name: string;
-  email: string;
-}
-
 export default function PaymentForm() {
   const router = useRouter();
   const { paymentInfo, setPaymentInfo } = useAppContext();
 
-  const onSubmitHandler = (values: FormValues) => {
+  const onSubmitHandler = (values: PaymentFormValues) => {
     setPaymentInfo(values);
     router.push('/payment/tip-amount');
   };
 
-  const methods = useForm<FormValues>({
+  const methods = useForm<PaymentFormValues>({
     mode: 'all',
     resolver: yupResolver(validationSchemaPaymentForm),
     defaultValues: {

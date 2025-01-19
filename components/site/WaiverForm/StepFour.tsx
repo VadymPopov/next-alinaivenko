@@ -6,18 +6,12 @@ import InputField from '@/components/ui/InputField';
 import Text from '@/components/ui/Text';
 import { useWaiverFormContext } from '@/providers/WaiverFormContext';
 import { validationSchemaWaiverStepFour } from '@/schemas';
+import { StepFourFormValues } from '@/types';
 
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-
-export interface StepFourData {
-  pain?: boolean;
-  infection?: boolean;
-  healing?: boolean;
-  outcome?: boolean;
-}
 
 export default function StepFour({ nextStep }: { nextStep: () => void }) {
   const { updateFormData, formData } = useWaiverFormContext();
@@ -38,7 +32,7 @@ export default function StepFour({ nextStep }: { nextStep: () => void }) {
     formState: { errors },
   } = methods;
 
-  const onSubmitHandler = (formValues: StepFourData) => {
+  const onSubmitHandler = (formValues: StepFourFormValues) => {
     updateFormData(formValues);
     nextStep();
   };

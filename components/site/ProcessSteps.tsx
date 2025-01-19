@@ -1,18 +1,15 @@
 'use client';
 
+import { Link as LinkType } from '@/types';
+
 import { RxDoubleArrowRight } from 'react-icons/rx';
 
 import clsx from 'clsx';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-interface Link {
-  label: string;
-  href: string;
-}
-
 interface ProcessStepsProps {
-  links: Link[];
+  links: LinkType[];
 }
 
 export function ProcessSteps({ links }: ProcessStepsProps) {

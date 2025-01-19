@@ -1,4 +1,4 @@
-import { MaxDate } from '@/hooks/useMaxBookingDate';
+import { MaxDate, ScheduleFormValues } from '@/types';
 import { findNextAvailableDate } from '@/utils/findNextAvailableDate';
 import { filterDate } from '@/utils/helpers';
 
@@ -9,11 +9,9 @@ import { Control, Controller } from 'react-hook-form';
 
 import { startOfDay } from 'date-fns';
 
-import { IFormValues } from './ScheduleForm';
-
 interface CalendarPickerProps {
-  name: keyof IFormValues;
-  control: Control<IFormValues>;
+  name: keyof ScheduleFormValues;
+  control: Control<ScheduleFormValues>;
   error?: string;
   maxDate?: MaxDate;
   blockedDates: string[];

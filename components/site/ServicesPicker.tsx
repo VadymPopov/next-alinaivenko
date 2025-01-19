@@ -1,36 +1,15 @@
 'use client';
 
 import Button from '@/components/ui/Button';
-import { serviceType, useAppContext } from '@/providers/BookingFormContext';
+import { SERVICES } from '@/constants';
+import { useAppContext } from '@/providers/AppContext';
+import { serviceType } from '@/types';
 import { getDepositBreakdown } from '@/utils/helpers';
 
 import React, { useState } from 'react';
 
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
-
-const services = [
-  {
-    title: 'Small Tattoo',
-    duration: '60 min',
-    deposit: 'CA$100',
-  },
-  {
-    title: 'Large Tattoo',
-    duration: '120 min',
-    deposit: 'CA$120',
-  },
-  {
-    title: 'Permanent Makeup',
-    duration: '60 min',
-    deposit: 'CA$100',
-  },
-  {
-    title: 'Touch-up',
-    duration: '30 min',
-    deposit: 'CA$20',
-  },
-];
 
 export default function ServicesPicker() {
   const router = useRouter();
@@ -68,7 +47,7 @@ export default function ServicesPicker() {
       </h3>
 
       <ul className="lg:flex lg:mb-10 lg:items-center lg:justify-center mb-5 sm:grid sm:grid-cols-[170px_150px] md:grid-cols-[200px_200px] md:gap-7 sm:gap-5 sm:mx-auto sm:mb-7 sm:justify-center grid grid-cols-[140px_140px] gap-2.5 justify-center">
-        {services.map(({ title, deposit, duration }) => {
+        {SERVICES.map(({ title, deposit, duration }) => {
           return (
             <li
               key={title}

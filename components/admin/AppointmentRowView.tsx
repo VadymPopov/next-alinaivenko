@@ -1,7 +1,7 @@
 'use client';
 
-import { IAppointment } from '@/components/admin/AppointmentDetails';
 import ServiceLabel from '@/components/ui/ServiceLabel';
+import { Appointment } from '@/types';
 import { formatCurrency, getParsedDate } from '@/utils/helpers';
 import { formatDuration } from '@/utils/helpers';
 
@@ -12,7 +12,7 @@ export default function AppointmentRow({
   appointment,
   isNew,
 }: {
-  appointment: IAppointment;
+  appointment: Appointment;
   isNew?: boolean;
 }) {
   const {

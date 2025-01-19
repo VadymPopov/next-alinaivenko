@@ -1,5 +1,5 @@
 import SidebarItem from '@/components/admin/SidebarItem';
-import { SIDEBAR_MENU } from '@/constants/constants';
+import { SIDEBAR_MENU } from '@/constants';
 
 import React from 'react';
 

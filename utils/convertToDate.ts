@@ -1,8 +1,4 @@
-interface AppointmentType {
-  date: string;
-  slot: string;
-  duration: number;
-}
+import { AppointmentType } from '@/types';
 
 export default function convertToDate(appointment: AppointmentType): Date {
   const [year, month, day] = appointment.date.split('-').map(Number);

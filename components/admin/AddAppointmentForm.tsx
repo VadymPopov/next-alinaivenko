@@ -5,11 +5,11 @@ import DatePickerField from '@/components/ui/DatePickerField';
 import FieldSet from '@/components/ui/FieldSet';
 import InputField from '@/components/ui/InputField';
 import SelectField from '@/components/ui/Select';
-import { SERVICE_OPTIONS } from '@/constants/constants';
+import { SERVICE_OPTIONS } from '@/constants';
 import useAppointments from '@/hooks/useAppointments';
 import useSlots from '@/hooks/useSlots';
-import { serviceType } from '@/providers/BookingFormContext';
 import { validationSchemaAddAppointment } from '@/schemas';
+import { AddApptFormValues, serviceType } from '@/types';
 import { durationOptions, slotsOptions } from '@/utils/helpers';
 
 import React, { useEffect, useMemo } from 'react';
@@ -20,18 +20,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
-
-interface FormValues {
-  phone?: string | null;
-  instagram?: string;
-  description?: string;
-  name: string;
-  email: string;
-  date: Date;
-  service: string;
-  slot: string;
-  duration: string;
-}
 
 export default function AddAppointmentForm() {
   const searchParams = useSearchParams();
@@ -71,7 +59,7 @@ export default function AddAppointmentForm() {
   const memoizedSlots = useMemo(() => slotsOptions(slots), [slots]);
   const { isValidating, addAppointment } = useAppointments();
 
-  const onSubmitHandler = async (formValues: FormValues) => {
+  const onSubmitHandler = async (formValues: AddApptFormValues) => {
     const { phone, date, duration, instagram, description, service } =
       formValues;
     try {
@@ -143,7 +131,7 @@ export default function AddAppointmentForm() {
           />
         </FieldSet>
         <FieldSet title="Appointment information:">
-          <DatePickerField<FormValues>
+          <DatePickerField<AddApptFormValues>
             name="date"
             control={control}
             label="Appointment Date"

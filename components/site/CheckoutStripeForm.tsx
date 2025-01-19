@@ -2,11 +2,7 @@
 
 import Button from '@/components/ui/Button';
 import { useConfirmPayment } from '@/hooks/useConfirmPayment';
-import {
-  IAppointmentInfo,
-  IPaymentInfo,
-  serviceType,
-} from '@/providers/BookingFormContext';
+import { AppointmentInfo, PaymentInfo, serviceType } from '@/types';
 import { formatCurrency } from '@/utils/helpers';
 
 import React, { FormEvent } from 'react';
@@ -21,13 +17,13 @@ import { useRouter } from 'next/navigation';
 
 interface AppointmentCheckoutProps {
   isBooking: true;
-  body: IAppointmentInfo;
+  body: AppointmentInfo;
   service?: serviceType | null;
 }
 
 interface PaymentCheckoutProps {
   isBooking: false;
-  body: IPaymentInfo;
+  body: PaymentInfo;
   service?: never;
 }
 
@@ -95,7 +91,7 @@ export default function CheckoutStripeForm({
               <div className="flex justify-between">
                 <p className="text-base mb-3 tracking-wider">Tips</p>
                 <p className="text-base mb-3 tracking-wider">
-                  {formatCurrency((body as IPaymentInfo).tip as number)}
+                  {formatCurrency((body as PaymentInfo).tip as number)}
                 </p>
               </div>
             )}

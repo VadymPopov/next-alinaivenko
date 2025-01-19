@@ -4,7 +4,7 @@ import { generatePaymentConfirmationEmail } from '../templates/generatePaymentCo
 import { generateEmailOptions } from './generateEmailOptions';
 import { getTransporter } from './transporter';
 
-export interface IData {
+export interface PaymentEmailData {
   name: string;
   email: string;
   date: string;
@@ -18,12 +18,12 @@ export interface IData {
   receiptUrl: string | null;
 }
 
-interface sendEmailI {
-  data: IData;
+interface SendPaymentEmailParams {
+  data: PaymentEmailData;
   client?: boolean;
 }
 
-export async function sendEmail({ data, client }: sendEmailI) {
+export async function sendEmail({ data, client }: SendPaymentEmailParams) {
   const { name, email } = data;
   try {
     const transporter = await getTransporter();

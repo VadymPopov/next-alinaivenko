@@ -6,15 +6,12 @@ import InputField from '@/components/ui/InputField';
 import Text from '@/components/ui/Text';
 import { useWaiverFormContext } from '@/providers/WaiverFormContext';
 import { validationSchemaWaiverStepThree } from '@/schemas';
+import { StepThreeFormValues } from '@/types';
 
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-
-export interface StepThreeData {
-  waveRelease?: boolean;
-}
 
 export default function StepThree({ nextStep }: { nextStep: () => void }) {
   const { updateFormData, formData } = useWaiverFormContext();
@@ -32,7 +29,7 @@ export default function StepThree({ nextStep }: { nextStep: () => void }) {
     formState: { errors },
   } = methods;
 
-  const onSubmitHandler = (formValues: StepThreeData) => {
+  const onSubmitHandler = (formValues: StepThreeFormValues) => {
     updateFormData(formValues);
     nextStep();
   };

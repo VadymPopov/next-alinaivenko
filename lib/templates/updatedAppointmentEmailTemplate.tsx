@@ -1,4 +1,4 @@
-interface generateUpdatedAppointmentEmailI {
+interface UpdatedAppointmentEmailParams {
   name: string;
   slot: string;
   date: string;
@@ -14,7 +14,7 @@ export function generateUpdatedAppointmentEmail({
   address,
   service,
   duration,
-}: generateUpdatedAppointmentEmailI) {
+}: UpdatedAppointmentEmailParams) {
   return `
   <div style="
     font-family: Arial, sans-serif;

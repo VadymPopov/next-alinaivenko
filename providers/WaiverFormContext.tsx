@@ -1,54 +1,8 @@
+import { type WaiverFormContext, WaiverFormData } from '@/types';
+
 import React, { createContext, useContext, useState } from 'react';
 
-export interface IWaiverFormData {
-  name: string;
-  email: string;
-  phone?: string | null;
-  governmentId: string;
-  dob: string;
-  address: string;
-
-  bodyPart: string;
-  design: string;
-  service: string;
-  appointmentDate: string;
-
-  waveRelease: boolean;
-
-  pain: boolean;
-  infection: boolean;
-  healing: boolean;
-  outcome: boolean;
-
-  refund: boolean;
-  permanentChange: boolean;
-  media: boolean;
-  age: boolean;
-
-  drugs: boolean;
-  disease: boolean;
-  medication: boolean;
-  skin: boolean;
-  recipientOrgan: boolean;
-  pregnancy: boolean;
-
-  agreement: boolean;
-  lot: string;
-  clientSignature: string;
-  parentalSignature: string;
-  parentalConsent: boolean;
-  parentalName: string;
-  parentGovernmentId: string;
-}
-
-interface IWaiverFormContext {
-  formData: IWaiverFormData;
-  updateFormData: (_newData: Partial<IWaiverFormData>) => void;
-  isClientUnder18: boolean;
-  setIsClientUnder18: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const initialFormData: IWaiverFormData = {
+const initialFormData: WaiverFormData = {
   name: '',
   email: '',
   phone: '',
@@ -83,7 +37,7 @@ const initialFormData: IWaiverFormData = {
   parentGovernmentId: '',
 };
 
-const WaiverFormContext = createContext<IWaiverFormContext | undefined>(
+const WaiverFormContext = createContext<WaiverFormContext | undefined>(
   undefined,
 );
 
@@ -102,9 +56,9 @@ export const WaiverFormProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [formData, setFormData] = useState<IWaiverFormData>(initialFormData);
+  const [formData, setFormData] = useState<WaiverFormData>(initialFormData);
   const [isClientUnder18, setIsClientUnder18] = useState(false);
-  const updateFormData = (newData: Partial<IWaiverFormData>) => {
+  const updateFormData = (newData: Partial<WaiverFormData>) => {
     setFormData((prev) => ({ ...prev, ...newData }));
   };
   return (

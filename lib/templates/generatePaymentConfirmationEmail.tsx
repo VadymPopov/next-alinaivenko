@@ -1,6 +1,6 @@
 import { formatCurrency } from '@/utils/helpers';
 
-interface generatePaymentConfirmationEmailI {
+interface PaymentEmailParams {
   name: string;
   email: string;
   date: string;
@@ -22,7 +22,7 @@ export function generatePaymentConfirmationEmail({
   client,
   date,
   receiptUrl,
-}: generatePaymentConfirmationEmailI) {
+}: PaymentEmailParams) {
   return `
   <div style="
     font-family: Arial, sans-serif;

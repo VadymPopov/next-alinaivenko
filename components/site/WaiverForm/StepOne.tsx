@@ -5,8 +5,9 @@ import DatePickerField from '@/components/ui/DatePickerField';
 import FieldSet from '@/components/ui/FieldSet';
 import InputField from '@/components/ui/InputField';
 import { useWaiverFormContext } from '@/providers/WaiverFormContext';
-import { IWaiverFormData } from '@/providers/WaiverFormContext';
 import { validationSchemaWaiverStepOne } from '@/schemas';
+import { WaiverFormData } from '@/types';
+import { StepOneFormValues } from '@/types';
 import { verifyClientLegalAge } from '@/utils/ageVerification';
 
 import React, { useEffect } from 'react';
@@ -14,20 +15,11 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 
-export interface StepOneData {
-  name: string;
-  email: string;
-  phone?: string | null;
-  governmentId: string;
-  dob: string;
-  address: string;
-}
-
 export default function StepOne({ nextStep }: { nextStep: () => void }) {
   const { updateFormData, setIsClientUnder18, formData } =
     useWaiverFormContext();
 
-  const methods = useForm<StepOneData>({
+  const methods = useForm<StepOneFormValues>({
     mode: 'all',
     resolver: yupResolver(validationSchemaWaiverStepOne),
     defaultValues: {
@@ -47,7 +39,7 @@ export default function StepOne({ nextStep }: { nextStep: () => void }) {
     formState: { errors },
   } = methods;
 
-  const onSubmitHandler = (formValues: Partial<IWaiverFormData>) => {
+  const onSubmitHandler = (formValues: Partial<WaiverFormData>) => {
     updateFormData(formValues);
     setIsClientUnder18(
       verifyClientLegalAge(new Date(formValues?.dob as string)),
@@ -71,7 +63,7 @@ export default function StepOne({ nextStep }: { nextStep: () => void }) {
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             error={errors.name?.message || ''}
           />
-          <DatePickerField<StepOneData>
+          <DatePickerField<StepOneFormValues>
             name="dob"
             control={control}
             label="Birthday Date"

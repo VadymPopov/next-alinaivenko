@@ -1,9 +1,9 @@
+import { deleteFetcher, getFetcher, postFetcher } from '@/lib/axiosFetchers';
+import { BlockedSlot } from '@/types';
+import { handleOptimisticMutate } from '@/utils/mutateHelper';
+
 import { format } from 'date-fns';
 import useSWR from 'swr';
-
-import { IBlockedSlot } from '../components/admin/WeekView';
-import { deleteFetcher, getFetcher, postFetcher } from '../lib/axiosFetchers';
-import { handleOptimisticMutate } from '../utils/mutateHelper';
 
 const BLOCKED_SLOTS_API = '/api/admin/calendar/blocked-slots';
 
@@ -40,7 +40,7 @@ export default function useBlockedSlots({
     error,
     isLoading,
     isValidating,
-  } = useSWR<IBlockedSlot[] | undefined>(
+  } = useSWR<BlockedSlot[] | undefined>(
     shouldFetch ? apiUrl : null,
     getFetcher,
     {
@@ -55,7 +55,7 @@ export default function useBlockedSlots({
     duration: number;
     reason: string;
   }) => {
-    const tempSlot: IBlockedSlot = { _id: '', ...newSlot };
+    const tempSlot: BlockedSlot = { _id: '', ...newSlot };
 
     try {
       handleOptimisticMutate(mutate, (cachedData) =>

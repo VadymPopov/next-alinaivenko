@@ -2,12 +2,12 @@
 
 import { MdSearch } from 'react-icons/md';
 
-interface ISearchBar {
+interface SearchBarProps {
   query: string;
   onSearch: (_searchTerm: string) => void;
 }
 
-export default function SearchBar({ query, onSearch }: ISearchBar) {
+export default function SearchBar({ query, onSearch }: SearchBarProps) {
   return (
     <div className="relative">
       <input

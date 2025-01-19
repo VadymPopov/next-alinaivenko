@@ -2,7 +2,7 @@
 
 import CustomTipForm from '@/components/site/CustomTipForm';
 import Button from '@/components/ui/Button';
-import { useAppContext } from '@/providers/BookingFormContext';
+import { useAppContext } from '@/providers/AppContext';
 import {
   calculateTip,
   formatCurrency,

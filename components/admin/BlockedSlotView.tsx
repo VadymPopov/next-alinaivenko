@@ -2,6 +2,7 @@
 
 import useBlockedSlots from '@/hooks/useBlockedSlots';
 import { useSidebar } from '@/providers/SidebarContext';
+import { BlockedSlot } from '@/types';
 import { convertToTimeRange } from '@/utils/convertToTimeRange';
 import { formatDuration, getParsedDate } from '@/utils/helpers';
 
@@ -12,10 +13,8 @@ import { MdClose } from 'react-icons/md';
 import clsx from 'clsx';
 import { format } from 'date-fns';
 
-import { IBlockedSlot } from './WeekView';
-
 interface BlockedSlotProps {
-  blockedSlot: IBlockedSlot;
+  blockedSlot: BlockedSlot;
   className?: string;
   style?: {
     height: string;

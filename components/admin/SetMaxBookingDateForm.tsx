@@ -4,18 +4,14 @@ import AdminTitle from '@/components/admin/AdminTitle';
 import Button from '@/components/ui/Button';
 import DatePickerField from '@/components/ui/DatePickerField';
 import { useMaxBookingDate } from '@/hooks/useMaxBookingDate';
-import { MaxDate } from '@/hooks/useMaxBookingDate';
 import { validationSchemaSetMaxBookingDate } from '@/schemas';
+import { MaxDate, SetMaxDateFormValues } from '@/types';
 
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-
-interface FormValues {
-  date: Date;
-}
 
 export default function SetMaxBookingDateForm({
   maxDate,
@@ -41,7 +37,7 @@ export default function SetMaxBookingDateForm({
 
   const watchDate = watch('date');
 
-  const onSubmitHandler = async (formValues: FormValues) => {
+  const onSubmitHandler = async (formValues: SetMaxDateFormValues) => {
     try {
       const updatedData = { _id: data?._id || '', ...formValues };
 
@@ -72,7 +68,7 @@ export default function SetMaxBookingDateForm({
       >
         <AdminTitle title="Maximum Booking Date" />
         <div className="flex gap-0 lg:gap-10 lg:items-start  flex-col lg:flex-row">
-          <DatePickerField<FormValues>
+          <DatePickerField<SetMaxDateFormValues>
             name="date"
             control={control}
             error={errors.date?.message}

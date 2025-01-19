@@ -1,3 +1,4 @@
+import { SLOT_TIMES } from '@/constants';
 import Appointment from '@/db/models/Appointment';
 import BlockedSlot from '@/db/models/BlockedSlot';
 import connect from '@/db/mongodb';
@@ -5,26 +6,6 @@ import connect from '@/db/mongodb';
 import { type NextRequest, NextResponse } from 'next/server';
 
 const SLOT_DURATION = 30;
-const SLOT_TIMES = [
-  '11:00am',
-  '11:30am',
-  '12:00pm',
-  '12:30pm',
-  '1:00pm',
-  '1:30pm',
-  '2:00pm',
-  '2:30pm',
-  '3:00pm',
-  '3:30pm',
-  '4:00pm',
-  '4:30pm',
-  '5:00pm',
-  '5:30pm',
-  '6:00pm',
-  '6:30pm',
-  '7:00pm',
-  '7:30pm',
-];
 
 export const GET = async (request: NextRequest) => {
   try {

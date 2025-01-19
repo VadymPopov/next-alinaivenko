@@ -1,6 +1,8 @@
+import { getFetcher } from '@/lib/axiosFetchers';
+
 import useSWR from 'swr';
 
-import { getFetcher } from '../lib/axiosFetchers';
+const SLOTS_API = '/api/slots';
 
 interface UseSlotsParams {
   date: string;
@@ -10,19 +12,13 @@ interface UseSlotsParams {
   id?: string;
 }
 
-interface useSlotsResult {
-  slots: string[];
-  isLoading: boolean;
-  isError: boolean;
-}
-
 export default function useSlots({
   fallbackData,
   date,
   duration,
   isEditing,
   id,
-}: UseSlotsParams): useSlotsResult {
+}: UseSlotsParams) {
   const params = new URLSearchParams();
 
   if (date) {
@@ -38,7 +34,7 @@ export default function useSlots({
     params.append('id', id);
   }
 
-  const url = `/api/slots?${params.toString()}`;
+  const url = `${SLOTS_API}?${params.toString()}`;
 
   const { data, error, isLoading } = useSWR<string[]>(
     date && duration ? url : null,

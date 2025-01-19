@@ -65,3 +65,82 @@ export const BOOKING_LINKS = [
   { label: 'Time', href: '/booking/schedule' },
   { label: 'Payment', href: '/booking/payment' },
 ];
+
+export const SERVICES = [
+  {
+    title: 'Small Tattoo',
+    duration: '60 min',
+    deposit: 'CA$100',
+  },
+  {
+    title: 'Large Tattoo',
+    duration: '120 min',
+    deposit: 'CA$120',
+  },
+  {
+    title: 'Permanent Makeup',
+    duration: '60 min',
+    deposit: 'CA$100',
+  },
+  {
+    title: 'Touch-up',
+    duration: '30 min',
+    deposit: 'CA$20',
+  },
+];
+
+export const SITE_MENU = [
+  {
+    path: '/portfolio',
+    label: 'Portfolio',
+  },
+  {
+    path: '/services',
+    label: 'Services and Prices',
+  },
+  {
+    path: '/aftercare',
+    label: 'Aftercare',
+  },
+  {
+    path: '/waiverform',
+    label: 'Waiver',
+  },
+  {
+    path: '/booking',
+    label: 'Booking',
+  },
+  {
+    path: '/faq',
+    label: 'FAQ',
+  },
+  {
+    path: '/contact',
+    label: 'Contact',
+  },
+  {
+    path: '/payment',
+    label: 'Payment',
+  },
+];
+
+export const SLOT_TIMES = [
+  '11:00am',
+  '11:30am',
+  '12:00pm',
+  '12:30pm',
+  '1:00pm',
+  '1:30pm',
+  '2:00pm',
+  '2:30pm',
+  '3:00pm',
+  '3:30pm',
+  '4:00pm',
+  '4:30pm',
+  '5:00pm',
+  '5:30pm',
+  '6:00pm',
+  '6:30pm',
+  '7:00pm',
+  '7:30pm',
+];

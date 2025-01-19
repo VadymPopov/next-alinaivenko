@@ -5,8 +5,9 @@ import FieldSet from '@/components/ui/FieldSet';
 import FileInput from '@/components/ui/FileInput';
 import InputField from '@/components/ui/InputField';
 import Text from '@/components/ui/Text';
-import { useAppContext } from '@/providers/BookingFormContext';
+import { useAppContext } from '@/providers/AppContext';
 import { validationSchemaClient } from '@/schemas';
+import { ClientFormValues } from '@/types';
 import { getBase64 } from '@/utils/getBase64';
 import { pickDuration } from '@/utils/helpers';
 
@@ -15,15 +16,6 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/navigation';
-
-interface FormValues {
-  phone?: string | null;
-  instagram?: string;
-  images?: File[] | null;
-  description?: string;
-  name: string;
-  email: string;
-}
 
 export default function ClientForm() {
   const router = useRouter();
@@ -52,7 +44,7 @@ export default function ClientForm() {
     setFocus('name');
   }, [setFocus]);
 
-  const onSubmitHandler = async (formValues: FormValues) => {
+  const onSubmitHandler = async (formValues: ClientFormValues) => {
     const isValid = await trigger();
 
     const imagesArray = Array.from(formValues?.images ?? []);

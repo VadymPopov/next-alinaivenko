@@ -2,12 +2,12 @@
 
 import { ReactNode, createContext, useContext, useState } from 'react';
 
-type SidebarContextType = {
+interface SidebarContext {
   isExtended: boolean;
   toggleSidebar: () => void;
-};
+}
 
-const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
+const SidebarContext = createContext<SidebarContext | undefined>(undefined);
 
 export const SidebarProvider = ({ children }: { children: ReactNode }) => {
   const [isExtended, setIsExtended] = useState(true);

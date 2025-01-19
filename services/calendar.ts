@@ -1,6 +1,5 @@
-import { IStudioInfo } from '@/components/admin/StudioInfoForm';
-import { MaxDate } from '@/hooks/useMaxBookingDate';
 import { getFetcher, postFetcher, putFetcher } from '@/lib/axiosFetchers';
+import { MaxDate, StudioInfo } from '@/types';
 
 import { KeyedMutator } from 'swr';
 
@@ -29,7 +28,7 @@ export async function getBlockedDates() {
 }
 
 export async function getStudioInfo() {
-  return await getFetcher<IStudioInfo>(`${CALENDAR_API}/studio`);
+  return await getFetcher<StudioInfo>(`${CALENDAR_API}/studio`);
 }
 
 export async function isBlockedMonthExists(month: string, year: string) {

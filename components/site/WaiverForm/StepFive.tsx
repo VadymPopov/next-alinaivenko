@@ -5,18 +5,12 @@ import FieldSet from '@/components/ui/FieldSet';
 import InputField from '@/components/ui/InputField';
 import { useWaiverFormContext } from '@/providers/WaiverFormContext';
 import { validationSchemaWaiverStepFive } from '@/schemas';
+import { StepFiveFormValues } from '@/types';
 
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-
-export interface StepFiveData {
-  refund?: boolean;
-  permanentChange?: boolean;
-  media?: boolean;
-  age?: boolean;
-}
 
 export default function StepFive({ nextStep }: { nextStep: () => void }) {
   const { updateFormData, formData } = useWaiverFormContext();
@@ -37,7 +31,7 @@ export default function StepFive({ nextStep }: { nextStep: () => void }) {
     formState: { errors },
   } = methods;
 
-  const onSubmitHandler = (formValues: StepFiveData) => {
+  const onSubmitHandler = (formValues: StepFiveFormValues) => {
     updateFormData(formValues);
     nextStep();
   };

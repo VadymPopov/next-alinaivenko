@@ -1,4 +1,5 @@
 import User from '@/db/models/User';
+import connect from '@/db/mongodb';
 
 import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
@@ -6,9 +7,7 @@ import { AuthOptions, getServerSession } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 
-import connect from '../db/mongodb';
-
-interface IUser {
+interface User {
   id: string;
   email: string;
   name?: string;
@@ -16,7 +15,7 @@ interface IUser {
   role?: string;
 }
 
-interface IUserDocument {
+interface UserDocument {
   _id: mongoose.Types.ObjectId;
   email: string;
   password: string;
@@ -42,7 +41,7 @@ const authOptions: AuthOptions = {
           name: profile.name,
           image: profile.picture,
           role: userRole,
-        } satisfies IUser;
+        } satisfies User;
       },
     }),
     CredentialsProvider({
@@ -66,10 +65,10 @@ const authOptions: AuthOptions = {
 
         try {
           await connect();
-          const foundUser = await User.findOne<IUserDocument>({
+          const foundUser = await User.findOne<UserDocument>({
             email: credentials?.email,
           })
-            .lean<IUserDocument>()
+            .lean<UserDocument>()
             .exec();
 
           if (!foundUser) {
@@ -90,7 +89,7 @@ const authOptions: AuthOptions = {
             email: foundUser.email,
             name: foundUser.name,
             role: foundUser.role,
-          } satisfies IUser;
+          } satisfies User;
         } catch (error) {
           console.error('Error during credentials authorization:', error);
           return null;

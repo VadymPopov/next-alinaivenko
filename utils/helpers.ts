@@ -1,9 +1,14 @@
-import { format, parse } from 'date-fns';
+import {
+  Appointment,
+  AppointmentEdited,
+  BlockedSlot,
+  FilteredWaiverFormValues,
+  SearchDate,
+  UnfilteredWaiverFormValues,
+  serviceType,
+} from '@/types';
 
-import { IDate } from '../app/admin/appointments/page';
-import { IAppointment } from '../components/admin/AppointmentDetails';
-import { IBlockedSlot } from '../components/admin/WeekView';
-import { serviceType } from '../providers/BookingFormContext';
+import { format, parse } from 'date-fns';
 
 export const calculatePrice = (selectedProcedure: serviceType | null) => {
   let price;
@@ -143,7 +148,7 @@ export const filterDate = (date: Date, blockedDates: string[]) => {
   );
 };
 
-export const getFilterString = (date: IDate) => {
+export const getFilterString = (date: SearchDate) => {
   if (date.year && date.month && date.day) {
     const fullDate = new Date(date.year, date.month - 1, date.day);
     return `Showing appointments for: ${format(fullDate, 'MMM dd, yyyy')}`;
@@ -215,8 +220,8 @@ export const slotsOptions = (slots: string[]) => {
 };
 
 export const getCombinedApptSlots = (
-  blockedSlots: IBlockedSlot[],
-  appointments: IAppointment[],
+  blockedSlots: BlockedSlot[],
+  appointments: Appointment[],
 ) => {
   const slots = [...blockedSlots, ...appointments];
   return slots.sort((a, b) => {
@@ -237,3 +242,56 @@ export const getTimeSlots = () => {
   }
   return slots;
 };
+
+export const prepareFilteredValues = (
+  values: UnfilteredWaiverFormValues,
+): FilteredWaiverFormValues => ({
+  name: values.name,
+  email: values.email,
+  phone: values.phone,
+  governmentId: values.governmentId,
+  dob: values.dob,
+  address: values.address,
+  bodyPart: values.bodyPart,
+  design: values.design,
+  service: values.service,
+  lot: values.lot,
+  appointmentDate: format(values.appointmentDate as string, 'yyyy-MM-dd'),
+  isClientUnder18: values.isClientUnder18,
+  ...(values.isClientUnder18
+    ? {
+        parentalSignature: values.parentalSignature,
+        parentalName: values.parentalName,
+        parentGovernmentId: values.parentGovernmentId,
+      }
+    : { clientSignature: values.clientSignature }),
+});
+
+export function mapToMongoAppointment(appointment: AppointmentEdited) {
+  return {
+    _id: appointment._id,
+    name: appointment.name,
+    email: appointment.email,
+    phone: appointment.phone || '',
+    service: appointment.service,
+    date: appointment.date,
+    slot: appointment.slot,
+    duration: Number(appointment.duration),
+    description: appointment.description || '',
+    instagram: appointment.instagram || '',
+    paymentIntentId: appointment.paymentIntentId || '',
+    deposit: {
+      amount: appointment.depositAmount || 0,
+      tax: appointment.depositTax || 0,
+      fee: appointment.depositFee || 0,
+      total: appointment.depositTotal || 0,
+    },
+    payment: {
+      amount: appointment.paymentAmount || 0,
+      tip: appointment.tip || 0,
+      fee: appointment.paymentFee || 0,
+      tax: appointment.paymentTax || 0,
+      total: appointment.paymentTotal || 0,
+    },
+  };
+}

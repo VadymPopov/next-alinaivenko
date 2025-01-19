@@ -1,10 +1,10 @@
 import React from 'react';
 
-type EmbeddedMapProps = {
+interface EmbeddedMapProps {
   latitude: string;
   longitude: string;
   query: string;
-};
+}
 
 const EmbeddedMap = ({ latitude, longitude, query }: EmbeddedMapProps) => {
   const apiKey = process.env.GOOGLE_MAPS_API_KEY;

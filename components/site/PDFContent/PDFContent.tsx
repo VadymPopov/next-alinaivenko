@@ -1,4 +1,4 @@
-import { IWaiverFormData } from '@/providers/WaiverFormContext';
+import { WaiverFormData } from '@/types';
 
 import React from 'react';
 
@@ -8,7 +8,7 @@ import { styles } from './PDFContent.stylesheet';
 
 interface PDFContentProps {
   isClientUnder18: boolean;
-  values: Partial<IWaiverFormData>;
+  values: Partial<WaiverFormData>;
 }
 
 export default function PDFContent({

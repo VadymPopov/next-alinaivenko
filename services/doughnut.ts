@@ -1,4 +1,4 @@
-import { SERVICE_TYPES } from '@/constants/constants';
+import { SERVICE_TYPES } from '@/constants';
 import Appointment from '@/db/models/Appointment';
 import connect from '@/db/mongodb';
 

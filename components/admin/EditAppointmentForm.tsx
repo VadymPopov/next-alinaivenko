@@ -5,10 +5,11 @@ import DatePickerField from '@/components/ui/DatePickerField';
 import FieldSet from '@/components/ui/FieldSet';
 import InputField from '@/components/ui/InputField';
 import SelectField from '@/components/ui/Select';
-import { SERVICE_OPTIONS } from '@/constants/constants';
+import { SERVICE_OPTIONS } from '@/constants';
 import useAppointments from '@/hooks/useAppointments';
 import useSlots from '@/hooks/useSlots';
 import { validationSchemaEditAppointment } from '@/schemas';
+import { Appointment } from '@/types';
 import {
   calculateStripeFee,
   calculateTotals,
@@ -25,33 +26,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 
-import { IAppointment } from './AppointmentDetails';
-
-interface FormValues {
-  phone?: string | null;
-  instagram?: string;
-  description?: string;
-  name: string;
-  email: string;
-  date: Date;
-  service: 'Small Tattoo' | 'Large Tattoo' | 'Touch-up' | 'Permanent Makeup';
-  slot: string;
-  duration: string;
-  depositAmount?: number;
-  depositTax?: number;
-  depositFee?: number;
-  depositTotal?: number;
-  paymentAmount?: number;
-  paymentTax?: number;
-  paymentTotal?: number;
-  paymentFee?: number;
-  tip?: number;
-}
-
 export default function EditAppointmentForm({
   appointment,
 }: {
-  appointment: IAppointment;
+  appointment: Appointment;
 }) {
   const router = useRouter();
   const {
@@ -67,7 +45,7 @@ export default function EditAppointmentForm({
     paymentIntentId,
   } = appointment || {};
 
-  const methods = useForm<FormValues>({
+  const methods = useForm<EditApptFormValues>({
     mode: 'all',
     resolver: yupResolver(validationSchemaEditAppointment),
     defaultValues: {
@@ -125,7 +103,7 @@ export default function EditAppointmentForm({
 
   const { isValidating, updateAppointment } = useAppointments();
 
-  const onSubmitHandler = async (formValues: FormValues) => {
+  const onSubmitHandler = async (formValues: EditApptFormValues) => {
     try {
       await updateAppointment({
         _id,
@@ -183,7 +161,7 @@ export default function EditAppointmentForm({
           />
         </FieldSet>
         <FieldSet title="Appointment information:">
-          <DatePickerField<FormValues>
+          <DatePickerField<EditApptFormValues>
             name="date"
             control={control}
             label="Appointment Date"

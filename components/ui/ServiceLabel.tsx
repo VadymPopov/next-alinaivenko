@@ -1,9 +1,11 @@
+import { serviceType } from '@/types';
+
 import React from 'react';
 
 import clsx from 'clsx';
 
 export interface ServiceLabelProps {
-  service: 'Small Tattoo' | 'Large Tattoo' | 'Touch-up' | 'Permanent Makeup';
+  service: serviceType;
 }
 
 export default function ServiceLabel({ service }: ServiceLabelProps) {

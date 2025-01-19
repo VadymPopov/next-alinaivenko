@@ -5,20 +5,12 @@ import FieldSet from '@/components/ui/FieldSet';
 import InputField from '@/components/ui/InputField';
 import { useWaiverFormContext } from '@/providers/WaiverFormContext';
 import { validationSchemaWaiverStepSix } from '@/schemas';
+import { StepSixFormValues } from '@/types';
 
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-
-export interface StepSixData {
-  drugs?: boolean;
-  disease?: boolean;
-  medication?: boolean;
-  skin?: boolean;
-  recipientOrgan?: boolean;
-  pregnancy?: boolean;
-}
 
 export default function StepSix({ nextStep }: { nextStep: () => void }) {
   const { updateFormData, formData } = useWaiverFormContext();
@@ -41,7 +33,7 @@ export default function StepSix({ nextStep }: { nextStep: () => void }) {
     formState: { errors },
   } = methods;
 
-  const onSubmitHandler = (formValues: StepSixData) => {
+  const onSubmitHandler = (formValues: StepSixFormValues) => {
     updateFormData(formValues);
     nextStep();
   };
