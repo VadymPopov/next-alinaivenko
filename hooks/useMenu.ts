@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export const useMenu = () => {
+export function useMenu() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -16,4 +16,4 @@ export const useMenu = () => {
   };
 
   return { isOpen, toggleMenu, onClose };
-};
+}

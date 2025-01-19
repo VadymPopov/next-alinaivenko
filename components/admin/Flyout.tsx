@@ -1,7 +1,7 @@
-import Button from '@/components/ui/Button';
+import { Button } from '@/components/ui';
 import { useSidebar } from '@/providers/SidebarContext';
 import { Appointment, SearchDate } from '@/types';
-import { downloadCSV, generateCSV } from '@/utils/csvUtils';
+import { downloadCSV, generateCSV } from '@/utils';
 import { getDateString } from '@/utils/helpers';
 
 import { useRef } from 'react';
@@ -10,7 +10,7 @@ import { MdAdd, MdDownload } from 'react-icons/md';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 
-export default function Flyout({
+export function Flyout({
   appointments,
   date,
 }: {

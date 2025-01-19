@@ -1,13 +1,14 @@
 'use client';
 
-import Button from '@/components/ui/Button';
-import DatePickerField from '@/components/ui/DatePickerField';
-import FieldSet from '@/components/ui/FieldSet';
-import InputField from '@/components/ui/InputField';
-import SelectField from '@/components/ui/Select';
+import {
+  Button,
+  DatePickerField,
+  FieldSet,
+  InputField,
+  SelectField,
+} from '@/components/ui';
 import { SERVICE_OPTIONS } from '@/constants';
-import useAppointments from '@/hooks/useAppointments';
-import useSlots from '@/hooks/useSlots';
+import { useAppointments, useSlots } from '@/hooks';
 import { validationSchemaAddAppointment } from '@/schemas';
 import { AddApptFormValues, serviceType } from '@/types';
 import { durationOptions, slotsOptions } from '@/utils/helpers';
@@ -18,10 +19,9 @@ import toast from 'react-hot-toast';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { format } from 'date-fns';
-import { useRouter } from 'next/navigation';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function AddAppointmentForm() {
+export function AddAppointmentForm() {
   const searchParams = useSearchParams();
   const slot = searchParams.get('slot');
   const date = searchParams.get('date');

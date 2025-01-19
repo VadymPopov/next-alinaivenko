@@ -1,6 +1,4 @@
-import Appointment from '@/db/models/Appointment';
-import Studio from '@/db/models/Studio';
-import connect from '@/db/mongodb';
+import { Appointment, Studio, connect } from '@/db';
 import { sendEmail } from '@/lib/nodemailer/sendEmail';
 
 import { NextResponse } from 'next/server';

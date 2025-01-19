@@ -1,10 +1,10 @@
-import StatCard from '@/components/admin/StatCard';
+import { StatCard } from '@/components/admin';
 import {
   getMonthlyAppointments,
   getMonthlyIncome,
   getTotalAppointments,
   getTotalIncome,
-} from '@/services/stats';
+} from '@/services';
 
 import React, { Suspense, use } from 'react';
 

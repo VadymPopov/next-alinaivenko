@@ -1,7 +1,7 @@
 'use client';
 
-import Button from '@/components/ui/Button';
-import { useConfirmPayment } from '@/hooks/useConfirmPayment';
+import { Button } from '@/components/ui';
+import { useConfirmPayment } from '@/hooks';
 import { AppointmentInfo, PaymentInfo, serviceType } from '@/types';
 import { formatCurrency } from '@/utils/helpers';
 
@@ -27,7 +27,7 @@ interface PaymentCheckoutProps {
   service?: never;
 }
 
-export default function CheckoutStripeForm({
+export function CheckoutStripeForm({
   isBooking,
   body,
   service,

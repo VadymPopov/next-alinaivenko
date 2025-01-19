@@ -1,14 +1,13 @@
 'use client';
 
-import ServiceLabel from '@/components/ui/ServiceLabel';
+import { ServiceLabel } from '@/components/ui';
 import { Appointment } from '@/types';
-import { formatCurrency, getParsedDate } from '@/utils/helpers';
-import { formatDuration } from '@/utils/helpers';
+import { formatCurrency, formatDuration, getParsedDate } from '@/utils/helpers';
 
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 
-export default function AppointmentRow({
+export function AppointmentRowView({
   appointment,
   isNew,
 }: {

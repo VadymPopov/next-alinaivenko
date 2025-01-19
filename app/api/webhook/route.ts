@@ -1,5 +1,4 @@
-import Appointment from '@/db/models/Appointment';
-import connect from '@/db/mongodb';
+import { Appointment, connect } from '@/db';
 
 import { type NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';

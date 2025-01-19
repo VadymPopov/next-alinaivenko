@@ -11,7 +11,7 @@ export interface ModalProps {
   onClose: () => void;
 }
 
-export default function Modal({ show, children, onClose }: ModalProps) {
+export function Modal({ show, children, onClose }: ModalProps) {
   return (
     <AnimatePresence>
       <Dialog

@@ -4,12 +4,12 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-type MenuProps = {
+interface MenuProps {
   onClick?: () => void;
   menu: { path: string; label: string }[];
-};
+}
 
-export default function Menu({ onClick, menu }: MenuProps) {
+export function Menu({ onClick, menu }: MenuProps) {
   const pathname = usePathname();
   const isActive = (path: string) => path === pathname;
 

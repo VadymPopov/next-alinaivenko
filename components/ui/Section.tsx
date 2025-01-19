@@ -2,12 +2,12 @@ import { ReactNode } from 'react';
 
 import clsx from 'clsx';
 
-type SuptitleProps = {
+interface SectionProps {
   children: ReactNode;
   primary?: boolean;
-};
+}
 
-export default function Section({ children, primary }: SuptitleProps) {
+export function Section({ children, primary }: SectionProps) {
   return (
     <section
       className={clsx(

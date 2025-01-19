@@ -1,13 +1,14 @@
 'use client';
 
-import Button from '@/components/ui/Button';
-import DatePickerField from '@/components/ui/DatePickerField';
-import FieldSet from '@/components/ui/FieldSet';
-import InputField from '@/components/ui/InputField';
-import SelectField from '@/components/ui/Select';
+import {
+  Button,
+  DatePickerField,
+  FieldSet,
+  InputField,
+  SelectField,
+} from '@/components/ui';
 import { SERVICE_OPTIONS } from '@/constants';
-import useAppointments from '@/hooks/useAppointments';
-import useSlots from '@/hooks/useSlots';
+import { useAppointments, useSlots } from '@/hooks';
 import { validationSchemaEditAppointment } from '@/schemas';
 import { Appointment } from '@/types';
 import {
@@ -26,7 +27,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 
-export default function EditAppointmentForm({
+export function EditAppointmentForm({
   appointment,
 }: {
   appointment: Appointment;

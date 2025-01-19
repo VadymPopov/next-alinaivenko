@@ -1,6 +1,6 @@
 import { AppointmentType } from '@/types';
 
-export default function convertToDate(appointment: AppointmentType): Date {
+export const convertToDate = (appointment: AppointmentType): Date => {
   const [year, month, day] = appointment.date.split('-').map(Number);
 
   let hours = Number(appointment.slot.replace(/(am|pm)/i, '').split(':')[0]);
@@ -15,4 +15,4 @@ export default function convertToDate(appointment: AppointmentType): Date {
   }
 
   return new Date(year, month - 1, day, hours, minutes);
-}
+};

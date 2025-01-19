@@ -1,8 +1,10 @@
 'use client';
 
-import AppointmentCardView from '@/components/admin/AppointmentCardView';
-import AppointmentRowView from '@/components/admin/AppointmentRowView';
-import BlockedSlotView from '@/components/admin/BlockedSlotView';
+import {
+  AppointmentCardView,
+  AppointmentRowView,
+  BlockedSlotView,
+} from '@/components/admin';
 import { Appointment, BlockedSlot } from '@/types';
 
 import React from 'react';
@@ -15,7 +17,7 @@ interface AppointmentsTableProps {
   isNew?: boolean;
 }
 
-export default function AppointmentsTable({
+export function AppointmentsTable({
   isLoading,
   appointments,
   combinedApptSlots,

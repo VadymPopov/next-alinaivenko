@@ -12,7 +12,7 @@ interface SkeletonGridProps {
   className?: string;
 }
 
-export default function SkeletonGrid({
+export function SkeletonGrid({
   rows,
   columns,
   buttonWidth = '100%',

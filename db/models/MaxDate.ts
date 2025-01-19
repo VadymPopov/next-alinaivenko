@@ -10,6 +10,4 @@ const maxDateSchema = new Schema(
   { versionKey: false, timestamps: true, collection: 'maxdate' },
 );
 
-const MaxDate = models.MaxDate || model('MaxDate', maxDateSchema);
-
-export default MaxDate;
+export const MaxDate = models.MaxDate || model('MaxDate', maxDateSchema);

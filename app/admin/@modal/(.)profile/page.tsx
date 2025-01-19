@@ -1,7 +1,7 @@
 'use client';
 
-import ProfileView from '@/components/admin/ProfileView';
-import Modal from '@/components/ui/Modal';
+import { ProfileView } from '@/components/admin';
+import { Modal } from '@/components/ui';
 
 import { useRouter } from 'next/navigation';
 

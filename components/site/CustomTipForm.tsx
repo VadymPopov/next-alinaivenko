@@ -1,7 +1,6 @@
 'use client';
 
-import Button from '@/components/ui/Button';
-import InputField from '@/components/ui/InputField';
+import { Button, InputField } from '@/components/ui';
 import { validationSchemaCustomTip } from '@/schemas';
 import { CustomTipFormValues } from '@/types';
 
@@ -17,7 +16,7 @@ interface CustomTipFormProps {
   setShowCustomTipForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function CustomTipForm({
+export function CustomTipForm({
   setTip,
   showCustomTipForm,
   setShowCustomTipForm,

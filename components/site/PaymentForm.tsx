@@ -1,8 +1,6 @@
 'use client';
 
-import Button from '@/components/ui/Button';
-import FieldSet from '@/components/ui/FieldSet';
-import InputField from '@/components/ui/InputField';
+import { Button, FieldSet, InputField } from '@/components/ui';
 import { useAppContext } from '@/providers/AppContext';
 import { validationSchemaPaymentForm } from '@/schemas';
 import { PaymentFormValues } from '@/types';
@@ -13,7 +11,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/navigation';
 
-export default function PaymentForm() {
+export function PaymentForm() {
   const router = useRouter();
   const { paymentInfo, setPaymentInfo } = useAppContext();
 

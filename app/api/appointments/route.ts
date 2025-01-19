@@ -3,7 +3,7 @@ import Studio from '@/db/models/Studio';
 import connect from '@/db/mongodb';
 import { sendEmail } from '@/lib/nodemailer/sendEmail';
 import { getReceipt } from '@/lib/stripe/getReceipt';
-import convertToDate from '@/utils/convertToDate';
+import { convertToDate } from '@/utils';
 
 import { format } from 'date-fns';
 import { type NextRequest, NextResponse } from 'next/server';

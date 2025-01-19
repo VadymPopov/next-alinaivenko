@@ -1,4 +1,4 @@
-import ProfileView from '@/components/admin/ProfileView';
+import { ProfileView } from '@/components/admin';
 
 import React from 'react';
 

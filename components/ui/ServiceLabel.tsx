@@ -8,7 +8,7 @@ export interface ServiceLabelProps {
   service: serviceType;
 }
 
-export default function ServiceLabel({ service }: ServiceLabelProps) {
+export function ServiceLabel({ service }: ServiceLabelProps) {
   return (
     <div
       className={clsx(

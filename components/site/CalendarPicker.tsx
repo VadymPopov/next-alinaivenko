@@ -1,5 +1,5 @@
 import { MaxDate, ScheduleFormValues } from '@/types';
-import { findNextAvailableDate } from '@/utils/findNextAvailableDate';
+import { findNextAvailableDate } from '@/utils';
 import { filterDate } from '@/utils/helpers';
 
 import React from 'react';
@@ -17,7 +17,7 @@ interface CalendarPickerProps {
   blockedDates: string[];
 }
 
-export default function CalendarPicker({
+export function CalendarPicker({
   name,
   control,
   error,

@@ -1,7 +1,6 @@
 'use client';
 
-import Button from '@/components/ui/Button';
-import InputField from '@/components/ui/InputField';
+import { Button, InputField } from '@/components/ui';
 import { validationSchemaSignIn } from '@/schemas';
 import { SignInFormValues } from '@/types';
 
@@ -12,7 +11,7 @@ import { MdLogin } from 'react-icons/md';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { signIn } from 'next-auth/react';
 
-export default function SignInForm() {
+export function SignInForm() {
   const [authError, setAuthError] = useState<string | null>(null);
 
   const methods = useForm({

@@ -17,7 +17,7 @@ interface SelectFieldProps<T extends FieldValues> {
   placeholder?: string;
 }
 
-export default function SelectField<T extends FieldValues>({
+export function SelectField<T extends FieldValues>({
   options,
   label,
   name,

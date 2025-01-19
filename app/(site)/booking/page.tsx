@@ -1,4 +1,4 @@
-import Services from '@/components/site/ServicesPicker';
+import { ServicesPicker } from '@/components/site';
 
 import React from 'react';
 
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 export default function Booking() {
   return (
     <div>
-      <Services />
+      <ServicesPicker />
     </div>
   );
 }

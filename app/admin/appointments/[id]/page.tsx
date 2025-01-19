@@ -1,5 +1,5 @@
-import AppointmentDetails from '@/components/admin/AppointmentDetails';
-import { getAppointment } from '@/services/appointment';
+import { AppointmentDetails } from '@/components/admin';
+import { getAppointment } from '@/services';
 
 export interface AppointmentDetailsProps {
   params: { id: string };

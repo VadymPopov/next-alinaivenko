@@ -32,7 +32,5 @@ const availabilitySchema = new Schema(
   { versionKey: false, timestamps: true },
 );
 
-const Availability =
+export const Availability =
   models.Availability || model('Availability', availabilitySchema);
-
-export default Availability;

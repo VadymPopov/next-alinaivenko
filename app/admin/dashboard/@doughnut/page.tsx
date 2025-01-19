@@ -1,5 +1,5 @@
-import DoughnutChart from '@/components/admin/DoughnutChart';
-import { getDatabyServiceType } from '@/services/doughnut';
+import { DoughnutChart } from '@/components/admin';
+import { getDatabyServiceType } from '@/services';
 
 import React, { Suspense, use } from 'react';
 

@@ -5,8 +5,8 @@ import {
   putFetcher,
 } from '@/lib/axiosFetchers';
 import { Appointment, AppointmentEdited, NewAppointment } from '@/types';
+import { handleOptimisticMutate } from '@/utils';
 import { mapToMongoAppointment } from '@/utils/helpers';
-import { handleOptimisticMutate } from '@/utils/mutateHelper';
 
 import useSWR from 'swr';
 
@@ -40,7 +40,7 @@ const buildQueryParams = ({
   return queryParams.toString();
 };
 
-export default function useAppointments({
+export function useAppointments({
   date,
   day,
   month,

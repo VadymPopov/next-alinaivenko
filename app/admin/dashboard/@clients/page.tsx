@@ -1,7 +1,6 @@
-import AdminTitle from '@/components/admin/AdminTitle';
-import AppointmentsTable from '@/components/admin/AppointmentsTable';
+import { AdminTitle, AppointmentsTable } from '@/components/admin';
 import { NEW_APPT_TABLE_HEADERS } from '@/constants';
-import { getRecentAppointments } from '@/services/clients';
+import { getRecentAppointments } from '@/services';
 
 import React, { Suspense, use } from 'react';
 

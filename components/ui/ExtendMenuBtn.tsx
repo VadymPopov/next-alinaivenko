@@ -1,7 +1,7 @@
 import React from 'react';
 import { HiOutlineMenuAlt2, HiOutlineMenuAlt3 } from 'react-icons/hi';
 
-export default function ExtendMenuBtn({
+export function ExtendMenuBtn({
   toggleSidebar,
   isExtended,
 }: {

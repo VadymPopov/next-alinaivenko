@@ -1,6 +1,6 @@
 'use client';
 
-import AddAppointmentForm from '@/components/admin/AddAppointmentForm';
+import { AddAppointmentForm } from '@/components/admin';
 
 import React from 'react';
 

@@ -7,11 +7,7 @@ interface ProgressBarProps {
   prevStep: () => void;
 }
 
-export default function ProgressBar({
-  step,
-  totalSteps,
-  prevStep,
-}: ProgressBarProps) {
+export function ProgressBar({ step, totalSteps, prevStep }: ProgressBarProps) {
   const percentage = (step / totalSteps) * 100;
 
   return (

@@ -11,11 +11,7 @@ export interface SidebarItemProps {
   children: React.ReactNode;
 }
 
-export default function SidebarItem({
-  current,
-  pathname,
-  children,
-}: SidebarItemProps) {
+export function SidebarItem({ current, pathname, children }: SidebarItemProps) {
   const { isExtended } = useSidebar();
   return (
     <li>

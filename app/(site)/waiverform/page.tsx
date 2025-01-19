@@ -1,6 +1,5 @@
-import WaiverForm from '@/components/site/WaiverForm/WaiverForm';
-import Text from '@/components/ui/Text';
-import Title from '@/components/ui/Title';
+import { WaiverForm } from '@/components/site';
+import { Text, Title } from '@/components/ui';
 
 import React from 'react';
 

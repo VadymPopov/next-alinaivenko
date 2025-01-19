@@ -1,14 +1,14 @@
 'use client';
 
-import ProfileForm from '@/components/admin/ProfileForm';
-import { getProfileInfo } from '@/utils/getProfileInfo';
+import { ProfileForm } from '@/components/admin';
+import { getProfileInfo } from '@/utils';
 
 import React from 'react';
 
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 
-export default function ProfileView() {
+export function ProfileView() {
   const { data: session } = useSession();
   const { profileImageURL, isGoogle } = getProfileInfo(session);
   return (

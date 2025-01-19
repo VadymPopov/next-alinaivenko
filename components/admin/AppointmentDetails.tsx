@@ -1,9 +1,8 @@
 'use client';
 
-import AppointmentView from '@/components/admin/AppointmentView';
-import EditAppointmentForm from '@/components/admin/EditAppointmentForm';
-import Button from '@/components/ui/Button';
-import useAppointments from '@/hooks/useAppointments';
+import { AppointmentView, EditAppointmentForm } from '@/components/admin';
+import { Button } from '@/components/ui';
+import { useAppointments } from '@/hooks';
 import { Appointment } from '@/types';
 
 import React, { useState } from 'react';
@@ -17,7 +16,7 @@ import {
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 
-export default function AppointmentDetails({
+export function AppointmentDetails({
   appointment,
 }: {
   appointment: Appointment;

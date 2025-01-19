@@ -1,15 +1,13 @@
 'use client';
 
-import Button from '@/components/ui/Button';
-import Text from '@/components/ui/Text';
-import Title from '@/components/ui/Title';
+import { Button, Text, Title } from '@/components/ui';
 
 import { BsFillCheckCircleFill } from 'react-icons/bs';
 import { MdOutlineArrowBackIos } from 'react-icons/md';
 
 import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function Completion() {
+export function Completion() {
   const searchParams = useSearchParams();
   const type = searchParams.get('type');
 

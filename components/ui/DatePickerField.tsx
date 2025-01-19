@@ -17,7 +17,7 @@ interface DatePickerProps<T extends FieldValues> {
   admin?: boolean;
 }
 
-export default function DatePickerField<T extends FieldValues>({
+export function DatePickerField<T extends FieldValues>({
   name,
   control,
   error,

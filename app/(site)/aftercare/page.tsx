@@ -1,7 +1,4 @@
-import Section from '@/components/ui/Section';
-import Suptitle from '@/components/ui/Suptitle';
-import Text from '@/components/ui/Text';
-import Title from '@/components/ui/Title';
+import { Section, Suptitle, Text, Title } from '@/components/ui';
 
 import React from 'react';
 

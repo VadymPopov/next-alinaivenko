@@ -1,5 +1,4 @@
-import Appointment from '@/db/models/Appointment';
-import connect from '@/db/mongodb';
+import { Appointment, connect } from '@/db';
 import { Appointment as AppointmentType } from '@/types';
 
 import { Types } from 'mongoose';

@@ -28,7 +28,5 @@ const blockedSlotSchema = new Schema(
   { versionKey: false, timestamps: true },
 );
 
-const BlockedSlot =
+export const BlockedSlot =
   models.BlockedSlot || model('BlockedSlot', blockedSlotSchema);
-
-export default BlockedSlot;

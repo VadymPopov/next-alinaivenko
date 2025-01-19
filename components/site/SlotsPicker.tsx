@@ -1,5 +1,5 @@
 import { ScheduleFormValues } from '@/types';
-import { isTimeWithinLastHour } from '@/utils/timeComparison';
+import { isTimeWithinLastHour } from '@/utils';
 
 import React, { useState } from 'react';
 import { Control, Controller } from 'react-hook-form';
@@ -14,7 +14,7 @@ interface SlotsPickerProps {
   selectedDate: Date;
 }
 
-export default function SlotsPicker({
+export function SlotsPicker({
   name,
   control,
   error,

@@ -1,5 +1,4 @@
-import Footer from '@/components/site/Footer';
-import Navigation from '@/components/site/Navigation';
+import { Footer, Navigation } from '@/components/site';
 import { AppProvider } from '@/providers/AppContext';
 import '@/styles/datepicker.css';
 import '@/styles/globals.css';

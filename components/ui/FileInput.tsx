@@ -1,5 +1,5 @@
-import ImagesPreview from '@/components/ui/ImagesPreview';
-import { useImageUpload } from '@/hooks/useImageUpload';
+import { ImagesPreview } from '@/components/ui';
+import { useImageUpload } from '@/hooks';
 
 import { InputHTMLAttributes } from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -16,7 +16,7 @@ interface FileInputProps
   error?: string;
 }
 
-export default function FileInput({
+export function FileInput({
   label,
   type,
   name,

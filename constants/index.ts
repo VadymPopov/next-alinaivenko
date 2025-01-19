@@ -124,6 +124,21 @@ export const SITE_MENU = [
   },
 ];
 
+export const ADMIN_MENU = [
+  {
+    path: '/admin/dashboard',
+    label: 'Dashboard',
+  },
+  {
+    path: '/admin/appointments',
+    label: 'Appointments',
+  },
+  {
+    path: '/admin/calendar',
+    label: 'Calendar',
+  },
+];
+
 export const SLOT_TIMES = [
   '11:00am',
   '11:30am',
@@ -143,4 +158,10 @@ export const SLOT_TIMES = [
   '6:30pm',
   '7:00pm',
   '7:30pm',
+];
+
+export const PAYMENT_LINKS = [
+  { label: 'Client', href: '/payment' },
+  { label: 'Tip', href: '/payment/tip-amount' },
+  { label: 'Payment', href: '/payment/confirmation' },
 ];

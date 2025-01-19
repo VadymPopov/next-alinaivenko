@@ -1,7 +1,7 @@
 'use client';
 
 import { useSidebar } from '@/providers/SidebarContext';
-import { convertToTimeRange } from '@/utils/convertToTimeRange';
+import { convertToTimeRange } from '@/utils';
 
 import React from 'react';
 
@@ -24,7 +24,7 @@ interface WeekViewAppointmentProps {
   };
 }
 
-export default function WeekViewAppointment({
+export function WeekViewAppointment({
   appointment,
   className,
   style,

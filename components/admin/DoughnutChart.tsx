@@ -7,13 +7,12 @@ import { Chart as ChartJS } from 'chart.js/auto';
 
 ChartJS.register();
 
-type ServiceData = { service: string; count: number };
+interface ServiceData {
+  service: string;
+  count: number;
+}
 
-export default function DoughnutChart({
-  serviceData,
-}: {
-  serviceData: ServiceData[];
-}) {
+export function DoughnutChart({ serviceData }: { serviceData: ServiceData[] }) {
   const data = {
     labels: serviceData.map((data) => data.service),
     datasets: [

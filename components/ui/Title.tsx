@@ -2,13 +2,13 @@ import { ReactNode } from 'react';
 
 import clsx from 'clsx';
 
-type TitleProps = {
+interface TitleProps {
   children: ReactNode;
   align?: boolean;
   mobile?: boolean;
-};
+}
 
-export default function Title({ children, mobile }: TitleProps) {
+export function Title({ children, mobile }: TitleProps) {
   return (
     <h2
       className={clsx(

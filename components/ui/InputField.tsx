@@ -18,7 +18,7 @@ interface InputFieldProps
   styles?: string;
 }
 
-export default function InputField({
+export function InputField({
   title,
   placeholder,
   label,

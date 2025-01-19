@@ -26,6 +26,4 @@ const studioSchema = new Schema(
   { versionKey: false, timestamps: true, collection: 'studio' },
 );
 
-const Studio = models.Studio || model('Studio', studioSchema);
-
-export default Studio;
+export const Studio = models.Studio || model('Studio', studioSchema);

@@ -1,6 +1,6 @@
 'use client';
 
-import AppointmentRow from '@/components/admin/AppointmentRowView';
+import { AppointmentRowView } from '@/components/admin';
 import { NEW_APPT_TABLE_HEADERS } from '@/constants';
 import { Appointment } from '@/types';
 
@@ -10,9 +10,7 @@ interface AppointmentsTableProps {
   appointments: Appointment[];
 }
 
-export default function NewAppointmentsTable({
-  appointments,
-}: AppointmentsTableProps) {
+export function NewAppointmentsTable({ appointments }: AppointmentsTableProps) {
   return (
     <table className="table-auto w-full border-separate border-spacing-y-2">
       <thead>
@@ -28,7 +26,7 @@ export default function NewAppointmentsTable({
         {appointments &&
           appointments.length > 0 &&
           appointments.map((appointment) => (
-            <AppointmentRow
+            <AppointmentRowView
               key={appointment._id}
               appointment={appointment}
               isNew={true}

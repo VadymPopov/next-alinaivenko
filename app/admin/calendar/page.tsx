@@ -1,12 +1,10 @@
-import AvailabilityCalendar from '@/components/admin/AvailabilityCalendar';
-import BlockSlotForm from '@/components/admin/BlockSlotForm';
-import SetMaxBookingDateForm from '@/components/admin/SetMaxBookingDateForm';
-import StudioInfoForm from '@/components/admin/StudioInfoForm';
 import {
-  getBlockedDates,
-  getMaxDate,
-  getStudioInfo,
-} from '@/services/calendar';
+  AvailabilityCalendar,
+  BlockSlotForm,
+  SetMaxBookingDateForm,
+  StudioInfoForm,
+} from '@/components/admin';
+import { getBlockedDates, getMaxDate, getStudioInfo } from '@/services';
 
 import React, { Suspense, use } from 'react';
 

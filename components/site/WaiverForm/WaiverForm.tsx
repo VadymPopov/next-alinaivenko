@@ -1,7 +1,6 @@
 'use client';
 
-import ProgressBar from '@/components/ui/ProgressBar';
-import Section from '@/components/ui/Section';
+import { ProgressBar, Section } from '@/components/ui';
 import { WaiverFormProvider } from '@/providers/WaiverFormContext';
 
 import React, { useState } from 'react';
@@ -14,7 +13,7 @@ import StepSix from './StepSix';
 import StepThree from './StepThree';
 import StepTwo from './StepTwo';
 
-export default function WaiverForm() {
+export function WaiverForm() {
   const [currentStep, setCurrentStep] = useState(1);
 
   const nextStep = () => setCurrentStep((prev) => prev + 1);

@@ -1,6 +1,6 @@
 'use client';
 
-import ErrorBoundary from '@/components/ui/ErrorBoundary';
+import { ErrorBoundary } from '@/components/ui';
 
 import React from 'react';
 

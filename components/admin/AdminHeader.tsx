@@ -1,12 +1,10 @@
 'use client';
 
-import BurgerBtn from '@/components/ui/BurgerBtn';
-import Menu from '@/components/ui/Menu';
-import SignOutBtn from '@/components/ui/SignOutBtn';
-import SlidingMenu from '@/components/ui/SlidingMenu';
-import { useMenu } from '@/hooks/useMenu';
+import { BurgerBtn, Menu, SignOutBtn, SlidingMenu } from '@/components/ui';
+import { ADMIN_MENU } from '@/constants';
+import { useMenu } from '@/hooks';
 import { useSidebar } from '@/providers/SidebarContext';
-import { getProfileInfo } from '@/utils/getProfileInfo';
+import { getProfileInfo } from '@/utils';
 import { capitalizeFirstLetter } from '@/utils/helpers';
 
 import React from 'react';
@@ -14,25 +12,9 @@ import React from 'react';
 import clsx from 'clsx';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
-const menu = [
-  {
-    path: '/admin/dashboard',
-    label: 'Dashboard',
-  },
-  {
-    path: '/admin/appointments',
-    label: 'Appointments',
-  },
-  {
-    path: '/admin/calendar',
-    label: 'Calendar',
-  },
-];
-
-export default function Header() {
+export function Header() {
   const pathname = usePathname();
   const router = useRouter();
   const { data: session } = useSession();
@@ -65,7 +47,7 @@ export default function Header() {
           isOpen ? 'opacity-100' : 'opacity-0',
         )}
       >
-        <Menu onClick={toggleMenu} menu={menu} />
+        <Menu onClick={toggleMenu} menu={ADMIN_MENU} />
       </SlidingMenu>
 
       <h1 className="flex-1 text-xl sm:text-2xl md:text-3xl font-semibld text-mainLightColor">

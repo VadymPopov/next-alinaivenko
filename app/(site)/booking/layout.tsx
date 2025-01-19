@@ -1,7 +1,5 @@
-import { ProcessSteps } from '@/components/site/ProcessSteps';
-import Section from '@/components/ui/Section';
-import Text from '@/components/ui/Text';
-import Title from '@/components/ui/Title';
+import { ProcessSteps } from '@/components/site';
+import { Section, Text, Title } from '@/components/ui';
 import { BOOKING_LINKS } from '@/constants';
 
 export default function Layout({ children }: { children: React.ReactNode }) {

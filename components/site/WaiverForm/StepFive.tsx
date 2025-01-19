@@ -1,8 +1,6 @@
 'use client';
 
-import Button from '@/components/ui/Button';
-import FieldSet from '@/components/ui/FieldSet';
-import InputField from '@/components/ui/InputField';
+import { Button, FieldSet, InputField } from '@/components/ui';
 import { useWaiverFormContext } from '@/providers/WaiverFormContext';
 import { validationSchemaWaiverStepFive } from '@/schemas';
 import { StepFiveFormValues } from '@/types';

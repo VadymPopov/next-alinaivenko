@@ -1,7 +1,7 @@
 'use client';
 
-import AdminTitle from '@/components/admin/AdminTitle';
-import Button from '@/components/ui/Button';
+import { AdminTitle } from '@/components/admin';
+import { Button } from '@/components/ui';
 import { getFetcher } from '@/lib/axiosFetchers';
 import { updateBlockedDates } from '@/services/calendar';
 import { arraysAreEqual, isNewDate } from '@/utils/helpers';
@@ -15,7 +15,7 @@ import useSWR from 'swr';
 
 const CALENDAR_API = '/api/admin/calendar';
 
-export default function AvailabilityCalendar({
+export function AvailabilityCalendar({
   initialDates,
 }: {
   initialDates: string[];

@@ -11,7 +11,7 @@ interface SignatureFieldProps<T extends FieldValues> {
   control: Control<T>;
 }
 
-export default function SignatureField<T extends FieldValues>({
+export function SignatureField<T extends FieldValues>({
   name,
   error,
   control,

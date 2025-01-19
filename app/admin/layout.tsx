@@ -1,6 +1,4 @@
-import Header from '@/components/admin/AdminHeader';
-import MainContent from '@/components/admin/AdminMain';
-import Sidebar from '@/components/admin/Sidebar';
+import { Header, MainContent, Sidebar } from '@/components/admin';
 import { getSession } from '@/lib/auth';
 import AuthProvider from '@/providers/SessionProvider';
 import { SidebarProvider } from '@/providers/SidebarContext';
@@ -13,10 +11,10 @@ import { Toaster } from 'react-hot-toast';
 import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
-type Props = {
+interface AdminLayoutProps {
   children: ReactNode;
   modal: ReactNode;
-};
+}
 
 export const metadata: Metadata = {
   title: {
@@ -25,7 +23,10 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({ children, modal }: Props) {
+export default async function RootLayout({
+  children,
+  modal,
+}: AdminLayoutProps) {
   const session = await getSession();
 
   if (!session) {

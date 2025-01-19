@@ -1,6 +1,6 @@
 'use client';
 
-import ServiceLabel from '@/components/ui/ServiceLabel';
+import { ServiceLabel } from '@/components/ui';
 import { Appointment } from '@/types';
 import { formatCurrency, formatDuration, getParsedDate } from '@/utils/helpers';
 
@@ -10,7 +10,7 @@ import { SiInstagram } from 'react-icons/si';
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 
-export default function AppointmentCardView({
+export function AppointmentCardView({
   appointment,
   isNew,
 }: {

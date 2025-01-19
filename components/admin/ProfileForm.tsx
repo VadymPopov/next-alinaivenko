@@ -1,8 +1,7 @@
 'use client';
 
-import Button from '@/components/ui/Button';
-import InputField from '@/components/ui/InputField';
-import usePasswordStrength from '@/hooks/usePasswordStrength';
+import { Button, InputField } from '@/components/ui';
+import { usePasswordStrength } from '@/hooks';
 import { postFetcher } from '@/lib/axiosFetchers';
 import { validationSchemaProfileForm } from '@/schemas';
 import { ProfileFormValues } from '@/types';
@@ -14,7 +13,7 @@ import toast from 'react-hot-toast';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/navigation';
 
-export default function ProfileForm({ id }: { id?: string }) {
+export function ProfileForm({ id }: { id?: string }) {
   const { strengthColor, passwordStrength, validatePasswordStrength } =
     usePasswordStrength();
   const router = useRouter();

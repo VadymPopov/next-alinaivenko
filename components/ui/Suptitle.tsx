@@ -7,7 +7,7 @@ type SuptitleProps = {
   primary?: boolean;
 };
 
-export default function Suptitle({ children, primary }: SuptitleProps) {
+export function Suptitle({ children, primary }: SuptitleProps) {
   return (
     <h3
       className={clsx(

@@ -11,7 +11,7 @@ interface SlidingMenuProps {
   children: React.ReactNode;
 }
 
-export default function SlidingMenu({
+export function SlidingMenu({
   isOpen,
   position = 'right',
   className,

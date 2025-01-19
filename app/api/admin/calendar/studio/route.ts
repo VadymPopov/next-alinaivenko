@@ -1,5 +1,4 @@
-import Studio from '@/db/models/Studio';
-import connect from '@/db/mongodb';
+import { Studio, connect } from '@/db';
 
 import { NextRequest, NextResponse } from 'next/server';
 

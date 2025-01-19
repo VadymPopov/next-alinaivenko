@@ -2,13 +2,13 @@ import { ReactNode } from 'react';
 
 import clsx from 'clsx';
 
-type TextProps = {
+interface TextProps {
   children: ReactNode;
   primary?: boolean;
   main?: boolean;
-};
+}
 
-export default function Text({ children, primary, main }: TextProps) {
+export function Text({ children, primary, main }: TextProps) {
   return (
     <p
       className={clsx(

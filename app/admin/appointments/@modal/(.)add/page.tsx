@@ -1,7 +1,7 @@
 'use client';
 
-import AddAppointmentForm from '@/components/admin/AddAppointmentForm';
-import Modal from '@/components/ui/Modal';
+import { AddAppointmentForm } from '@/components/admin';
+import { Modal } from '@/components/ui';
 
 import React from 'react';
 

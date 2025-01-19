@@ -1,6 +1,4 @@
-import Loader from '@/components/ui/Loader';
-import Section from '@/components/ui/Section';
-import Title from '@/components/ui/Title';
+import { Loader, Section, Title } from '@/components/ui';
 import { freshArray } from '@/public/images/fresh';
 import { healedArray } from '@/public/images/healed';
 import { permanentArray } from '@/public/images/permanent';

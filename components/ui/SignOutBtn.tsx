@@ -6,7 +6,7 @@ import { MdLogout } from 'react-icons/md';
 import clsx from 'clsx';
 import { signOut } from 'next-auth/react';
 
-export default function SignOutBtn() {
+export function SignOutBtn() {
   const { isExtended } = useSidebar();
   return (
     <button

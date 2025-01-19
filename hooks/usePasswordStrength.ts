@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const usePasswordStrength = () => {
+export function usePasswordStrength() {
   const [passwordStrength, setPasswordStrength] = useState('');
   const [strengthColor, setStrengthColor] = useState('');
 
@@ -50,6 +50,4 @@ const usePasswordStrength = () => {
     passwordStrength,
     validatePasswordStrength,
   };
-};
-
-export default usePasswordStrength;
+}

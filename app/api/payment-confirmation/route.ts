@@ -1,5 +1,4 @@
-import Appointment from '@/db/models/Appointment';
-import connect from '@/db/mongodb';
+import { Appointment, connect } from '@/db';
 import { sendEmail } from '@/lib/nodemailer/sendPaymentConfirmationEmail';
 import { getReceipt } from '@/lib/stripe/getReceipt';
 

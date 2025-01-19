@@ -1,6 +1,5 @@
 import { SERVICE_TYPES } from '@/constants';
-import Appointment from '@/db/models/Appointment';
-import connect from '@/db/mongodb';
+import { Appointment, connect } from '@/db';
 
 export async function getDatabyServiceType() {
   try {

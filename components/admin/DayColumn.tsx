@@ -1,9 +1,12 @@
 'use client';
 
-import BlockedSlotView from '@/components/admin/BlockedSlotView';
-import WeekViewAppointment from '@/components/admin/WeekViewAppointment';
-import { Appointment } from '@/types';
-import { BlockedSlot } from '@/types';
+import { BlockedSlotView, WeekViewAppointment } from '@/components/admin';
+import { Appointment, BlockedSlot } from '@/types';
+import {
+  filterDate,
+  getCombinedApptSlots,
+  getTimeSlots,
+} from '@/utils/helpers';
 
 import React from 'react';
 import { MdAdd } from 'react-icons/md';
@@ -11,12 +14,6 @@ import { MdAdd } from 'react-icons/md';
 import clsx from 'clsx';
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
-
-import {
-  filterDate,
-  getCombinedApptSlots,
-  getTimeSlots,
-} from '../../utils/helpers';
 
 interface DayColumnProps {
   day: Date;
@@ -26,7 +23,7 @@ interface DayColumnProps {
   blockedSlots: BlockedSlot[];
 }
 
-export default function DayColumn({
+export function DayColumn({
   day,
   appointments,
   slotHeight,

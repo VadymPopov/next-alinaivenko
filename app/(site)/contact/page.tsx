@@ -1,7 +1,6 @@
-import EmbeddedMap from '@/components/site/EmbeddedMap';
-import Section from '@/components/ui/Section';
-import Title from '@/components/ui/Title';
-import { getStudioInfo } from '@/services/calendar';
+import { EmbeddedMap } from '@/components/site';
+import { Section, Title } from '@/components/ui';
+import { getStudioInfo } from '@/services';
 
 import React, { Suspense, use } from 'react';
 import {

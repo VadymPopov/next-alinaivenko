@@ -4,11 +4,7 @@ import { useSidebar } from '@/providers/SidebarContext';
 
 import clsx from 'clsx';
 
-export default function MainContent({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export function MainContent({ children }: { children: React.ReactNode }) {
   const { isExtended } = useSidebar();
 
   return (

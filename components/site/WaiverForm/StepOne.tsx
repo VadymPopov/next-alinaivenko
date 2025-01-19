@@ -1,14 +1,10 @@
 'use client';
 
-import Button from '@/components/ui/Button';
-import DatePickerField from '@/components/ui/DatePickerField';
-import FieldSet from '@/components/ui/FieldSet';
-import InputField from '@/components/ui/InputField';
+import { Button, DatePickerField, FieldSet, InputField } from '@/components/ui';
 import { useWaiverFormContext } from '@/providers/WaiverFormContext';
 import { validationSchemaWaiverStepOne } from '@/schemas';
-import { WaiverFormData } from '@/types';
-import { StepOneFormValues } from '@/types';
-import { verifyClientLegalAge } from '@/utils/ageVerification';
+import { StepOneFormValues, WaiverFormData } from '@/types';
+import { verifyClientLegalAge } from '@/utils';
 
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';

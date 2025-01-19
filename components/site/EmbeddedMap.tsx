@@ -6,7 +6,7 @@ interface EmbeddedMapProps {
   query: string;
 }
 
-const EmbeddedMap = ({ latitude, longitude, query }: EmbeddedMapProps) => {
+export function EmbeddedMap({ latitude, longitude, query }: EmbeddedMapProps) {
   const apiKey = process.env.GOOGLE_MAPS_API_KEY;
   const mapUrl = `https://www.google.com/maps/embed/v1/place?key=${apiKey}&center=${latitude},${longitude}&zoom=18&q=${query}`;
 
@@ -24,6 +24,4 @@ const EmbeddedMap = ({ latitude, longitude, query }: EmbeddedMapProps) => {
       ></iframe>
     </div>
   );
-};
-
-export default EmbeddedMap;
+}

@@ -1,5 +1,4 @@
-import Availability from '@/db/models/Calendar';
-import connect from '@/db/mongodb';
+import { Availability, connect } from '@/db';
 
 import { NextRequest, NextResponse } from 'next/server';
 

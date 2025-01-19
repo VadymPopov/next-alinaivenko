@@ -1,9 +1,8 @@
 'use client';
 
-import AdminTitle from '@/components/admin/AdminTitle';
-import Button from '@/components/ui/Button';
-import DatePickerField from '@/components/ui/DatePickerField';
-import { useMaxBookingDate } from '@/hooks/useMaxBookingDate';
+import { AdminTitle } from '@/components/admin';
+import { Button, DatePickerField } from '@/components/ui';
+import { useMaxBookingDate } from '@/hooks';
 import { validationSchemaSetMaxBookingDate } from '@/schemas';
 import { MaxDate, SetMaxDateFormValues } from '@/types';
 
@@ -13,11 +12,7 @@ import toast from 'react-hot-toast';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 
-export default function SetMaxBookingDateForm({
-  maxDate,
-}: {
-  maxDate: MaxDate;
-}) {
+export function SetMaxBookingDateForm({ maxDate }: { maxDate: MaxDate }) {
   const { data, error, mutate, isLoading } = useMaxBookingDate(maxDate);
 
   const methods = useForm({

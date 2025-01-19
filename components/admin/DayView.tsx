@@ -1,11 +1,8 @@
 'use client';
 
-import AdminTitle from '@/components/admin/AdminTitle';
-import AppointmentsTable from '@/components/admin/AppointmentsTable';
+import { AdminTitle, AppointmentsTable } from '@/components/admin';
 import { APPT_TABLE_HEADERS } from '@/constants';
-import useAppointments from '@/hooks/useAppointments';
-import useBlockedDates from '@/hooks/useBlockedDates';
-import useBlockedSlots from '@/hooks/useBlockedSlots';
+import { useAppointments, useBlockedDates, useBlockedSlots } from '@/hooks';
 import { filterDate, getCombinedApptSlots } from '@/utils/helpers';
 
 import React, { useState } from 'react';
@@ -14,7 +11,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import { format } from 'date-fns';
 
-const DayView = () => {
+export function DayView() {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [currentDate, setCurrentDate] = useState(new Date());
   const date = format(selectedDate, 'yyyy-MM-dd');
@@ -55,6 +52,4 @@ const DayView = () => {
       </div>
     </div>
   );
-};
-
-export default DayView;
+}

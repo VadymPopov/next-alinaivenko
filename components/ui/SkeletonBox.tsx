@@ -10,7 +10,7 @@ interface SkeletonBoxProps {
   className?: string;
 }
 
-export default function SkeletonBox({
+export function SkeletonBox({
   width = '100%',
   height = '100%',
   borderRadius = 20,

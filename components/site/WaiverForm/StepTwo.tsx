@@ -1,10 +1,12 @@
 'use client';
 
-import Button from '@/components/ui/Button';
-import DatePickerField from '@/components/ui/DatePickerField';
-import FieldSet from '@/components/ui/FieldSet';
-import InputField from '@/components/ui/InputField';
-import SelectField from '@/components/ui/Select';
+import {
+  Button,
+  DatePickerField,
+  FieldSet,
+  InputField,
+  SelectField,
+} from '@/components/ui';
 import { useWaiverFormContext } from '@/providers/WaiverFormContext';
 import { validationSchemaWaiverStepTwo } from '@/schemas';
 import { StepTwoFormValues } from '@/types';

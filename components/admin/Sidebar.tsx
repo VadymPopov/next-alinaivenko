@@ -1,8 +1,7 @@
 'use client';
 
-import SidebarHeader from '@/components/admin/SidebarHeader';
-import SidebarList from '@/components/admin/SidebarList';
-import SignOutBtn from '@/components/ui/SignOutBtn';
+import { SidebarHeader, SidebarList } from '@/components/admin';
+import { SignOutBtn } from '@/components/ui';
 import { useSidebar } from '@/providers/SidebarContext';
 
 import React from 'react';
@@ -10,7 +9,7 @@ import React from 'react';
 import clsx from 'clsx';
 import { usePathname, useRouter } from 'next/navigation';
 
-export default function Sidebar() {
+export function Sidebar() {
   const { isExtended, toggleSidebar } = useSidebar();
   const pathname = usePathname();
   const router = useRouter();

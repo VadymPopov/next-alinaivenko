@@ -31,18 +31,18 @@ export async function getStudioInfo() {
   return await getFetcher<StudioInfo>(`${CALENDAR_API}/studio`);
 }
 
-export async function isBlockedMonthExists(month: string, year: string) {
+async function isBlockedMonthExists(month: string, year: string) {
   return await getFetcher<{ exists: boolean }>(
     `${CALENDAR_API}?isExists=true&month=${month}&year=${year}`,
   );
 }
 
-export const updateBlockedDates = async (
+export async function updateBlockedDates(
   newDates: Date[],
   mutate: KeyedMutator<string[]>,
   currentMonth: string,
   currentYear: string,
-) => {
+) {
   const formattedDates = formatDates(newDates);
 
   try {
@@ -76,4 +76,4 @@ export const updateBlockedDates = async (
       error instanceof Error ? error.message : 'Failed to update blocked dates',
     );
   }
-};
+}

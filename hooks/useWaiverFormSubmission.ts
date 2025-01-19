@@ -4,7 +4,7 @@ import { prepareFilteredValues } from '@/utils/helpers';
 
 import { useState } from 'react';
 
-export function useWaiverSubmission() {
+export function useWaiverFormSubmission() {
   const [isProcessing, setIsProcessing] = useState(false);
 
   const sendWaiverForm = async (data: FilteredWaiverFormValues) => {

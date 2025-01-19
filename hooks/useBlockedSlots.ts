@@ -1,6 +1,6 @@
 import { deleteFetcher, getFetcher, postFetcher } from '@/lib/axiosFetchers';
 import { BlockedSlot } from '@/types';
-import { handleOptimisticMutate } from '@/utils/mutateHelper';
+import { handleOptimisticMutate } from '@/utils';
 
 import { format } from 'date-fns';
 import useSWR from 'swr';
@@ -25,7 +25,7 @@ const buildQueryParams = ({
   return queryParams.toString();
 };
 
-export default function useBlockedSlots({
+export function useBlockedSlots({
   date,
   start,
   end,

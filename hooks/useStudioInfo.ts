@@ -5,7 +5,7 @@ import useSWR from 'swr';
 
 const STUDIO_API = '/api/admin/calendar/studio';
 
-export default function useStudioInfo(fallbackData?: {
+export function useStudioInfo(fallbackData?: {
   _id: string;
   address: string;
   city: string;

@@ -1,9 +1,7 @@
 'use client';
 
-import AdminTitle from '@/components/admin/AdminTitle';
-import Button from '@/components/ui/Button';
-import InputField from '@/components/ui/InputField';
-import SelectField from '@/components/ui/Select';
+import { AdminTitle } from '@/components/admin';
+import { Button, InputField, SelectField } from '@/components/ui';
 import { MONTH_OPTIONS } from '@/constants';
 import { Options, SearchDate } from '@/types';
 import { generateDays } from '@/utils/helpers';
@@ -12,7 +10,7 @@ import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { MdSearch } from 'react-icons/md';
 
-export default function AppointmentsSearchForm({
+export function AppointmentsSearchForm({
   setDate,
 }: {
   setDate: React.Dispatch<React.SetStateAction<SearchDate>>;

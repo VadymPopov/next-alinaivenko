@@ -1,6 +1,6 @@
 'use client';
 
-import Button from '@/components/ui/Button';
+import { Button } from '@/components/ui';
 import { useAppContext } from '@/providers/AppContext';
 import { serviceType } from '@/types';
 
@@ -18,7 +18,7 @@ interface ServiceCardProps {
   duration: string;
 }
 
-export default function ServiceCard({
+export function ServiceCard({
   imgURL,
   title,
   price,

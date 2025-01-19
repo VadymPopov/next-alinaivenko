@@ -1,5 +1,4 @@
-import Appointment from '@/db/models/Appointment';
-import connect from '@/db/mongodb';
+import { Appointment, connect } from '@/db';
 
 import { endOfMonth, format, startOfMonth } from 'date-fns';
 

@@ -12,7 +12,7 @@ interface UseSlotsParams {
   id?: string;
 }
 
-export default function useSlots({
+export function useSlots({
   fallbackData,
   date,
   duration,

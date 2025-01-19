@@ -1,11 +1,11 @@
 'use client';
 
-import BlockedSlotView from '@/components/admin/BlockedSlotView';
-import DayColumn from '@/components/admin/DayColumn';
-import WeekViewAppointment from '@/components/admin/WeekViewAppointment';
-import useAppointments from '@/hooks/useAppointments';
-import useBlockedDates from '@/hooks/useBlockedDates';
-import useBlockedSlots from '@/hooks/useBlockedSlots';
+import {
+  BlockedSlotView,
+  DayColumn,
+  WeekViewAppointment,
+} from '@/components/admin';
+import { useAppointments, useBlockedDates, useBlockedSlots } from '@/hooks';
 import { filterDate, getCombinedApptSlots } from '@/utils/helpers';
 
 import React, { useState } from 'react';
@@ -22,7 +22,7 @@ import {
   sub,
 } from 'date-fns';
 
-const WeekView = () => {
+export function WeekView() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [week, setWeek] = useState(new Date());
   const start = React.useMemo(
@@ -197,6 +197,4 @@ const WeekView = () => {
       </div>
     </div>
   );
-};
-
-export default WeekView;
+}

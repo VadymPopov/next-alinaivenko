@@ -1,5 +1,4 @@
-import MaxDate from '@/db/models/MaxDate';
-import connect from '@/db/mongodb';
+import { MaxDate, connect } from '@/db';
 
 import { NextRequest, NextResponse } from 'next/server';
 

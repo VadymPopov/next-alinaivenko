@@ -1,12 +1,13 @@
 'use client';
 
-import AdminTitle from '@/components/admin/AdminTitle';
-import Button from '@/components/ui/Button';
-import DatePickerField from '@/components/ui/DatePickerField';
-import InputField from '@/components/ui/InputField';
-import SelectField from '@/components/ui/Select';
-import useBlockedSlots from '@/hooks/useBlockedSlots';
-import useSlots from '@/hooks/useSlots';
+import { AdminTitle } from '@/components/admin';
+import {
+  Button,
+  DatePickerField,
+  InputField,
+  SelectField,
+} from '@/components/ui';
+import { useBlockedSlots, useSlots } from '@/hooks';
 import { validationSchemaBlockSlot } from '@/schemas';
 import { BlockSlotFormValues } from '@/types';
 import { durationOptions, slotsOptions } from '@/utils/helpers';
@@ -18,7 +19,7 @@ import toast from 'react-hot-toast';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { format } from 'date-fns';
 
-export default function BlockSlotForm() {
+export function BlockSlotForm() {
   const { isValidating, error, addBlockedSlot } = useBlockedSlots();
 
   const methods = useForm({

@@ -1,11 +1,8 @@
 'use client';
 
-import CalendarPicker from '@/components/site/CalendarPicker';
-import SlotsPicker from '@/components/site/SlotsPicker';
-import Button from '@/components/ui/Button';
-import FieldSet from '@/components/ui/FieldSet';
-import SkeletonGrid from '@/components/ui/SkeletonGrid';
-import useSlots from '@/hooks/useSlots';
+import { CalendarPicker, SlotsPicker } from '@/components/site';
+import { Button, FieldSet, SkeletonGrid } from '@/components/ui';
+import { useSlots } from '@/hooks';
 import { useAppContext } from '@/providers/AppContext';
 import { validationSchemaSchedule } from '@/schemas';
 import { MaxDate, ScheduleFormValues } from '@/types';
@@ -19,7 +16,7 @@ import clsx from 'clsx';
 import { format, parse, startOfDay } from 'date-fns';
 import { useRouter } from 'next/navigation';
 
-export default function ScheduleForm({
+export function ScheduleForm({
   availableDate,
   initialSlots,
   maxDate,

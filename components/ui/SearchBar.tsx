@@ -7,7 +7,7 @@ interface SearchBarProps {
   onSearch: (_searchTerm: string) => void;
 }
 
-export default function SearchBar({ query, onSearch }: SearchBarProps) {
+export function SearchBar({ query, onSearch }: SearchBarProps) {
   return (
     <div className="relative">
       <input

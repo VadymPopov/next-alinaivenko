@@ -1,12 +1,14 @@
 'use client';
 
-import AdminTitle from '@/components/admin/AdminTitle';
-import AppointmentsSearchForm from '@/components/admin/AppointmentsSearchForm';
-import AppointmentsTable from '@/components/admin/AppointmentsTable';
-import Flyout from '@/components/admin/Flyout';
-import SearchBar from '@/components/ui/SearchBar';
+import {
+  AdminTitle,
+  AppointmentsSearchForm,
+  AppointmentsTable,
+  Flyout,
+} from '@/components/admin';
+import { SearchBar } from '@/components/ui';
 import { APPT_TABLE_HEADERS } from '@/constants';
-import useAppointments from '@/hooks/useAppointments';
+import { useAppointments } from '@/hooks';
 import { SearchDate } from '@/types';
 import { getFilterString } from '@/utils/helpers';
 

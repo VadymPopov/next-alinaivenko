@@ -162,7 +162,7 @@ export const getFilterString = (date: SearchDate) => {
   }
 };
 
-export const getDateString = (date: IDate) => {
+export const getDateString = (date: SearchDate) => {
   if (date.year && date.month && date.day) {
     const fullDate = new Date(date.year, date.month - 1, date.day);
     return `${format(fullDate, 'MMM dd, yyyy')}`;

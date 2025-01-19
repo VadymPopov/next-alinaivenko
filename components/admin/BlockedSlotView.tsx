@@ -1,9 +1,9 @@
 'use client';
 
-import useBlockedSlots from '@/hooks/useBlockedSlots';
+import { useBlockedSlots } from '@/hooks';
 import { useSidebar } from '@/providers/SidebarContext';
 import { BlockedSlot } from '@/types';
-import { convertToTimeRange } from '@/utils/convertToTimeRange';
+import { convertToTimeRange } from '@/utils';
 import { formatDuration, getParsedDate } from '@/utils/helpers';
 
 import React, { useState } from 'react';
@@ -23,7 +23,7 @@ interface BlockedSlotProps {
   isCard?: boolean;
 }
 
-export default function BlockedSlotView({
+export function BlockedSlotView({
   blockedSlot,
   className,
   style,

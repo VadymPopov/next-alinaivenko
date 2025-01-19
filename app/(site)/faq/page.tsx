@@ -1,6 +1,4 @@
-import Section from '@/components/ui/Section';
-import Text from '@/components/ui/Text';
-import Title from '@/components/ui/Title';
+import { Section, Text, Title } from '@/components/ui';
 
 import React from 'react';
 

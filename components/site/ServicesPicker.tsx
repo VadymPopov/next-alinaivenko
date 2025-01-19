@@ -1,6 +1,6 @@
 'use client';
 
-import Button from '@/components/ui/Button';
+import { Button } from '@/components/ui';
 import { SERVICES } from '@/constants';
 import { useAppContext } from '@/providers/AppContext';
 import { serviceType } from '@/types';
@@ -11,7 +11,7 @@ import React, { useState } from 'react';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 
-export default function ServicesPicker() {
+export function ServicesPicker() {
   const router = useRouter();
   const { service, setService, setAppointmentInfo } = useAppContext();
   const [selectedService, setSelectedService] = useState<serviceType | null>(

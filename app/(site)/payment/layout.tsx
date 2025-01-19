@@ -1,13 +1,6 @@
-import { ProcessSteps } from '@/components/site/ProcessSteps';
-import Section from '@/components/ui/Section';
-import Text from '@/components/ui/Text';
-import Title from '@/components/ui/Title';
-
-const links = [
-  { label: 'Client', href: '/payment' },
-  { label: 'Tip', href: '/payment/tip-amount' },
-  { label: 'Payment', href: '/payment/confirmation' },
-];
+import { ProcessSteps } from '@/components/site';
+import { Section, Text, Title } from '@/components/ui';
+import { PAYMENT_LINKS } from '@/constants';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -21,7 +14,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         cost, taxes, and the added tip. Once reviewed, proceed to securely
         submit your payment. Thank you for choosing me to be your tattoo artist.
       </Text>
-      <ProcessSteps links={links} />
+      <ProcessSteps links={PAYMENT_LINKS} />
 
       <div>{children}</div>
     </Section>

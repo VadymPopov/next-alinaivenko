@@ -1,9 +1,8 @@
 'use client';
 
-import AdminTitle from '@/components/admin/AdminTitle';
-import Button from '@/components/ui/Button';
-import InputField from '@/components/ui/InputField';
-import useStudioInfo from '@/hooks/useStudioInfo';
+import { AdminTitle } from '@/components/admin';
+import { Button, InputField } from '@/components/ui';
+import { useStudioInfo } from '@/hooks';
 import { validationSchemaStudioInfo } from '@/schemas';
 import { StudioFormValues, StudioInfo } from '@/types';
 
@@ -13,7 +12,7 @@ import toast from 'react-hot-toast';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 
-export default function StudioInfoForm({ studio }: { studio: StudioInfo }) {
+export function StudioInfoForm({ studio }: { studio: StudioInfo }) {
   const { data, error, isLoading, updateStudioInfo, isValidating } =
     useStudioInfo(studio);
 

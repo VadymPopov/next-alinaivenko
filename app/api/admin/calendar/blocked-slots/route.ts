@@ -1,5 +1,4 @@
-import BlockedSlot from '@/db/models/BlockedSlot';
-import connect from '@/db/mongodb';
+import { BlockedSlot, connect } from '@/db';
 
 import { NextRequest, NextResponse } from 'next/server';
 

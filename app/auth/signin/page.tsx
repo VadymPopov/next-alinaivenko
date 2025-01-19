@@ -1,7 +1,7 @@
 'use client';
 
-import SignInForm from '@/components/admin/SignInForm';
-import Loader from '@/components/ui/Loader';
+import { SignInForm } from '@/components/admin';
+import { Loader } from '@/components/ui';
 
 import { useEffect, useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';

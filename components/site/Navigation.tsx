@@ -1,16 +1,14 @@
 'use client';
 
-import BurgerBtn from '@/components/ui/BurgerBtn';
-import Menu from '@/components/ui/Menu';
-import SlidingMenu from '@/components/ui/SlidingMenu';
+import { BurgerBtn, Menu, SlidingMenu } from '@/components/ui';
 import { SITE_MENU } from '@/constants';
-import { useMenu } from '@/hooks/useMenu';
+import { useMenu } from '@/hooks';
 
 import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function Navigation() {
+export function Navigation() {
   const { onClose, isOpen, toggleMenu } = useMenu();
 
   return (

@@ -1,5 +1,5 @@
 import { getFetcher, postFetcher, putFetcher } from '@/lib/axiosFetchers';
-import { handleOptimisticMutate } from '@/utils/mutateHelper';
+import { handleOptimisticMutate } from '@/utils';
 
 import { isAfter, parseISO, startOfDay } from 'date-fns';
 import useSWR from 'swr';
@@ -12,10 +12,7 @@ const formatDates = (dates: Date[]) =>
     .map((date) => date.toISOString())
     .sort();
 
-export default function useBlockedDates(
-  currentDate: Date = new Date(),
-  // fallbackData: string[],
-) {
+export function useBlockedDates(currentDate: Date = new Date()) {
   const currentMonth = currentDate.toLocaleString('default', {
     month: 'long',
   });
@@ -26,7 +23,6 @@ export default function useBlockedDates(
   const url = `${CALENDAR_API}?month=${currentMonth}&year=${currentYear}`;
 
   const { data, mutate, error, isLoading } = useSWR<string[]>(url, getFetcher, {
-    // fallbackData,
     revalidateOnMount: false,
     revalidateIfStale: true,
   });

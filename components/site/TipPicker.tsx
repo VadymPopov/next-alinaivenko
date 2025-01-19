@@ -1,7 +1,7 @@
 'use client';
 
-import CustomTipForm from '@/components/site/CustomTipForm';
-import Button from '@/components/ui/Button';
+import { CustomTipForm } from '@/components/site';
+import { Button } from '@/components/ui';
 import { useAppContext } from '@/providers/AppContext';
 import {
   calculateTip,
@@ -16,7 +16,7 @@ import { useRouter } from 'next/navigation';
 
 const TIPS_ARRAY = [15, 20, 25, 30];
 
-export default function TipPicker() {
+export function TipPicker() {
   const { paymentInfo, setPaymentInfo } = useAppContext();
   const [tip, setTip] = useState(0);
   const [selectedTipPercentage, setSelectedTipPercentage] = useState<

@@ -1,6 +1,6 @@
 import { ColorRing } from 'react-loader-spinner';
 
-export default function ButtonLoader() {
+export function ButtonLoader() {
   return (
     <ColorRing
       visible={true}

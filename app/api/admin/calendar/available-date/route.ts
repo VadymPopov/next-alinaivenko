@@ -1,6 +1,5 @@
-import Availability from '@/db/models/Calendar';
-import connect from '@/db/mongodb';
-import { findNextAvailableDate } from '@/utils/findNextAvailableDate';
+import { Availability, connect } from '@/db';
+import { findNextAvailableDate } from '@/utils';
 
 import { addDays, addMonths } from 'date-fns';
 import { NextRequest, NextResponse } from 'next/server';

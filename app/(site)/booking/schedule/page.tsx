@@ -1,6 +1,5 @@
-import ScheduleForm from '@/components/site/ScheduleForm';
-import { getMaxDate } from '@/services/calendar';
-import { getFirstAvailableDate } from '@/services/schedule';
+import { ScheduleForm } from '@/components/site';
+import { getFirstAvailableDate, getMaxDate } from '@/services';
 
 import React, { Suspense, use } from 'react';
 

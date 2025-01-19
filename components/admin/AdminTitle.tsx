@@ -5,7 +5,7 @@ interface TitleProps {
   title: string;
 }
 
-export default function AdminTitle({ title, className }: TitleProps) {
+export function AdminTitle({ title, className }: TitleProps) {
   return (
     <h2
       className={clsx(

@@ -1,14 +1,10 @@
 'use client';
 
-import Button from '@/components/ui/Button';
-import FieldSet from '@/components/ui/FieldSet';
-import FileInput from '@/components/ui/FileInput';
-import InputField from '@/components/ui/InputField';
-import Text from '@/components/ui/Text';
+import { Button, FieldSet, FileInput, InputField, Text } from '@/components/ui';
 import { useAppContext } from '@/providers/AppContext';
 import { validationSchemaClient } from '@/schemas';
 import { ClientFormValues } from '@/types';
-import { getBase64 } from '@/utils/getBase64';
+import { getBase64 } from '@/utils';
 import { pickDuration } from '@/utils/helpers';
 
 import React, { useEffect } from 'react';
@@ -17,7 +13,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/navigation';
 
-export default function ClientForm() {
+export function ClientForm() {
   const router = useRouter();
   const { service, setAppointmentInfo, appointmentInfo } = useAppContext();
   const duration = pickDuration(service);

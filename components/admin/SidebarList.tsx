@@ -1,9 +1,9 @@
-import SidebarItem from '@/components/admin/SidebarItem';
+import { SidebarItem } from '@/components/admin';
 import { SIDEBAR_MENU } from '@/constants';
 
 import React from 'react';
 
-export default function SidebarList({
+export function SidebarList({
   pathname,
   isExtended,
 }: {

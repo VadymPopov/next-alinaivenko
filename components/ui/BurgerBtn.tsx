@@ -1,7 +1,7 @@
 import React from 'react';
 import { CgClose, CgMenu } from 'react-icons/cg';
 
-export default function BurgerBtn({
+export function BurgerBtn({
   isOpen,
   toggleMenu,
 }: {

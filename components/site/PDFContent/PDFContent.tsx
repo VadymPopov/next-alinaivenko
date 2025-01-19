@@ -11,10 +11,7 @@ interface PDFContentProps {
   values: Partial<WaiverFormData>;
 }
 
-export default function PDFContent({
-  values,
-  isClientUnder18,
-}: PDFContentProps) {
+export function PDFContent({ values, isClientUnder18 }: PDFContentProps) {
   return (
     <Document pageMode="fullScreen">
       <Page size="A4" style={styles.page}>

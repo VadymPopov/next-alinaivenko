@@ -8,7 +8,7 @@ interface ImagesPreviewProps {
   handleDelete: (_index: number) => void;
 }
 
-export default function ImagesPreview({
+export function ImagesPreview({
   selectedFiles,
   handleDelete,
 }: ImagesPreviewProps) {

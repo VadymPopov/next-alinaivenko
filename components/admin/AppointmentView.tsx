@@ -1,16 +1,12 @@
 'use client';
 
-import ServiceLabel from '@/components/ui/ServiceLabel';
+import { ServiceLabel } from '@/components/ui';
 import { Appointment } from '@/types';
 import { formatCurrency, formatDuration } from '@/utils/helpers';
 
 import React from 'react';
 
-export default function AppointmentView({
-  appointment,
-}: {
-  appointment: Appointment;
-}) {
+export function AppointmentView({ appointment }: { appointment: Appointment }) {
   return (
     <div>
       <section className="mb-8">

@@ -78,7 +78,5 @@ const appointmentSchema = new Schema(
   { versionKey: false, timestamps: true },
 );
 
-const Appointment =
+export const Appointment =
   models.Appointment || model('Appointment', appointmentSchema);
-
-export default Appointment;

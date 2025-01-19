@@ -1,11 +1,11 @@
-import ExtendMenuBtn from '@/components/ui/ExtendMenuBtn';
+import { ExtendMenuBtn } from '@/components/ui';
 
 import React from 'react';
 
 import clsx from 'clsx';
 import Image from 'next/image';
 
-export default function SidebarHeader({
+export function SidebarHeader({
   isExtended,
   toggleSidebar,
   onLogoClick,

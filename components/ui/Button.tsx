@@ -1,6 +1,6 @@
 'use client';
 
-import ButtonLoader from '@/components/ui/ButtonLoader';
+import { ButtonLoader } from '@/components/ui';
 
 import React, { ReactNode } from 'react';
 
@@ -15,7 +15,7 @@ export interface ButtonProps
   styles?: string;
 }
 
-export default function Button({
+export function Button({
   primary,
   disabled,
   children,

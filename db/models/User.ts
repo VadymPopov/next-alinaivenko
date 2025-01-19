@@ -24,6 +24,4 @@ const userSchema = new Schema(
   { versionKey: false, timestamps: true },
 );
 
-const User = models.User || model('User', userSchema);
-
-export default User;
+export const User = models.User || model('User', userSchema);

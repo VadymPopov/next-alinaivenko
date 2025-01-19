@@ -1,11 +1,13 @@
 'use client';
 
-import Button from '@/components/ui/Button';
-import FieldSet from '@/components/ui/FieldSet';
-import InputField from '@/components/ui/InputField';
-import SignatureField from '@/components/ui/SignatureField';
-import Text from '@/components/ui/Text';
-import { useWaiverSubmission } from '@/hooks/useWaiverFormSubmission';
+import {
+  Button,
+  FieldSet,
+  InputField,
+  SignatureField,
+  Text,
+} from '@/components/ui';
+import { useWaiverFormSubmission } from '@/hooks';
 import { useWaiverFormContext } from '@/providers/WaiverFormContext';
 import { validationSchemaWaiverStepSeven } from '@/schemas';
 import { StepSevenFormValues } from '@/types';
@@ -21,7 +23,7 @@ export default function StepSeven() {
   const { updateFormData, isClientUnder18, formData } = useWaiverFormContext();
   const router = useRouter();
 
-  const { isProcessing, submitForm } = useWaiverSubmission();
+  const { isProcessing, submitForm } = useWaiverFormSubmission();
 
   const methods = useForm({
     mode: 'all',

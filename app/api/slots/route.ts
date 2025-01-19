@@ -1,7 +1,5 @@
 import { SLOT_TIMES } from '@/constants';
-import Appointment from '@/db/models/Appointment';
-import BlockedSlot from '@/db/models/BlockedSlot';
-import connect from '@/db/mongodb';
+import { Appointment, BlockedSlot, connect } from '@/db';
 
 import { type NextRequest, NextResponse } from 'next/server';
 
