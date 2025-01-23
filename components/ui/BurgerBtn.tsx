@@ -15,9 +15,15 @@ export function BurgerBtn({
       aria-label="mobile-menu-toggle"
     >
       {isOpen ? (
-        <CgClose className="h-8 w-8 text-mainLightColor" />
+        <CgClose
+          className="h-8 w-8 text-mainLightColor"
+          data-testid="icon-close"
+        />
       ) : (
-        <CgMenu className="h-8 w-8 text-mainLightColor" />
+        <CgMenu
+          className="h-8 w-8 text-mainLightColor"
+          data-testid="icon-open"
+        />
       )}
     </button>
   );

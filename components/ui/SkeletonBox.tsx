@@ -19,7 +19,7 @@ export function SkeletonBox({
   className = '',
 }: SkeletonBoxProps) {
   return (
-    <div className={className}>
+    <div className={className} data-testid="skeleton-container">
       <Skeleton
         count={1}
         width={width}

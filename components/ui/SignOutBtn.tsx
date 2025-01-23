@@ -16,7 +16,7 @@ export function SignOutBtn() {
       )}
       onClick={() => signOut({ callbackUrl: '/' })}
     >
-      <MdLogout size={18} />
+      <MdLogout size={18} data-testid="logout-icon" />
       {isExtended && (
         <span className="font-medium text-white hidden md:block">Logout</span>
       )}

@@ -10,6 +10,7 @@ interface SectionProps {
 export function Section({ children, primary }: SectionProps) {
   return (
     <section
+      data-testid="section"
       className={clsx(
         'px-5 py-8',
         primary ? 'bg-bgColor' : 'bg-mainLightColor',

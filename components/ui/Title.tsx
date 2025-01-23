@@ -4,7 +4,6 @@ import clsx from 'clsx';
 
 interface TitleProps {
   children: ReactNode;
-  align?: boolean;
   mobile?: boolean;
 }
 

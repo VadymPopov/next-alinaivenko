@@ -39,7 +39,7 @@ export function Modal({ show, children, onClose }: ModalProps) {
               type="button"
               className="absolute top-4 right-4"
               onClick={onClose}
-              aria-label="Close modal"
+              aria-label="close modal"
             >
               <div className=" bg-mainDarkColor hover:bg-cardColor transition-colors rounded-full">
                 <MdClose className="text-xl text-mainLightColor" />

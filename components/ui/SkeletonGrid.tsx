@@ -23,7 +23,7 @@ export function SkeletonGrid({
   className = '',
 }: SkeletonGridProps) {
   return (
-    <div className={className}>
+    <div className={className} data-testid="skeleton-grid">
       {Array.from({ length: rows * columns }).map((_, index) => (
         <Skeleton
           key={index}

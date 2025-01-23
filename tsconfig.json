@@ -26,7 +26,9 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "swiper.d.ts"
+    "swiper.d.ts",
+    "__tests__/components/first.test.tsx",
+    "jest.setup.js"
   ],
   "exclude": ["node_modules"]
 }

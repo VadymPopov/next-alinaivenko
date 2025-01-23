@@ -22,8 +22,16 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:prettier/recommended',
     'plugin:react-hooks/recommended',
+    'plugin:testing-library/react',
+    'plugin:jest-dom/recommended',
   ],
-  plugins: ['prettier', '@typescript-eslint', 'react', 'react-hooks'],
+  plugins: [
+    'prettier',
+    '@typescript-eslint',
+    'react',
+    'react-hooks',
+    'jsx-a11y',
+  ],
   rules: {
     // JavaScript rules
     'prefer-const': 'warn',
@@ -58,6 +66,8 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
     'prettier/prettier': 'warn',
+    'jsx-a11y/aria-props': 'error',
+    'jsx-a11y/aria-proptypes': 'error',
   },
   settings: {
     react: {
