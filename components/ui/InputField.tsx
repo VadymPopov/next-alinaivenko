@@ -38,6 +38,7 @@ export function InputField({
   return (
     <div className="flex flex-col items-center justify-center">
       <div
+        data-testid="input-container"
         className={clsx(
           !admin ? 'flex  w-full' : 'flex',
           type === 'checkbox'
@@ -88,7 +89,7 @@ export function InputField({
               className="absolute top-1/2 right-2 translate-y-[-50%]"
               aria-label="Valid input"
             >
-              <FcCheckmark className="text-xl" />
+              <FcCheckmark className="text-xl" data-testid="checkmark" />
             </span>
           )}
         </div>

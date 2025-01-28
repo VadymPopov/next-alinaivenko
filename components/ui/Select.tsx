@@ -33,6 +33,7 @@ export function SelectField<T extends FieldValues>({
         className={clsx(
           admin ? 'w-40 flex flex-col' : 'flex flex-col md:w-96 sm:w-80 w-full',
         )}
+        data-testid="select-container"
       >
         <label className="text-start mb-1 text-base" htmlFor={name as string}>
           {label}

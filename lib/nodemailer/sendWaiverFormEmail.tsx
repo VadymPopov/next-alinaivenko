@@ -20,7 +20,7 @@ export async function sendEmail(data: {
     const logoPath = path.resolve('./public/email-logo.png');
     const subject = `Waiver - ${name}, ${appointmentDate}`;
     const htmlContent = generateWaiverFormEmail(data);
-    const pdfBuffer = await renderToBuffer(
+    const view = await renderToBuffer(
       <PDFContent values={data} isClientUnder18={isClientUnder18} />,
     );
 
@@ -32,7 +32,7 @@ export async function sendEmail(data: {
       attachments: [
         {
           filename: `Waiver ${name}, ${appointmentDate}.pdf`,
-          content: pdfBuffer,
+          content: view,
           contentType: 'application/pdf',
         },
       ],

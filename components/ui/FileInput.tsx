@@ -43,6 +43,7 @@ export function FileInput({
               'group flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:border-accentColor bg-bgColor transition-all',
             )}
             htmlFor={name}
+            data-testid="file-input-label"
           >
             <div className="flex flex-col items-center justify-center pt-5 pb-6">
               <SlCloudUpload className="h-8 w-8 fill-cardColor group-hover:fill-accentColor" />
@@ -59,6 +60,7 @@ export function FileInput({
               {...registeredProps}
               className="hidden"
               onChange={handleFileChange}
+              data-testid="file-input"
             />
           </label>
           <span className="my-1 text-error text-sm h-5">{error}</span>
