@@ -1,3 +1,5 @@
+'use client';
+
 import { getFetcher, postFetcher, putFetcher } from '@/lib/axiosFetchers';
 import { MaxDate } from '@/types';
 

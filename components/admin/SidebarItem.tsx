@@ -1,3 +1,5 @@
+'use client';
+
 import { useSidebar } from '@/providers/SidebarContext';
 
 import React from 'react';

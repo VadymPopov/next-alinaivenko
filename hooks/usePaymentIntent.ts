@@ -1,3 +1,5 @@
+'use client';
+
 import { postFetcher } from '@/lib/axiosFetchers';
 
 import useSWR from 'swr';

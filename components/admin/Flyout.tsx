@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@/components/ui';
 import { useSidebar } from '@/providers/SidebarContext';
 import { Appointment, SearchDate } from '@/types';

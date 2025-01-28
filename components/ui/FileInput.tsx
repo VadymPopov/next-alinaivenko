@@ -1,3 +1,5 @@
+'use client';
+
 import { ImagesPreview } from '@/components/ui';
 import { useImageUpload } from '@/hooks';
 

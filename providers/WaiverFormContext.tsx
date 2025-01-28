@@ -1,3 +1,5 @@
+'use client';
+
 import { type WaiverFormContext, WaiverFormData } from '@/types';
 
 import React, { createContext, useContext, useState } from 'react';

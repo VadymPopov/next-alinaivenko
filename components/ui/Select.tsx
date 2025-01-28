@@ -1,3 +1,5 @@
+'use client';
+
 import { Options } from '@/types';
 
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';

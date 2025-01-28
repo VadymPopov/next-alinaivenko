@@ -1,3 +1,5 @@
+'use client';
+
 import { ScheduleFormValues } from '@/types';
 import { isTimeWithinLastHour } from '@/utils';
 

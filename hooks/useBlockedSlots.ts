@@ -1,3 +1,5 @@
+'use client';
+
 import { deleteFetcher, getFetcher, postFetcher } from '@/lib/axiosFetchers';
 import { BlockedSlot } from '@/types';
 import { handleOptimisticMutate } from '@/utils';

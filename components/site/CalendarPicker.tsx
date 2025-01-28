@@ -1,3 +1,5 @@
+'use client';
+
 import { MaxDate, ScheduleFormValues } from '@/types';
 import { findNextAvailableDate } from '@/utils';
 import { filterDate } from '@/utils/helpers';

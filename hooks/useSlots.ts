@@ -1,3 +1,5 @@
+'use client';
+
 import { getFetcher } from '@/lib/axiosFetchers';
 
 import useSWR from 'swr';

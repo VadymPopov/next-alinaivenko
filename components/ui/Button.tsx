@@ -16,30 +16,26 @@ export interface ButtonProps
 }
 
 export function Button({
-  primary,
-  disabled,
+  primary = false,
+  disabled = false,
   children,
-  isProcessing,
-  styles,
+  isProcessing = false,
+  styles = '',
   ...rest
 }: ButtonProps) {
+  const baseStyles =
+    'flex items-center justify-center rounded-3xl text-sm font-semibold uppercase transition-colors h-10 w-40 px-3 py-5';
+  const enabledStyles = primary
+    ? 'bg-accentColor text-mainLightColor hover:shadow-md hover:shadow-mainLightColor hover:text-cardColor'
+    : 'bg-transparent text-cardColor border-[1px] border-accentColor hover:bg-accentColor hover:text-mainLightColor hover:shadow-md hover:shadow-cardColor';
+
+  const disabledStyles = 'cursor-not-allowed opacity-70 bg-textColorDarkBg';
+  const currentStyles = disabled ? disabledStyles : enabledStyles;
+
   return (
     <button
       {...rest}
-      className={clsx(
-        'flex items-center justify-center rounded-3xl border-[1px] border-accentColor text-sm font-semibold uppercase transition-colors ',
-        disabled
-          ? 'cursor-not-allowed bg-textColorDarkBg opacity-70 shadow-none'
-          : 'hover:bg-accentColor hover:shadow-md hover:shadow-cardColor cursor-pointer bg-transparent',
-        disabled && primary
-          ? 'text-mainLightColor'
-          : disabled
-            ? 'text-cardColor'
-            : primary
-              ? 'text-mainLightColor hover:text-cardColor hover:shadow-mainLightColor'
-              : 'text-cardColor hover:text-mainLightColor',
-        styles ? styles : 'h-10 w-40 px-3 py-5',
-      )}
+      className={clsx(baseStyles, currentStyles, styles)}
       disabled={disabled}
     >
       {children}

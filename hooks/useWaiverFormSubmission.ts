@@ -1,3 +1,5 @@
+'use client';
+
 import { postFetcher } from '@/lib/axiosFetchers';
 import { FilteredWaiverFormValues, UnfilteredWaiverFormValues } from '@/types';
 import { prepareFilteredValues } from '@/utils/helpers';

@@ -1,3 +1,5 @@
+'use client';
+
 import { AppointmentInfo, PaymentInfo, serviceType } from '@/types';
 
 import { useState } from 'react';

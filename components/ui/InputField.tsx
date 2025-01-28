@@ -1,3 +1,5 @@
+'use client';
+
 import { InputHTMLAttributes } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { FcCheckmark } from 'react-icons/fc';
