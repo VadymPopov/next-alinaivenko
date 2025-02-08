@@ -1,4 +1,4 @@
-import { PDFContent } from '@/components/site';
+import { PDFContent } from '@/components/site/PDFContent/PDFContent';
 import { generateEmailOptions } from '@/lib/nodemailer/generateEmailOptions';
 import { getTransporter } from '@/lib/nodemailer/transporter';
 import { generateWaiverFormEmail } from '@/lib/templates/waiverformEmailTemplate';

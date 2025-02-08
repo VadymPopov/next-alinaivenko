@@ -102,7 +102,9 @@ export default function StepOne({ nextStep }: { nextStep: () => void }) {
           />
         </FieldSet>
         <div className="flex justify-center items-center">
-          <Button type="submit">Next</Button>
+          <Button type="submit" disabled={!!Object.keys(errors).length}>
+            Next
+          </Button>
         </div>
       </form>
     </FormProvider>

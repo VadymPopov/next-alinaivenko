@@ -35,12 +35,7 @@ export function Navigation() {
           <div className="hidden lg:flex">
             <Menu menu={SITE_MENU} />
           </div>
-          <BurgerBtn
-            isOpen={isOpen}
-            toggleMenu={toggleMenu}
-            aria-expanded={isOpen}
-            aria-controls="sliding-menu"
-          />
+          <BurgerBtn isOpen={isOpen} toggleMenu={toggleMenu} />
         </div>
         <SlidingMenu
           isOpen={isOpen}

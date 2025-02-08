@@ -37,6 +37,7 @@ export function Button({
       {...rest}
       className={clsx(baseStyles, currentStyles, styles)}
       disabled={disabled}
+      aria-disabled={disabled}
     >
       {children}
       {isProcessing && <ButtonLoader />}

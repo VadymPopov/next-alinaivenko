@@ -34,8 +34,11 @@ export function CustomTipForm({
 
   const {
     handleSubmit,
+    watch,
     formState: { errors },
   } = methods;
+
+  const amount = watch('amount');
 
   return (
     <>
@@ -56,7 +59,7 @@ export function CustomTipForm({
             <div>
               <Button
                 type="submit"
-                disabled={!!Object.keys(errors).length}
+                disabled={!!Object.keys(errors).length || !amount}
                 styles="p-2.5 rounded-2xl"
               >
                 <MdDone size={24} />

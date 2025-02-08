@@ -1,31 +1,31 @@
 'use client';
 
-import { MaxDate, ScheduleFormValues } from '@/types';
+import { MaxDate } from '@/types';
 import { findNextAvailableDate } from '@/utils';
 import { filterDate } from '@/utils/helpers';
 
 import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { Control, Controller } from 'react-hook-form';
+import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 
 import { startOfDay } from 'date-fns';
 
-interface CalendarPickerProps {
-  name: keyof ScheduleFormValues;
-  control: Control<ScheduleFormValues>;
+interface CalendarPickerProps<T extends FieldValues> {
+  name: Path<T>;
+  control: Control<T>;
   error?: string;
   maxDate?: MaxDate;
   blockedDates: string[];
 }
 
-export function CalendarPicker({
+export function CalendarPicker<T extends FieldValues>({
   name,
   control,
   error,
   maxDate,
   blockedDates,
-}: CalendarPickerProps) {
+}: CalendarPickerProps<T>) {
   const minDate = new Date();
   return (
     <div className="flex items-center justify-center">
@@ -34,7 +34,7 @@ export function CalendarPicker({
         control={control}
         render={({ field: { onChange, value } }) => {
           const selectedDate = findNextAvailableDate({
-            date: startOfDay(value),
+            date: startOfDay(value || new Date()),
             blockedDates,
           });
 

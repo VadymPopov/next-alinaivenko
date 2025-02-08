@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { CgClose, CgMenu } from 'react-icons/cg';
 
@@ -14,6 +13,8 @@ export function BurgerBtn({
       onClick={toggleMenu}
       className="lg:hidden text-white h-10 w-10 cursor-pointer border-none bg-transparent outline-none z-50"
       aria-label="mobile-menu-toggle"
+      aria-expanded={isOpen}
+      aria-controls="sliding-menu"
     >
       {isOpen ? (
         <CgClose

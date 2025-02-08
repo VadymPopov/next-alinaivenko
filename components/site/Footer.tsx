@@ -12,8 +12,9 @@ export function Footer() {
   const pathname = usePathname();
   return (
     <footer
+      role="contentinfo"
       className={clsx(
-        pathname === '/waiverform' ? 'pb-[60px]' : ' py-3  lg:py-4  xl:py-5',
+        pathname === '/waiverform' ? 'pb-[60px]' : 'py-3  lg:py-4  xl:py-5',
         'flex flex-col items-center justify-between border-t-[1px] border-t-cardColor  text-sm md:flex-row px-4 lg:px-5 xl:px-6',
       )}
     >

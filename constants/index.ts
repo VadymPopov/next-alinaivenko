@@ -165,3 +165,5 @@ export const PAYMENT_LINKS = [
   { label: 'Tip', href: '/payment/tip-amount' },
   { label: 'Payment', href: '/payment/confirmation' },
 ];
+
+export const TIPS_ARRAY = [15, 20, 25, 30];

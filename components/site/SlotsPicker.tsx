@@ -1,28 +1,27 @@
 'use client';
 
-import { ScheduleFormValues } from '@/types';
 import { isTimeWithinLastHour } from '@/utils';
 
 import React, { useState } from 'react';
-import { Control, Controller } from 'react-hook-form';
+import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 
 import clsx from 'clsx';
 
-interface SlotsPickerProps {
-  name: keyof ScheduleFormValues;
-  control: Control<ScheduleFormValues>;
+interface SlotsPickerProps<T extends FieldValues> {
+  name: Path<T>;
+  control: Control<T>;
   error?: string;
   slots: string[];
   selectedDate: Date;
 }
 
-export function SlotsPicker({
+export function SlotsPicker<T extends FieldValues>({
   name,
   control,
   error,
   slots,
   selectedDate,
-}: SlotsPickerProps) {
+}: SlotsPickerProps<T>) {
   const [activeButtonIndex, setActiveButtonIndex] = useState<number | null>(
     null,
   );

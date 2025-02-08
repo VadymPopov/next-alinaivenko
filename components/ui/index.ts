@@ -15,7 +15,6 @@ export { SearchBar } from './SearchBar';
 export { Section } from './Section';
 export { SelectField } from './Select';
 export { ServiceLabel } from './ServiceLabel';
-export { SignatureField } from './SignatureField';
 export { SignOutBtn } from './SignOutBtn';
 export { SkeletonBox } from './SkeletonBox';
 export { SkeletonGrid } from './SkeletonGrid';

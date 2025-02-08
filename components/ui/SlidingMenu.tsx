@@ -21,6 +21,7 @@ export function SlidingMenu({
 
   return (
     <div
+      role="mobile-menu"
       className={clsx(
         'lg:hidden right-0 z-40 flex h-screen items-center justify-center overflow-auto px-5 py-10 bg-cardColor',
         className,

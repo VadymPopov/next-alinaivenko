@@ -1,12 +1,7 @@
 'use client';
 
-import {
-  Button,
-  FieldSet,
-  InputField,
-  SignatureField,
-  Text,
-} from '@/components/ui';
+import { Button, FieldSet, InputField, Text } from '@/components/ui';
+import { SignatureField } from '@/components/ui/SignatureField';
 import { useWaiverFormSubmission } from '@/hooks';
 import { useWaiverFormContext } from '@/providers/WaiverFormContext';
 import { validationSchemaWaiverStepSeven } from '@/schemas';

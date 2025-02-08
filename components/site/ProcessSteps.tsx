@@ -36,7 +36,10 @@ export function ProcessSteps({ links }: ProcessStepsProps) {
             {idx === links.length - 1 ? (
               ''
             ) : (
-              <RxDoubleArrowRight className="w-4 h-4 text-textColorDarkBg" />
+              <RxDoubleArrowRight
+                data-testid="arrow-icon"
+                className="w-4 h-4 text-textColorDarkBg"
+              />
             )}
           </li>
         );

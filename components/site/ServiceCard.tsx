@@ -38,7 +38,7 @@ export function ServiceCard({
     <div className="mr-0 mt-5 block rounded-md border-2 border-accentColor bg-cardColor p-2.5 text-center text-mainLightColor sm:flex lg:mr-12 lg:block ">
       <Image
         src={imgURL}
-        alt="small tattoo"
+        alt={title}
         className="w-full h-[450px] rounded-md sm:min-w-[320px] sm:max-w-[320px]  object-cover"
         width={260}
         height={400}

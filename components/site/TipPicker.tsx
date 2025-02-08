@@ -2,6 +2,7 @@
 
 import { CustomTipForm } from '@/components/site';
 import { Button } from '@/components/ui';
+import { TIPS_ARRAY } from '@/constants';
 import { useAppContext } from '@/providers/AppContext';
 import {
   calculateTip,
@@ -13,8 +14,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
-
-const TIPS_ARRAY = [15, 20, 25, 30];
 
 export function TipPicker() {
   const { paymentInfo, setPaymentInfo } = useAppContext();
@@ -81,6 +80,7 @@ export function TipPicker() {
       <div className="grid grid-cols-[130px_130px] gap-[30px] mx-auto mb-5 justify-center sm:grid-cols-[130px_130px_130px] md:flex md:items-center md:justify-center">
         {TIPS_ARRAY.map((tipPercentage) => (
           <div
+            role="tip-card"
             key={tipPercentage}
             onClick={() => handleTipClick(tipPercentage)}
             className={clsx(
@@ -99,6 +99,7 @@ export function TipPicker() {
           </div>
         ))}
         <div
+          role="custom-tip-card"
           onClick={() => handleCustomTipClick('custom')}
           className={clsx(
             'flex flex-col justify-between px-4 py-5 font-semibold text-base md:text-lg h-28 w-32 border border-accentColor rounded-2xl transition-colors cursor-pointer  leading-tight hover:bg-accentColor hover:text-mainLightColor hover:shadow-2xl',
