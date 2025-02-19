@@ -43,6 +43,7 @@ export function DayColumn({
       <div className="grid grid-rows-[repeat(18,_minmax(0,_1fr))]">
         {timeSlots.map((slot, index) => (
           <div
+            data-testid="time-slot"
             key={index}
             className={clsx(
               'sm:flex justify-center items-center p-2 rounded-lg  text-sm h-[60px] border border-transparent  group',
@@ -60,6 +61,7 @@ export function DayColumn({
             }
           >
             <div
+              data-testid="add-icon"
               className={clsx(
                 isBlocked ? 'hidden' : 'blocked',
                 'text-textColor invisible rounded-full border group-hover:visible',

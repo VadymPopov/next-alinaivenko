@@ -32,11 +32,17 @@ export function AppointmentDetails({
   };
 
   const handleDeleteClick = async () => {
-    await deleteAppointment(appointment._id);
-    toast.success('An appointment was successfully deleted!', {
-      duration: 3000,
-    });
-    router.replace('/admin/appointments');
+    try {
+      await deleteAppointment(appointment._id);
+      toast.success('An appointment was successfully deleted!', {
+        duration: 3000,
+      });
+      router.replace('/admin/appointments');
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : 'Failed to delete appointment',
+      );
+    }
   };
 
   return (
@@ -56,6 +62,7 @@ export function AppointmentDetails({
           <div className="space-x-2">
             {!isEditing && !deleteFlag && (
               <button
+                data-testid="delete-btn"
                 onClick={() => setDeleteFlag(true)}
                 className="text-xl py-0.5 px-1 rounded-md border border-cardColor text-cardColor bg-transparent cursor-pointer
                  hover:text-accentColor hover:border-accentColor"
@@ -65,6 +72,7 @@ export function AppointmentDetails({
             )}
             {!deleteFlag && (
               <button
+                data-testid="edit-btn"
                 onClick={toggleEditMode}
                 className={clsx(
                   ' py-0.5 px-1  cursor-pointer ',

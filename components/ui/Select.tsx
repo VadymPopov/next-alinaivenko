@@ -4,7 +4,7 @@ import { Options } from '@/types';
 
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { FcCheckmark } from 'react-icons/fc';
-import Select from 'react-select';
+import Select, { components } from 'react-select';
 
 import clsx from 'clsx';
 
@@ -46,6 +46,7 @@ export function SelectField<T extends FieldValues>({
           render={({ field: { onChange, onBlur, value } }) => (
             <div className="relative">
               <Select
+                data-testid={name}
                 id={name as string}
                 options={options}
                 onChange={(selectedOption) => onChange(selectedOption?.value)}
@@ -105,6 +106,11 @@ export function SelectField<T extends FieldValues>({
                   }),
                 }}
                 isClearable={isClearable}
+                components={{
+                  Input: (props) => (
+                    <components.Input {...props} data-testid={name} />
+                  ),
+                }}
               />
               {value && !error && !admin && (
                 <span

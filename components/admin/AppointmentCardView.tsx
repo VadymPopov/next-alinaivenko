@@ -32,6 +32,7 @@ export function AppointmentCardView({
 
   return (
     <div
+      data-testid="appt-card"
       className="flex sm:flex-wrap items-center gap-2.5 justify-between lg:hidden border border-accentColor rounded-lg p-4 bg-mainLightColor hover:cursor-pointer shadow-lg hover:shadow-none hover:bg-bgColor transition-colors"
       onClick={() => router.push(`/admin/appointments/${_id}`)}
     >

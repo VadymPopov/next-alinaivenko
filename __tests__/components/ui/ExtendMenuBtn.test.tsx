@@ -6,13 +6,13 @@ describe('ExtendMenuBtn component', () => {
   it('renders correctly when isExtended is true', () => {
     render(<ExtendMenuBtn toggleSidebar={() => {}} isExtended={true} />);
 
-    expect(screen.getByTestId('extended-icon')).toBeInTheDocument();
+    expect(screen.getByTestId('extended-menu-open')).toBeInTheDocument();
   });
 
   it('renders correctly when isExtended is false', () => {
     render(<ExtendMenuBtn toggleSidebar={() => {}} isExtended={false} />);
 
-    expect(screen.queryByTestId('extended-icon')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('extended-menu-open')).not.toBeInTheDocument();
   });
 
   it('calls toggleSidebar when button is clicked', () => {

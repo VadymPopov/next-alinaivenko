@@ -13,6 +13,8 @@ import toast from 'react-hot-toast';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/navigation';
 
+import { AdminTitle } from './AdminTitle';
+
 export function ProfileForm({ id }: { id?: string }) {
   const { strengthColor, passwordStrength, validatePasswordStrength } =
     usePasswordStrength();
@@ -36,6 +38,11 @@ export function ProfileForm({ id }: { id?: string }) {
   }, [password, validatePasswordStrength]);
 
   const onSubmitHandler = async (formValues: ProfileFormValues) => {
+    if (!id) {
+      toast.error('User ID is missing. Cannot update password.');
+      return;
+    }
+
     try {
       await postFetcher(`/api/users?id=${id}`, {
         password: formValues.password,
@@ -59,9 +66,7 @@ export function ProfileForm({ id }: { id?: string }) {
         onSubmit={handleSubmit(onSubmitHandler)}
       >
         <div className="flex  items-center gap-3 mb-3">
-          <h2 className="text-accentColor text-lg font-medium">
-            Change Password:
-          </h2>
+          <AdminTitle title={'Change Password:'} />
           <div>
             <p style={{ color: strengthColor }}>{passwordStrength}</p>
           </div>

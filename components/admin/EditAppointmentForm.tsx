@@ -10,7 +10,7 @@ import {
 import { SERVICE_OPTIONS } from '@/constants';
 import { useAppointments, useSlots } from '@/hooks';
 import { validationSchemaEditAppointment } from '@/schemas';
-import { Appointment } from '@/types';
+import { Appointment, EditApptFormValues } from '@/types';
 import {
   calculateStripeFee,
   calculateTotals,
@@ -60,7 +60,7 @@ export function EditAppointmentForm({
       depositTax: deposit?.tax,
       depositFee: deposit?.fee,
       depositTotal: deposit?.total,
-      paymentAmount: payment?.total,
+      paymentAmount: payment?.amount,
       paymentTax: payment?.tax,
       paymentFee: payment?.fee,
       paymentTotal: payment?.total,

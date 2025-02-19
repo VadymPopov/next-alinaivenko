@@ -34,13 +34,14 @@ export function WeekViewAppointment({
 
   return (
     <div
+      data-testid="appt-container"
       onClick={() => router.push(`/admin/appointments/${appointment._id}`)}
       style={style}
       className={clsx(
         className,
         'text-center px-1 lg:py-0.5 lg:px-3.5 shadow-md rounded-xl md:rounded-lg text-xs lg:text-sm hover:border cursor-pointer border-transparent border flex flex-col justify-center items-center',
         appointment.service === 'Small Tattoo' &&
-          'text-[#2D6A4F] bg-[#D8F3DC] hover:border-[#2D6A4F] ',
+          'text-[#2D6A4F] bg-[#D8F3DC] hover:border-[#2D6A4F]',
         appointment.service === 'Large Tattoo' &&
           'text-[#A4161A] bg-[#FFD6D9] hover:border-[#A4161A]',
         appointment.service === 'Touch-up' &&
@@ -49,7 +50,7 @@ export function WeekViewAppointment({
           'text-[#0077B6] bg-[#D0EFFF] hover:border-[#0077B6]',
       )}
     >
-      <p className={clsx('font-medium', isExtended ? 'text-xs' : ' text-sm')}>
+      <p className={clsx('font-medium', isExtended ? 'text-xs' : 'text-sm')}>
         {appointment.name}
       </p>
       <p className="text-textColor">

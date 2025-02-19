@@ -60,14 +60,16 @@ export function AppointmentView({ appointment }: { appointment: Appointment }) {
         </h2>
         <div className="space-y-2">
           <p>
-            <strong>Amount:</strong>{' '}
+            <strong>Amount: </strong>
             {formatCurrency(appointment.deposit.amount)}
           </p>
           <p>
-            <strong>Tax:</strong> {formatCurrency(appointment.deposit.tax)}
+            <strong>Tax: </strong>
+            {formatCurrency(appointment.deposit.tax)}
           </p>
           <p>
-            <strong>Fee:</strong> {formatCurrency(appointment.deposit.fee)}
+            <strong>Fee: </strong>
+            {formatCurrency(appointment.deposit.fee)}
           </p>
           <p className="font-bold">
             Total: {formatCurrency(appointment.deposit.total)}
@@ -81,19 +83,19 @@ export function AppointmentView({ appointment }: { appointment: Appointment }) {
         </h2>
         <div className="space-y-2">
           <p>
-            <strong>Amount:</strong>{' '}
+            <strong>Amount: </strong>
             {formatCurrency(appointment.payment?.amount || 0)}
           </p>
           <p>
-            <strong>Tax:</strong>{' '}
+            <strong>Tax: </strong>
             {formatCurrency(appointment.payment?.tax || 0)}
           </p>
           <p>
-            <strong>Fee:</strong>{' '}
+            <strong>Fee: </strong>
             {formatCurrency(appointment.payment?.fee || 0)}
           </p>
           <p>
-            <strong>Tips:</strong>{' '}
+            <strong>Tips: </strong>
             {formatCurrency(appointment.payment?.tip || 0)}
           </p>
           <p className="font-bold">

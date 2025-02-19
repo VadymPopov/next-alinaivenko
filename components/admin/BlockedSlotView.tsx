@@ -35,14 +35,22 @@ export function BlockedSlotView({
   const { deleteBlockedSlot } = useBlockedSlots();
 
   const handleDeleteClick = async () => {
-    await deleteBlockedSlot(_id);
-    toast.success('Blocked slot was successfully deleted!', {
-      duration: 3000,
-    });
+    setDeleteFlag(false);
+    try {
+      await deleteBlockedSlot(_id);
+      toast.success('Blocked slot was successfully deleted!', {
+        duration: 3000,
+      });
+    } catch (error) {
+      toast.error(
+        error instanceof Error ? error.message : 'Slot deletion failed.',
+      );
+    }
   };
 
   return (
     <div
+      data-testid="blocked-slot-card"
       style={style}
       className={clsx(
         className,

@@ -70,7 +70,7 @@ export function WeekView() {
             onClick={handlePrev}
             className="rounded-md p-2 bg-mainLightColor hover:bg-mainDarkColor hover:text-mainLightColor transition-colors"
           >
-            <MdOutlineArrowBackIos />
+            <MdOutlineArrowBackIos data-testid="back-icon" />
           </button>
           <button
             type="button"
@@ -84,7 +84,7 @@ export function WeekView() {
             onClick={handleNext}
             className="rounded-md p-2 bg-mainLightColor hover:bg-mainDarkColor hover:text-mainLightColor transition-colors"
           >
-            <MdArrowForwardIos />
+            <MdArrowForwardIos data-testid="forward-icon" />
           </button>
         </div>
       </div>

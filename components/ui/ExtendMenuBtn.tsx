@@ -14,9 +14,9 @@ export function ExtendMenuBtn({
       onClick={toggleSidebar}
     >
       {isExtended ? (
-        <HiOutlineMenuAlt3 size={18} data-testid="extended-icon" />
+        <HiOutlineMenuAlt3 size={18} data-testid="extended-menu-open" />
       ) : (
-        <HiOutlineMenuAlt2 size={18} data-testid="extended" />
+        <HiOutlineMenuAlt2 size={18} data-testid="extended-menu-close" />
       )}
     </button>
   );

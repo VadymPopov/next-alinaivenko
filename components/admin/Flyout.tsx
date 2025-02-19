@@ -23,8 +23,8 @@ export function Flyout({
   const router = useRouter();
   const linkRef = useRef<HTMLAnchorElement>(null);
   const dateString = getDateString(date);
-  const message = `${appointments.length} appointment${appointments.length > 1 ? 's' : ''} selected`;
-  const filename = `${appointments.length}_appointment${appointments.length > 1 ? 's' : ''}_${dateString}.csv`;
+  const message = `${appointments.length} appointment${appointments.length === 1 ? '' : 's'} selected`;
+  const filename = `${appointments.length}_appointment${appointments.length === 1 ? '' : 's'}_${dateString}.csv`;
 
   const handleDownload = () => {
     if (!linkRef.current) return;
@@ -35,6 +35,7 @@ export function Flyout({
 
   return (
     <div
+      data-testid="flyout-container"
       className={clsx(
         isExtended ? 'md:left-64' : 'md:left-16',
         'fixed top-16 right-0 left-0 shadow-lg bg-gradient-to-r from-textColorDarkBg from-10%  to-bgColor to-80% p-3 flex justify-between items-center px-8 py-2.5 transition-all z-40',

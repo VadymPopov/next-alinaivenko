@@ -16,7 +16,6 @@ export { DayView } from './DayView';
 export { DoughnutChart } from './DoughnutChart';
 export { EditAppointmentForm } from './EditAppointmentForm';
 export { Flyout } from './Flyout';
-export { NewAppointmentsTable } from './NewAppointmentsTable';
 export { ProfileForm } from './ProfileForm';
 export { ProfileView } from './ProfileView';
 export { SetMaxBookingDateForm } from './SetMaxBookingDateForm';
