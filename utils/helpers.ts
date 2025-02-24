@@ -8,7 +8,7 @@ import {
   serviceType,
 } from '@/types';
 
-import { format, parse } from 'date-fns';
+import { format, isValid, parse } from 'date-fns';
 
 export const calculatePrice = (selectedProcedure: serviceType | null) => {
   let price;
@@ -181,10 +181,13 @@ export const capitalizeFirstLetter = (string: string) => {
 };
 
 export const getParsedDate = (dateStr: string) => {
-  return parse(dateStr, 'yyyy-MM-dd', new Date());
+  if (!dateStr) return null;
+  const parsedDate = parse(dateStr, 'yyyy-MM-dd', new Date());
+  return isValid(parsedDate) ? parsedDate : null;
 };
 
 export const arraysAreEqual = (arr1: Date[], arr2: Date[]) => {
+  if (!arr1 || !arr2) return false;
   if (arr1.length !== arr2.length) return false;
   const sortedArr1 = arr1.map((date) => new Date(date).getTime()).sort();
   const sortedArr2 = arr2.map((date) => new Date(date).getTime()).sort();

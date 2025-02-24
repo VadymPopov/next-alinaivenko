@@ -1,8 +1,12 @@
 import { differenceInYears, format, parse, startOfDay } from 'date-fns';
 
-export const verifyClientLegalAge = (birthdate: Date) => {
+export const isClientUnderage = (birthdate: Date) => {
   if (!birthdate) {
     throw new Error('Birthdate is required.');
+  }
+
+  if (birthdate > new Date()) {
+    throw new Error('Invalid birthdate.');
   }
 
   const date = format(birthdate, 'yyyy-MM-dd');

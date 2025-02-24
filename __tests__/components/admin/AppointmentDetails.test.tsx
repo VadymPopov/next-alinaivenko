@@ -1,7 +1,6 @@
-import { mockedAppointment } from '@/__tests__/mocks/mockData';
+import { mockedAppointment } from '@/__mocks__/mockData';
 import { AppointmentDetails } from '@/components/admin';
 import { useAppointments } from '@/hooks';
-import { serviceType } from '@/types';
 
 import toast from 'react-hot-toast';
 

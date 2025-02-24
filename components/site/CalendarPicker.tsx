@@ -27,6 +27,7 @@ export function CalendarPicker<T extends FieldValues>({
   blockedDates,
 }: CalendarPickerProps<T>) {
   const minDate = new Date();
+
   return (
     <div className="flex items-center justify-center">
       <Controller
@@ -51,7 +52,23 @@ export function CalendarPicker<T extends FieldValues>({
                   date: startOfDay(date),
                   blockedDates,
                 });
-                onChange(selectedDate);
+
+                if (!selectedDate) return;
+                const maxDateValue = maxDate?.date
+                  ? new Date(maxDate.date)
+                  : null;
+                const minDateValue = new Date(minDate);
+
+                if (
+                  maxDateValue &&
+                  selectedDate.getTime() > maxDateValue.getTime()
+                ) {
+                  onChange(maxDateValue);
+                } else if (selectedDate.getTime() < minDateValue.getTime()) {
+                  onChange(minDateValue);
+                } else {
+                  onChange(selectedDate);
+                }
               }}
               selected={selectedDate}
               placeholderText="Select a date"

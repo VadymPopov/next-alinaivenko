@@ -86,6 +86,7 @@ export const generateCSV = (appointments: Appointment[]) => {
   ].join('\n');
   return csvContent;
 };
+
 export const downloadCSV = (
   data: string,
   filename: string,

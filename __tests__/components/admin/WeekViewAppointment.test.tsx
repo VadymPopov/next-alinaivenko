@@ -1,4 +1,4 @@
-import { mockedAppointment, serviceStyles } from '@/__tests__/mocks/mockData';
+import { mockedAppointment, serviceStyles } from '@/__mocks__/mockData';
 import { WeekViewAppointment } from '@/components/admin';
 import { useSidebar } from '@/providers/SidebarContext';
 import { convertToTimeRange } from '@/utils';

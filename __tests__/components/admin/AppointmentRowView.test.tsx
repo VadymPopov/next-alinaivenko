@@ -1,6 +1,5 @@
-import { mockedAppointment } from '@/__tests__/mocks/mockData';
+import { mockedAppointment } from '@/__mocks__/mockData';
 import { AppointmentRowView } from '@/components/admin';
-import { serviceType } from '@/types';
 
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
@@ -33,10 +32,13 @@ describe('AppointmentRowView component', () => {
   });
 
   it('does not display Instagram when isNew is true', () => {
-    render(<AppointmentRowView appointment={mockedAppointment} isNew={true} />);
-    expect(
-      screen.queryByText(mockedAppointment.instagram),
-    ).not.toBeInTheDocument();
+    render(
+      <AppointmentRowView
+        appointment={{ ...mockedAppointment, instagram: '@test' }}
+        isNew={true}
+      />,
+    );
+    expect(screen.queryByText('@test')).not.toBeInTheDocument();
   });
 
   it('does not display duration when isNew is true', () => {

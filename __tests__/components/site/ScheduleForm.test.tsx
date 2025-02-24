@@ -1,11 +1,11 @@
+import { mockedSlots } from '@/__mocks__/mockData';
 import { ScheduleForm } from '@/components/site';
 import { useSlots } from '@/hooks';
 import { useAppContext } from '@/providers/AppContext';
 
 import toast from 'react-hot-toast';
 
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 
@@ -25,16 +25,31 @@ jest.mock('@/hooks', () => ({
   useSlots: jest.fn(),
 }));
 
-const mockedSlots = ['11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm'];
+const renderComponent = (props = {}) => {
+  render(
+    <ScheduleForm
+      availableDate={''}
+      initialSlots={mockedSlots}
+      maxDate={{ date: new Date() }}
+      blockedDates={[]}
+      duration={60}
+      {...props}
+    />,
+  );
+};
 
 describe('ScheduleForm component', () => {
-  let mockSetAppointmentInfo: jest.Mock;
-  let mockPush: jest.Mock;
+  const mockToday = new Date('2025-02-10T05:00:00.000Z');
+
+  const mockSetAppointmentInfo = jest.fn();
+  const mockPush = jest.fn();
+
+  beforeAll(() => {
+    jest.useFakeTimers().setSystemTime(mockToday);
+  });
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockSetAppointmentInfo = jest.fn();
-    mockPush = jest.fn();
 
     (useRouter as jest.Mock).mockReturnValue({
       push: mockPush,
@@ -55,29 +70,18 @@ describe('ScheduleForm component', () => {
   it('initializes with provided availableDate', () => {
     const availableDate = '2025-02-10';
 
-    render(
-      <ScheduleForm
-        availableDate={availableDate}
-        initialSlots={mockedSlots}
-        maxDate={{ date: new Date() }}
-        blockedDates={[]}
-        duration={60}
-      />,
-    );
+    renderComponent({
+      availableDate,
+      maxDate: { date: new Date('2025-02-25T05:00:00.000Z') },
+    });
 
     expect(screen.getByText('February 10, 2025')).toBeInTheDocument();
   });
 
   it('renders component correctly', () => {
-    render(
-      <ScheduleForm
-        availableDate={''}
-        initialSlots={mockedSlots}
-        maxDate={{ date: new Date() }}
-        blockedDates={[]}
-        duration={60}
-      />,
-    );
+    renderComponent({
+      maxDate: { date: new Date('2025-02-25T05:00:00.000Z') },
+    });
 
     const currMonth = format(new Date(), 'MMMM yyyy');
 
@@ -93,61 +97,61 @@ describe('ScheduleForm component', () => {
   });
 
   it('disables submit button if slot has not been selected', async () => {
-    render(
-      <ScheduleForm
-        availableDate={''}
-        initialSlots={mockedSlots}
-        maxDate={{ date: new Date() }}
-        blockedDates={[]}
-        duration={60}
-      />,
-    );
+    renderComponent({
+      availableDate: '2025-02-12',
+      maxDate: { date: new Date('2025-02-27T05:00:00.000Z') },
+    });
 
     const btn = screen.getByRole('button', { name: /next/i });
 
-    await userEvent.click(btn);
+    fireEvent.click(btn);
     expect(btn).toBeDisabled();
 
-    await userEvent.click(screen.getByText(mockedSlots[0]));
+    fireEvent.click(screen.getByText('22'));
+    fireEvent.click(screen.getByText(mockedSlots[0]));
 
-    expect(btn).toBeEnabled();
+    await waitFor(() => {
+      expect(btn).toBeEnabled();
+    });
   });
 
   it('displays validation errors if slot is not selected', async () => {
-    render(
-      <ScheduleForm
-        availableDate={''}
-        initialSlots={mockedSlots}
-        maxDate={{ date: new Date() }}
-        blockedDates={[]}
-        duration={60}
-      />,
-    );
+    renderComponent();
 
-    await userEvent.click(screen.getByText(mockedSlots[0]));
-    await userEvent.click(screen.getByText(mockedSlots[0]));
+    fireEvent.click(screen.getByText('22'));
+    fireEvent.click(screen.getByText(mockedSlots[0]));
+    fireEvent.click(screen.getByText(mockedSlots[0]));
 
-    expect(screen.getByText(/time is required/i)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText(/time is required/i)).toBeInTheDocument();
+    });
   });
 
   it('submits form and navigates to the next step', async () => {
-    render(
-      <ScheduleForm
-        availableDate={''}
-        initialSlots={mockedSlots}
-        maxDate={{ date: new Date() }}
-        blockedDates={[]}
-        duration={60}
-      />,
-    );
+    renderComponent({
+      availableDate: '2025-02-12',
+      maxDate: { date: new Date('2025-02-25T05:00:00.000Z') },
+    });
 
     const btn = screen.getByRole('button', { name: /next/i });
-    await userEvent.click(screen.getByText(mockedSlots[0]));
 
-    await userEvent.click(btn);
+    fireEvent.click(screen.getByText('15'));
+    expect(screen.getByText(/February 15, 2025/i)).toBeInTheDocument();
 
-    expect(mockPush).toHaveBeenCalledWith('/booking/payment');
-    expect(mockSetAppointmentInfo).toHaveBeenCalled();
+    fireEvent.click(screen.getByText(mockedSlots[1]));
+    expect(screen.getByText(mockedSlots[1])).toHaveClass('bg-accentColor');
+
+    await waitFor(() => expect(btn).toBeEnabled());
+
+    fireEvent.click(btn);
+
+    await waitFor(() => {
+      expect(mockPush).toHaveBeenCalledWith('/booking/payment');
+    });
+
+    await waitFor(() => {
+      expect(mockSetAppointmentInfo).toHaveBeenCalled();
+    });
   });
 
   it('shows skeleton on isLoading is true', () => {
@@ -157,15 +161,7 @@ describe('ScheduleForm component', () => {
       slots: [],
     });
 
-    render(
-      <ScheduleForm
-        availableDate={''}
-        initialSlots={mockedSlots}
-        maxDate={{ date: new Date() }}
-        blockedDates={[]}
-        duration={60}
-      />,
-    );
+    renderComponent();
 
     expect(screen.getByTestId('skeleton-grid')).toBeInTheDocument();
   });
@@ -177,15 +173,7 @@ describe('ScheduleForm component', () => {
       slots: [],
     });
 
-    render(
-      <ScheduleForm
-        availableDate={''}
-        initialSlots={mockedSlots}
-        maxDate={{ date: new Date() }}
-        blockedDates={[]}
-        duration={60}
-      />,
-    );
+    renderComponent();
 
     expect(
       screen.getByText('Error fetching slots. Please try again later.'),
@@ -199,39 +187,37 @@ describe('ScheduleForm component', () => {
       slots: [],
     });
 
-    render(
-      <ScheduleForm
-        availableDate=""
-        initialSlots={mockedSlots}
-        maxDate={{ date: new Date() }}
-        blockedDates={[]}
-        duration={60}
-      />,
-    );
+    renderComponent();
 
     expect(toast.error).toHaveBeenCalledWith('Error fetching slots');
   });
 
   it('calls setAppointmentInfo with correct data on submit', async () => {
-    render(
-      <ScheduleForm
-        availableDate="2025-02-10"
-        initialSlots={mockedSlots}
-        maxDate={{ date: new Date() }}
-        blockedDates={[]}
-        duration={60}
-      />,
-    );
+    renderComponent({
+      availableDate: '2025-02-12',
+      maxDate: { date: new Date('2025-02-25T05:00:00.000Z') },
+    });
 
-    await userEvent.click(screen.getByText(mockedSlots[1]));
-    await userEvent.click(screen.getByRole('button', { name: /next/i }));
+    const btn = screen.getByRole('button', { name: /next/i });
 
-    expect(mockSetAppointmentInfo).toHaveBeenCalledWith(
-      expect.objectContaining({
-        date: expect.any(Date),
-        slot: mockedSlots[1],
-        duration: 60,
-      }),
+    fireEvent.click(screen.getByText('20'));
+    expect(screen.getByText(/February 20, 2025/i)).toBeInTheDocument();
+
+    fireEvent.click(screen.getByText(mockedSlots[0]));
+    expect(screen.getByText(mockedSlots[0])).toHaveClass('bg-accentColor');
+
+    await waitFor(() => expect(btn).toBeEnabled());
+
+    fireEvent.click(btn);
+
+    await waitFor(() =>
+      expect(mockSetAppointmentInfo).toHaveBeenCalledWith(
+        expect.objectContaining({
+          date: new Date('2025-02-20T20:00:00.000Z'),
+          slot: mockedSlots[0],
+          duration: 60,
+        }),
+      ),
     );
   });
 });

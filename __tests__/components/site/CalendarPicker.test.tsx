@@ -1,12 +1,18 @@
+import { mockedBlockedDates } from '@/__mocks__/mockData';
 import { CalendarPicker } from '@/components/site';
 import { MaxDate } from '@/types';
 
 import { useForm } from 'react-hook-form';
 
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 describe('CalendarPicker Component', () => {
+  const mockToday = new Date('2025-02-10T05:00:00.000Z');
+
+  beforeAll(() => {
+    jest.useFakeTimers().setSystemTime(mockToday);
+  });
+
   const MockedCalendarPicker = (props: {
     error?: string;
     maxDate?: MaxDate;
@@ -27,23 +33,17 @@ describe('CalendarPicker Component', () => {
     expect(screen.queryByText('Date is required')).not.toBeInTheDocument();
   });
 
-  it('filters out blocked dates from selection', async () => {
-    const today = new Date();
-    const blockedDates = [
-      new Date(today.setDate(today.getDate() + 1)).toISOString().split('T')[0],
-      new Date(today.setDate(today.getDate() + 7)).toISOString().split('T')[0],
-    ];
-
-    render(<MockedCalendarPicker blockedDates={blockedDates} />);
+  it('filters out blocked dates from selection', () => {
+    render(<MockedCalendarPicker blockedDates={mockedBlockedDates} />);
 
     const dateInput = screen.getByRole('listbox');
-    await userEvent.click(dateInput);
+    fireEvent.click(dateInput);
 
-    blockedDates.forEach((blockedDate) => {
-      const blockedDateElement = screen.queryAllByText(
+    mockedBlockedDates.forEach((blockedDate) => {
+      const blockedDateElement = screen.queryByText(
         new Date(blockedDate).getDate(),
       );
-      expect(blockedDateElement[0]).toHaveAttribute('aria-disabled', 'true');
+      expect(blockedDateElement).toHaveAttribute('aria-disabled', 'true');
     });
   });
 });

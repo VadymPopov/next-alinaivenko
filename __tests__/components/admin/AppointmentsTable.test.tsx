@@ -1,7 +1,4 @@
-import {
-  mockedAppointments,
-  mockedBlockedSlots,
-} from '@/__tests__/mocks/mockData';
+import { mockedAppointments, mockedBlockedSlots } from '@/__mocks__/mockData';
 import { AppointmentsTable } from '@/components/admin';
 import { APPT_TABLE_HEADERS } from '@/constants';
 import { BlockedSlot } from '@/types';

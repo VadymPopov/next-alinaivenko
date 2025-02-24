@@ -1,4 +1,4 @@
-import { mockedAppointment } from '@/__tests__/mocks/mockData';
+import { mockedAppointment } from '@/__mocks__/mockData';
 import { AppointmentView } from '@/components/admin';
 import { formatCurrency } from '@/utils/helpers';
 

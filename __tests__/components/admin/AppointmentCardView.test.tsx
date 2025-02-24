@@ -1,6 +1,5 @@
-import { mockedAppointment } from '@/__tests__/mocks/mockData';
+import { mockedAppointment } from '@/__mocks__/mockData';
 import { AppointmentCardView } from '@/components/admin';
-import { serviceType } from '@/types';
 
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
@@ -32,13 +31,20 @@ describe('AppointmentCardView component', () => {
   });
 
   it('displays Instagram handle when isNew is false', () => {
-    render(<AppointmentCardView appointment={mockedAppointment} />);
+    render(
+      <AppointmentCardView
+        appointment={{ ...mockedAppointment, instagram: '@test' }}
+      />,
+    );
     expect(screen.getByText('@test')).toBeInTheDocument();
   });
 
   it('does not display Instagram handle when isNew is true', () => {
     render(
-      <AppointmentCardView appointment={mockedAppointment} isNew={true} />,
+      <AppointmentCardView
+        appointment={{ ...mockedAppointment, instagram: '@test' }}
+        isNew={true}
+      />,
     );
     expect(screen.queryByText('@test')).not.toBeInTheDocument();
   });

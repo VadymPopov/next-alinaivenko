@@ -1,4 +1,4 @@
-export { verifyClientLegalAge } from './ageVerification';
+export { isClientUnderage } from './ageVerification';
 export { convertToDate } from './convertToDate';
 export { isTimeWithinLastHour } from './timeComparison';
 export { getBase64 } from './getBase64';

@@ -2,7 +2,7 @@ import {
   mockedAppointments,
   mockedBlockedDates,
   mockedBlockedSlots,
-} from '@/__tests__/mocks/mockData';
+} from '@/__mocks__/mockData';
 import { WeekView } from '@/components/admin';
 import { useAppointments, useBlockedDates, useBlockedSlots } from '@/hooks';
 import { Appointment, BlockedSlot } from '@/types';

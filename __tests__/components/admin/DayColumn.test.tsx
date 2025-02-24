@@ -2,7 +2,7 @@ import {
   mockedAppointments,
   mockedBlockedDates,
   mockedBlockedSlots,
-} from '@/__tests__/mocks/mockData';
+} from '@/__mocks__/mockData';
 import { DayColumn } from '@/components/admin';
 import { Appointment, BlockedSlot } from '@/types';
 import { getTimeSlots } from '@/utils/helpers';

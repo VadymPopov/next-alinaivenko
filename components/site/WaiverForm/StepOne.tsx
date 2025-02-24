@@ -4,7 +4,7 @@ import { Button, DatePickerField, FieldSet, InputField } from '@/components/ui';
 import { useWaiverFormContext } from '@/providers/WaiverFormContext';
 import { validationSchemaWaiverStepOne } from '@/schemas';
 import { StepOneFormValues, WaiverFormData } from '@/types';
-import { verifyClientLegalAge } from '@/utils';
+import { isClientUnderage } from '@/utils';
 
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -37,9 +37,7 @@ export default function StepOne({ nextStep }: { nextStep: () => void }) {
 
   const onSubmitHandler = (formValues: Partial<WaiverFormData>) => {
     updateFormData(formValues);
-    setIsClientUnder18(
-      verifyClientLegalAge(new Date(formValues?.dob as string)),
-    );
+    setIsClientUnder18(isClientUnderage(new Date(formValues?.dob as string)));
     nextStep();
   };
 

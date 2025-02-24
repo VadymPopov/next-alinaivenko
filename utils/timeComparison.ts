@@ -7,9 +7,11 @@ export const isTimeWithinLastHour = (
   const parsedTime = parse(timeString, 'h:mma', new Date());
   const hours = parsedTime.getHours();
   const minutes = parsedTime.getMinutes();
-  selectedDate.setHours(hours, minutes, 0, 0);
 
-  const parsedTimeMinusOneHour = subHours(selectedDate, 1);
+  const newDate = new Date(selectedDate);
+  newDate.setHours(hours, minutes, 0, 0);
+
+  const parsedTimeMinusOneHour = subHours(newDate, 1);
   const currentTime = new Date();
 
   if (

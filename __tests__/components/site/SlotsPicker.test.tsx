@@ -1,11 +1,10 @@
+import { mockedSlots } from '@/__mocks__/mockData';
 import { SlotsPicker } from '@/components/site';
 import { isTimeWithinLastHour } from '@/utils';
 
 import { useForm } from 'react-hook-form';
 
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-
-const mockedSlots = ['11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm'];
 
 jest.mock('@/utils', () => ({
   isTimeWithinLastHour: jest.fn(),

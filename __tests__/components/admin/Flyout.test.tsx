@@ -1,4 +1,4 @@
-import { mockedAppointments } from '@/__tests__/mocks/mockData';
+import { mockedAppointments } from '@/__mocks__/mockData';
 import { Flyout } from '@/components/admin';
 import { useSidebar } from '@/providers/SidebarContext';
 import { downloadCSV, generateCSV } from '@/utils';

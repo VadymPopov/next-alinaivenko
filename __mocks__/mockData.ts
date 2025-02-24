@@ -1,4 +1,9 @@
-import { Appointment, BlockedSlot, serviceType } from '@/types';
+import {
+  Appointment,
+  AppointmentEdited,
+  BlockedSlot,
+  serviceType,
+} from '@/types';
 
 export const mockedAppointments: Appointment[] = [
   {
@@ -112,6 +117,7 @@ export const mockedAppointment = {
     tip: 10,
     total: 68.25,
   },
+  paymentIntentId: 'test-intent-id-1',
 };
 
 export const mockedBlockedDates = [
@@ -138,3 +144,69 @@ export const serviceStyles = [
     expectedClass: 'text-[#0077B6] bg-[#D0EFFF] hover:border-[#0077B6]',
   },
 ];
+
+export const mockedSlots = ['11:00am', '12:00pm', '1:00pm', '2:00pm', '3:00pm'];
+
+export const mockedWaiverFormData = {
+  name: 'John Doe',
+  email: 'john.doe@example.com',
+  phone: '123-456-7890',
+  governmentId: '987654321',
+  dob: '1990-01-01',
+  address: '123 Main St',
+
+  bodyPart: 'Arm',
+  design: 'Floral Tattoo',
+  service: 'Tattoo',
+  appointmentDate: '2025-03-10T12:00:00.000Z',
+
+  waveRelease: true,
+
+  pain: true,
+  infection: true,
+  healing: true,
+  outcome: true,
+
+  refund: true,
+  permanentChange: false,
+  media: false,
+  age: true,
+
+  drugs: false,
+  disease: false,
+  medication: false,
+  skin: false,
+  recipientOrgan: false,
+  pregnancy: false,
+
+  agreement: true,
+  lot: 'A1',
+  clientSignature: 'John Doe Signature',
+  parentalSignature: 'Jane Doe Signature',
+  parentalConsent: true,
+  parentalName: 'Jane Doe',
+  parentGovernmentId: '123456789',
+};
+
+export const mockedAppointmentEdited: AppointmentEdited = {
+  _id: '123',
+  name: 'Jane Doe',
+  email: 'jane.doe@example.com',
+  service: 'Tattoo',
+  date: '2025-03-10',
+  slot: '1:00pm',
+  duration: '45',
+  depositAmount: 50,
+  depositTax: 5,
+  depositFee: 3,
+  depositTotal: 58,
+  paymentAmount: 150,
+  paymentFee: 10,
+  paymentTax: 12,
+  paymentTotal: 172,
+  paymentIntentId: '',
+  tip: 15,
+  description: '',
+  instagram: '',
+  phone: '123-456-7890',
+};

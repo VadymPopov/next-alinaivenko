@@ -1,4 +1,4 @@
-import { mockedAppointment } from '@/__tests__/mocks/mockData';
+import { mockedAppointment } from '@/__mocks__/mockData';
 import { EditAppointmentForm } from '@/components/admin';
 import { useAppointments, useSlots } from '@/hooks';
 
