@@ -42,21 +42,39 @@ export default function Home() {
       <Section primary={true}>
         <div className="block items-start md:flex">
           <ul className="flex sm:justify-evenly sm:last:mr-0">
-            <li className="mr-8">
+            <li className="mr-8 relative group overflow-hidden">
               <Image
                 src="/images/about-me-one.jpg"
                 alt="about-me-one"
                 width={270}
                 height={270}
+                className="group-hover:scale-110 transition-transform duration-300"
               />
+
+              <div className="absolute top-0 left-0 bg-backdrop w-full h-full transition-transform duration-300 delay-75 translate-y-full group-hover:translate-y-0 text-mainLightColor flex items-end ">
+                <div>
+                  <p className="p-5 text-xs sm:text-sm md:text-base">
+                    Let art shape your story — one inked moment at a time.
+                  </p>
+                </div>
+              </div>
             </li>
-            <li className="md:hidden lg:mr-8 lg:inline-block">
+            <li className="relative md:hidden lg:mr-8 lg:inline-block group overflow-hidden">
               <Image
                 src="/images/about-me-two.jpg"
                 alt="about-me-two"
                 width={270}
                 height={270}
+                className="group-hover:scale-110 transition-transform duration-300"
               />
+
+              <div className="absolute top-0 left-0 bg-backdrop w-full h-full transition-transform duration-300 delay-75 -translate-y-full group-hover:translate-y-0 text-mainLightColor flex items-end">
+                <div>
+                  <p className="p-5 text-xs sm:text-sm md:text-base">
+                    Your transformation begins here — dare to express yourself.
+                  </p>
+                </div>
+              </div>
             </li>
           </ul>
           <div className="flex flex-1 flex-col text-left">

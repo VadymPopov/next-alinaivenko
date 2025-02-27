@@ -25,9 +25,10 @@ export function Button({
 }: ButtonProps) {
   const baseStyles =
     'flex items-center justify-center rounded-3xl text-sm font-semibold uppercase transition-colors h-10 w-40 px-3 py-5';
+
   const enabledStyles = primary
-    ? 'bg-accentColor text-mainLightColor hover:shadow-md hover:shadow-mainLightColor hover:text-cardColor'
-    : 'bg-transparent text-cardColor border-[1px] border-accentColor hover:bg-accentColor hover:text-mainLightColor hover:shadow-md hover:shadow-cardColor';
+    ? 'bg-transparent border-accentColor border-[1px] text-mainLightColor hover:bg-accentColor hover:text-cardColor'
+    : 'bg-transparent text-cardColor border-[1px] border-accentColor hover:bg-accentColor  hover:text-mainLightColor hover:shadow-md hover:shadow-cardColor';
 
   const disabledStyles = 'cursor-not-allowed opacity-70 bg-textColorDarkBg';
   const currentStyles = disabled ? disabledStyles : enabledStyles;

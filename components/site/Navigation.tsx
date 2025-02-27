@@ -14,7 +14,7 @@ export function Navigation() {
   return (
     <header
       className={clsx(
-        'fixed top-0 z-[100] w-full overflow-hidden border-b-[1px] border-b-cardColor px-4 py-3 lg:px-5 lg:py-4 xl:px-6 xl:py-5 lg:bg-mainLightColor bg-cardColor',
+        'fixed top-0 z-[100] w-full overflow-hidden px-4 py-3 lg:px-5 lg:py-4 xl:px-6 xl:py-5 lg:bg-mainLightColor bg-cardColor shadow-lg',
       )}
     >
       <nav>

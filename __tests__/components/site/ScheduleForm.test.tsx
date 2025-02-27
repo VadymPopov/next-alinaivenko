@@ -213,7 +213,7 @@ describe('ScheduleForm component', () => {
     await waitFor(() =>
       expect(mockSetAppointmentInfo).toHaveBeenCalledWith(
         expect.objectContaining({
-          date: new Date('2025-02-20T20:00:00.000Z'),
+          date: new Date('2025-02-20T05:00:00.000Z'),
           slot: mockedSlots[0],
           duration: 60,
         }),

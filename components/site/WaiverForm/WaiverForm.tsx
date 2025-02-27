@@ -21,19 +21,21 @@ export function WaiverForm() {
 
   return (
     <WaiverFormProvider>
-      <div className="fixed bottom-0 z-[120] w-full bg-mainLightColor">
+      <div className="fixed bottom-0 z-[99] w-full bg-mainLightColor shadow-lg shadow-cardColor">
         <ProgressBar step={currentStep} totalSteps={7} prevStep={prevStep} />
       </div>
 
-      <Section>
-        {currentStep === 1 && <StepOne nextStep={nextStep} />}
-        {currentStep === 2 && <StepTwo nextStep={nextStep} />}
-        {currentStep === 3 && <StepThree nextStep={nextStep} />}
-        {currentStep === 4 && <StepFour nextStep={nextStep} />}
-        {currentStep === 5 && <StepFive nextStep={nextStep} />}
-        {currentStep === 6 && <StepSix nextStep={nextStep} />}
-        {currentStep === 7 && <StepSeven />}
-      </Section>
+      <div className="pb-[120px]">
+        <Section>
+          {currentStep === 1 && <StepOne nextStep={nextStep} />}
+          {currentStep === 2 && <StepTwo nextStep={nextStep} />}
+          {currentStep === 3 && <StepThree nextStep={nextStep} />}
+          {currentStep === 4 && <StepFour nextStep={nextStep} />}
+          {currentStep === 5 && <StepFive nextStep={nextStep} />}
+          {currentStep === 6 && <StepSix nextStep={nextStep} />}
+          {currentStep === 7 && <StepSeven />}
+        </Section>
+      </div>
     </WaiverFormProvider>
   );
 }
