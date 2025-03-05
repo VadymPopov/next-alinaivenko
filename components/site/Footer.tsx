@@ -15,7 +15,7 @@ export function Footer() {
       role="contentinfo"
       className={clsx(
         pathname === '/waiverform' && 'hidden',
-        'flex flex-col items-center justify-between text-sm md:flex-row px-4 py-6 lg:px-5 lg:py-7 xl:px-6 xl:py-9 shadow-lg shadow-cardColor ',
+        'flex flex-col items-center justify-between text-sm md:flex-row px-4 py-6 lg:px-5 lg:py-7 xl:px-6 xl:py-9 shadow-lg shadow-cardColor',
       )}
     >
       <div className="order-3 flex items-center justify-center text-center md:order-1">

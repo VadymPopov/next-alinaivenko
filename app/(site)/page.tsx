@@ -1,3 +1,4 @@
+import { FlashDesigns } from '@/components/site';
 import { Button, Section, Suptitle, Text, Title } from '@/components/ui';
 
 import { Metadata } from 'next';
@@ -93,6 +94,16 @@ export default function Home() {
             </Button>
           </div>
         </div>
+      </Section>
+
+      <Section>
+        <Suptitle>Pick Your Design & Book with Ease</Suptitle>
+        <Title>Latest Flash Tattoo Designs</Title>
+        <Text>
+          Pick a flash design and let me know when you book your appointment in
+          the description section — just tell me the name of the design.
+        </Text>
+        <FlashDesigns />
       </Section>
     </>
   );

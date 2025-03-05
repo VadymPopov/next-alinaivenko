@@ -41,7 +41,7 @@ export default function Portfolio() {
     <>
       <Section>
         <Title mobile={true}>Fresh Tattoos</Title>
-        <Swiper initialSlide={4}>
+        <Swiper initialSlide={4} effect={true}>
           {freshArray.map((item, index) => (
             <swiper-slide lazy={true} key={index}>
               <Image
@@ -56,7 +56,7 @@ export default function Portfolio() {
       </Section>
       <Section primary={true}>
         <Title mobile={true}>Healed Tattoos</Title>
-        <Swiper initialSlide={11}>
+        <Swiper initialSlide={11} effect={true}>
           {healedArray.map((item, index) => (
             <swiper-slide lazy={true} key={index}>
               <Image
@@ -71,7 +71,7 @@ export default function Portfolio() {
       </Section>
       <Section>
         <Title mobile={true}>Healed Permanent</Title>
-        <Swiper>
+        <Swiper effect={true}>
           {permanentArray.map((item, index) => (
             <swiper-slide lazy={true} key={index}>
               <Image
