@@ -1,8 +1,11 @@
 import { Footer, Navigation } from '@/components/site';
 import { AppProvider } from '@/providers/AppContext';
+import { getStudioInfo } from '@/services';
 import '@/styles/datepicker.css';
 import '@/styles/globals.css';
+import { StudioInfo } from '@/types';
 
+import React, { use } from 'react';
 import { Toaster } from 'react-hot-toast';
 
 import { Metadata } from 'next';
@@ -19,6 +22,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const studio: StudioInfo | null = use(getStudioInfo());
+
   return (
     <html lang="en">
       <body className="mx-auto my-0 flex min-h-screen flex-col">
@@ -27,7 +32,8 @@ export default function RootLayout({
         <main className="mt-[88px] flex-1 xl:mt-[104px]">
           <AppProvider>{children}</AppProvider>
         </main>
-        <Footer />
+
+        <Footer studio={studio} />
       </body>
     </html>
   );
