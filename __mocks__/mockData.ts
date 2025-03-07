@@ -210,3 +210,12 @@ export const mockedAppointmentEdited: AppointmentEdited = {
   instagram: '',
   phone: '123-456-7890',
 };
+
+export const mockedStudio = {
+  name: 'Mocked Tattoo Studio',
+  address: '123 Main Street, Anytown, CA 91234',
+  _id: 'studio123',
+  city: 'Anytown',
+  latitude: '34.0522',
+  longitude: '-118.2437',
+};

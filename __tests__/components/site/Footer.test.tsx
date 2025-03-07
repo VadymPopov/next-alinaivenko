@@ -1,3 +1,4 @@
+import { mockedStudio } from '@/__mocks__/mockData';
 import { Footer } from '@/components/site';
 
 import { render, screen } from '@testing-library/react';
@@ -9,7 +10,7 @@ jest.mock('next/navigation', () => ({
 
 describe('Footer component', () => {
   it('renders component correctly', () => {
-    render(<Footer />);
+    render(<Footer studio={mockedStudio} />);
 
     expect(screen.getByText(/developed by/i)).toBeInTheDocument();
 
@@ -22,25 +23,25 @@ describe('Footer component', () => {
     expect(
       screen.getByRole('link', { name: /instagram-page/i }),
     ).toBeInTheDocument();
+    expect(
+      screen.getByRole('link', { name: /email-page/i }),
+    ).toBeInTheDocument();
+
+    expect(screen.getByText('Mocked Tattoo Studio')).toBeInTheDocument();
 
     expect(screen.getByText(/© 2023/i)).toBeInTheDocument();
   });
 
-  it('applies correct class when pathname is waiverform', () => {
+  it('does not render footer when pathname is waiverform', () => {
     (usePathname as jest.Mock).mockReturnValue('/waiverform');
-    render(<Footer />);
-    const footer = screen.getByRole('contentinfo');
+    render(<Footer studio={mockedStudio} />);
+    const footer = screen.queryByRole('contentinfo');
 
-    expect(footer).toHaveClass('pb-[60px]');
-    expect(footer).not.toHaveClass('py-3  lg:py-4  xl:py-5');
+    expect(footer).not.toBeInTheDocument();
   });
 
-  it('displays the correct current year', () => {
-    render(<Footer />);
-    const year = new Date().getFullYear();
-
-    expect(
-      screen.getByText(new RegExp(`© 2023-${year}`, 'i')),
-    ).toBeInTheDocument();
+  it('does not render studio info when studio is null', () => {
+    render(<Footer studio={null} />);
+    expect(screen.queryByText(/mocked tattoo studio/i)).not.toBeInTheDocument();
   });
 });
