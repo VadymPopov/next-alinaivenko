@@ -1,6 +1,6 @@
 'use client';
 
-import { CalendarPicker, SlotsPicker } from '@/components/site';
+import { CalendarPicker, ErrorDisplay, SlotsPicker } from '@/components/site';
 import { Button, FieldSet, SkeletonGrid } from '@/components/ui';
 import { useSlots } from '@/hooks';
 import { useAppContext } from '@/providers/AppContext';
@@ -61,14 +61,6 @@ export function ScheduleForm({
 
   if (isError) {
     toast.error('Error fetching slots');
-    return (
-      <div>
-        <p>{selectedDate && format(selectedDate, 'MMMM dd, yyyy')}</p>
-        <div className="text-error text-center">
-          <p>Error fetching slots. Please try again later.</p>
-        </div>
-      </div>
-    );
   }
 
   const onSubmitHandler = async (formData: ScheduleFormValues) => {
@@ -124,13 +116,26 @@ export function ScheduleForm({
                     isLoading ? 'opacity-0' : 'opacity-100',
                   )}
                 >
-                  <SlotsPicker
-                    name="slot"
-                    control={control}
-                    error={errors.slot?.message}
-                    slots={slots}
-                    selectedDate={selectedDate}
-                  />
+                  {!isError ? (
+                    <SlotsPicker
+                      name="slot"
+                      control={control}
+                      error={errors.slot?.message}
+                      slots={slots}
+                      selectedDate={selectedDate}
+                    />
+                  ) : (
+                    <ErrorDisplay
+                      className="text-center font-semibold mt-4"
+                      prefixMsg="Hiss!"
+                      mainMsg="😿 I
+                        couldn't fetch the slots—maybe they're
+                        napping?"
+                      src="https://lottie.host/6cc3a64a-f962-49f2-9408-bc45ac3b4e69/WKh1SFzJTa.lottie"
+                      mode="bounce"
+                      speed={0.5}
+                    />
+                  )}
                 </div>
               )}
             </div>

@@ -19,5 +19,9 @@ export function usePaymentIntent<T>({
     shouldFetch ? [endpoint, body] : null,
     ([url, args]) => postFetcher(url, args),
   );
-  return { isLoading, error, clientSecret: data?.clientSecret };
+  return {
+    isLoading,
+    isError: error,
+    clientSecret: data?.clientSecret,
+  };
 }

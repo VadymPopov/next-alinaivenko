@@ -11,8 +11,13 @@ const formatDates = (dates: Date[]) =>
     .map((date) => date.toISOString())
     .sort();
 
-export async function getMaxDate() {
-  return await getFetcher<MaxDate>(`${CALENDAR_API}/max-date`);
+export async function getMaxDate(): Promise<MaxDate | null> {
+  try {
+    return await getFetcher<MaxDate>(`${CALENDAR_API}/max-date`);
+  } catch (error) {
+    console.error('Error fetching max date:', error);
+    return null;
+  }
 }
 
 export async function getBlockedDates() {
@@ -27,8 +32,13 @@ export async function getBlockedDates() {
   );
 }
 
-export async function getStudioInfo() {
-  return await getFetcher<StudioInfo>(`${CALENDAR_API}/studio`);
+export async function getStudioInfo(): Promise<StudioInfo | null> {
+  try {
+    return await getFetcher<StudioInfo>(`${CALENDAR_API}/studio`);
+  } catch (error) {
+    console.error('Error fetching studio info:', error);
+    return null;
+  }
 }
 
 async function isBlockedMonthExists(month: string, year: string) {
