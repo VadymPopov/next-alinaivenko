@@ -14,7 +14,7 @@ const Swiper = dynamic(() => import('@/components/site/Swiper'), {
 
 export function FlashDesigns() {
   return (
-    <div>
+    <div className="mb-5">
       <Swiper initialSlide={4} loop={true} styles={{ padding: '0' }}>
         {designsArray.map((item, index) => (
           <swiper-slide

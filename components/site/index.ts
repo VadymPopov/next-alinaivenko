@@ -16,3 +16,6 @@ export { CalendarPicker } from './CalendarPicker';
 export { WaiverForm } from './WaiverForm/WaiverForm';
 export { FlashDesigns } from './FlashDesigns';
 export { ErrorDisplay } from './ErrorDisplay';
+export { AboutSection } from './AboutSection';
+export { FlashSection } from './FlashSection';
+export { HeroSection } from './HeroSection';

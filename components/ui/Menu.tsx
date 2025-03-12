@@ -1,6 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -17,7 +18,8 @@ export function Menu({ onClick, menu }: MenuProps) {
     <ul className="m-0 flex list-none flex-col items-center p-0 lg:flex-row lg:justify-center xl:mb-5 xl:mr-5">
       {menu.map(({ path, label }) => {
         return (
-          <li
+          <motion.li
+            whileHover={{ scale: 1.05 }}
             key={label}
             className="mb-5 lg:mb-0 lg:mr-8 lg:last:mr-0"
             onClick={onClick}
@@ -25,7 +27,7 @@ export function Menu({ onClick, menu }: MenuProps) {
             <Link
               href={path}
               className={clsx(
-                ' block whitespace-nowrap px-2 py-1 text-xl font-semibold tracking-widest no-underline transition-colors duration-300 hover:text-accentColor focus:text-accentColor md:text-2xl lg:text-sm xl:text-lg',
+                ' block whitespace-nowrap px-2 py-1 text-xl font-semibold tracking-widest no-underline transition-colors hover:text-accentColor focus:text-accentColor md:text-2xl lg:text-sm xl:text-lg ',
                 isActive(path)
                   ? 'text-accentColor'
                   : 'text-mainLightColor lg:text-cardColor',
@@ -33,7 +35,7 @@ export function Menu({ onClick, menu }: MenuProps) {
             >
               {label}
             </Link>
-          </li>
+          </motion.li>
         );
       })}
     </ul>

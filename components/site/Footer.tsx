@@ -40,7 +40,7 @@ export function Footer({ studio }: { studio: StudioInfo | null }) {
     <footer
       role="contentinfo"
       className={
-        'flex flex-col items-center gap-6 md:gap-0 md:items-end md:justify-between text-sm lg:text-base md:flex-row px-4 py-6 md:px-6 md:py-10 shadow-lg shadow-cardColor'
+        'flex flex-col items-center gap-6 md:gap-0 md:items-end md:justify-between text-sm lg:text-base md:flex-row px-5 py-12 md:px-6 md:py-16 lg:py-20 xl:py-24 shadow-lg shadow-cardColor'
       }
     >
       <div className="flex flex-col md:flex-row md:justify-center items-center gap-4">
