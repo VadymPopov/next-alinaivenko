@@ -1,4 +1,4 @@
-import { AboutSection, FlashSection, HeroSection } from '@/components/site';
+import { HomeView } from '@/components/site';
 
 import { Metadata } from 'next';
 
@@ -23,11 +23,5 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  return (
-    <>
-      <HeroSection />
-      <AboutSection />
-      <FlashSection />
-    </>
-  );
+  return <HomeView />;
 }

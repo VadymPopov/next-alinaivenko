@@ -1,11 +1,14 @@
 'use client';
 
+import { slideFrom } from '@/animations';
 import { Button } from '@/components/ui';
 import { useAppContext } from '@/providers/AppContext';
 import { serviceType } from '@/types';
 
 import React from 'react';
 
+import clsx from 'clsx';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
@@ -16,6 +19,7 @@ interface ServiceCardProps {
   deposit: string;
   size?: string;
   duration: string;
+  direction: 'left' | 'right';
 }
 
 export function ServiceCard({
@@ -25,6 +29,7 @@ export function ServiceCard({
   deposit,
   size,
   duration,
+  direction,
 }: ServiceCardProps) {
   const { setService } = useAppContext();
 
@@ -35,7 +40,17 @@ export function ServiceCard({
     router.push('/booking');
   };
   return (
-    <div className="mr-0 mt-5 block rounded-md border-2 border-accentColor bg-cardColor p-2.5 text-center text-mainLightColor sm:flex lg:mr-12 lg:block ">
+    <motion.div
+      variants={slideFrom}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      custom={{ x: direction === 'left' ? -100 : 100, delay: 0.3 }}
+      className={clsx(
+        'mr-0 mt-5 block rounded-md border-2 border-accentColor bg-cardColor p-2.5 text-center text-mainLightColor sm:flex  lg:block',
+        direction === 'left' ? 'lg:mr-12' : 'lg:ml-12',
+      )}
+    >
       <Image
         src={imgURL}
         alt={title}
@@ -59,6 +74,6 @@ export function ServiceCard({
           </Button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

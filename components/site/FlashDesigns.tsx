@@ -31,7 +31,7 @@ export function FlashDesigns() {
                 height={360}
                 className="relative hover:scale-110 transition-transform duration-300"
               />
-              <figcaption className="absolute bottom-0 bg-cardColor text-mainLightColor w-full text-center p-1 group-hover:bg-accentColor  transition-colors duration-300">
+              <figcaption className="absolute bottom-0 bg-mainLightColor text-cardColor w-full text-center p-1 group-hover:bg-accentColor  transition-colors duration-300">
                 {item.title}
               </figcaption>
             </figure>

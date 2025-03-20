@@ -40,7 +40,7 @@ export function Footer({ studio }: { studio: StudioInfo | null }) {
     <footer
       role="contentinfo"
       className={
-        'flex flex-col items-center gap-6 md:gap-0 md:items-end md:justify-between text-sm lg:text-base md:flex-row px-5 py-12 md:px-6 md:py-16 lg:py-20 xl:py-24 shadow-lg shadow-cardColor'
+        'flex flex-col items-center gap-6 md:gap-0 md:items-end md:justify-between text-sm lg:text-base md:flex-row px-5 py-12 md:px-6 md:py-16 lg:py-20 xl:py-24 shadow-lg shadow-mainLightColor text-mainLightColor'
       }
     >
       <div className="flex flex-col md:flex-row md:justify-center items-center gap-4">
@@ -70,7 +70,7 @@ export function Footer({ studio }: { studio: StudioInfo | null }) {
             aria-label="frontend-developer-github"
             className="inline-block"
           >
-            <VscGithub className="h-5 w-5 text-mainDarkColor transition-colors hover:text-accentColor" />
+            <VscGithub className="h-5 w-5 text-mainLightColor transition-colors hover:text-accentColor" />
           </Link>
           <span>&</span>
           <Link
@@ -80,7 +80,7 @@ export function Footer({ studio }: { studio: StudioInfo | null }) {
             aria-label="backend-developer-github"
             className="inline-block"
           >
-            <VscGithubInverted className="h-5 w-5 text-mainDarkColor transition-colors hover:text-accentColor" />
+            <VscGithubInverted className="h-5 w-5 text-mainLightColor transition-colors hover:text-accentColor" />
           </Link>
         </div>
       </div>
@@ -93,7 +93,7 @@ export function Footer({ studio }: { studio: StudioInfo | null }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`${label}-page`}
-            className="flex items-center gap-2 text-mainDarkColor transition-colors hover:text-accentColor"
+            className="flex items-center gap-2 text-mainLightColor transition-colors hover:text-accentColor"
           >
             {icon} {text}
           </Link>

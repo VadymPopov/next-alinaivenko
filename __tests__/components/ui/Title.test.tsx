@@ -15,13 +15,13 @@ describe('Title component', () => {
     expect(heading).toBeInTheDocument();
   });
 
-  it('applies correct class when mobile is true', () => {
-    render(<Title mobile>Test Title Two</Title>);
+  it('applies correct class when secondary is true', () => {
+    render(<Title secondary>Test Title Two</Title>);
     const heading = screen.getByText('Test Title Two');
     expect(heading).toHaveClass('text-end');
   });
 
-  it('applies correct class when mobile is false', () => {
+  it('applies correct class when secondary is false', () => {
     render(<Title>Test Title Three</Title>);
     const heading = screen.getByText('Test Title Three');
     expect(heading).toHaveClass('text-start');

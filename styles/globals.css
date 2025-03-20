@@ -2,9 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
 body {
-  overflow-x: hidden;
+  background-color: black;
 }
 
 @keyframes rotateImage {
@@ -14,6 +13,10 @@ body {
   100% {
     transform: translate(-50%, -50%) rotate(360deg);
   }
+}
+
+.img-rotate {
+  animation: rotateImage 20s linear infinite;
 }
 
 .hero-section::before {

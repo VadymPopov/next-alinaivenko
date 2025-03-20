@@ -5,9 +5,9 @@ import { ButtonLoader } from '@/components/ui';
 import React, { ReactNode } from 'react';
 
 import clsx from 'clsx';
+import { HTMLMotionProps, motion } from 'framer-motion';
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends HTMLMotionProps<'button'> {
   children: ReactNode;
   primary?: boolean;
   disabled?: boolean;
@@ -34,7 +34,9 @@ export function Button({
   const currentStyles = disabled ? disabledStyles : enabledStyles;
 
   return (
-    <button
+    <motion.button
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.9 }}
       {...rest}
       className={clsx(baseStyles, currentStyles, styles)}
       disabled={disabled}
@@ -42,6 +44,6 @@ export function Button({
     >
       {children}
       {isProcessing && <ButtonLoader />}
-    </button>
+    </motion.button>
   );
 }

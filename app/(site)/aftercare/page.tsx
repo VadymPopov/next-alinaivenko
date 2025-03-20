@@ -59,9 +59,9 @@ export default function Aftercare() {
           />
         </div>
       </Section>
-      <Section primary={true}>
-        <Title mobile={true}>Small & Large Tattoo</Title>
-        <div className="flex">
+      <Section bgColor="bg-bgColor">
+        <Title secondary={true}>Small & Large Tattoo</Title>
+        <div className="flex ">
           <Image
             src="/images/aftercare-two.jpg"
             alt="artist in the studio"

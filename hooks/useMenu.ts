@@ -6,7 +6,7 @@ export function useMenu() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    document.body.style.overflow = isOpen ? 'hidden' : 'auto';
+    document.body.style.overflow = isOpen ? 'hidden' : '';
   }, [isOpen]);
 
   const toggleMenu = () => {

@@ -1,51 +1,44 @@
 'use client';
 
-import { scaleFrom, slideFrom } from '@/animations';
-
 import React from 'react';
 
 import { motion } from 'framer-motion';
+import { useScroll, useTransform } from 'framer-motion';
 
-import { Suptitle } from '../ui';
+import { ParallaxContent } from './ParallaxContent';
+
+const SECTION_HEIGHT = 2200;
 
 export function HeroSection() {
+  const { scrollY, scrollYProgress } = useScroll();
+  const opacity = useTransform(
+    scrollY,
+    [SECTION_HEIGHT, SECTION_HEIGHT + 500],
+    [1, 0],
+  );
+
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 10]);
+
   return (
-    <motion.section
-      variants={scaleFrom}
-      initial="hidden"
-      animate="visible"
-      custom={1.3}
-      className="hero-section relative overflow-hidden bg-cardColor px-5 py-[190px] h-[calc(100vh-80px)] md:xl:h-[calc(100vh-90px)] xl:h-[calc(100vh-100px)]"
+    <div
+      className="relative w-full overflow-clip"
+      style={{ height: `calc(${SECTION_HEIGHT}px + 100vh)` }}
     >
-      <div className="relative z-50">
-        <motion.div
-          variants={slideFrom}
-          initial="hidden"
-          animate="visible"
-          custom={{ y: -150, delay: 0.9 }}
-        >
-          <Suptitle>Your favorite tattoo artist</Suptitle>
-        </motion.div>
-        <motion.h1
-          variants={slideFrom}
-          initial="hidden"
-          animate="visible"
-          custom={{ x: -150, delay: 0.5 }}
-          className="mb-5 font-raleway text-7xl font-extrabold leading-tight tracking-wider text-mainLightColor"
-        >
-          Ivenko Alina
-        </motion.h1>
-        <motion.p
-          variants={slideFrom}
-          initial="hidden"
-          animate="visible"
-          custom={{ y: 150, delay: 0.9 }}
-          className="w-[300px] text-xl font-normal text-textColorDarkBg"
-        >
-          Embrace the art of transformation. Don&apos;t hesitate, schedule your
-          tattoo appointment right now.
-        </motion.p>
-      </div>
-    </motion.section>
+      <motion.div
+        className="sticky top-[80px] md:top-[90px] xl:top-[100px] h-screen w-full bg-cardColor"
+        style={{
+          opacity,
+          scale,
+        }}
+      >
+        <motion.img
+          src="/images/hero-eye.png"
+          alt="Hero Eye"
+          className=" absolute top-[50%] left-1/2 -translate-x-1/2 -translate-[50%] img-rotate min-w-[600px] h-auto min-h-[400px] lg:max-h-[800px]"
+        />
+      </motion.div>
+      <ParallaxContent />
+      <div className="absolute bottom-0 left-0 right-0 h-96 bg-gradient-to-b from-[rgba(0,0,0,0)] to-cardColor" />
+    </div>
   );
 }

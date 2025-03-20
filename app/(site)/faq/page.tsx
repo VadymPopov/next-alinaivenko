@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 
 export default function Faq() {
   return (
-    <Section primary={true}>
+    <Section bgColor="bg-bgColor">
       <Title>Tattoo FAQ&apos;s</Title>
       <ul className="block list-none grid-cols-3 gap-2.5 p-0 lg:grid">
         <li className="p-2.5">

@@ -41,7 +41,7 @@ export default function Contact() {
 
   return (
     <Suspense fallback={<p>Loading...</p>}>
-      <Section primary={true}>
+      <Section bgColor="bg-bgColor">
         <Title>Contact me</Title>
         <div className="block lg:flex">
           <div className="flex-1">

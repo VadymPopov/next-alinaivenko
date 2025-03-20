@@ -23,6 +23,15 @@ const config: Config = {
       error: '#D2042D',
       backdrop: 'rgba(0, 0, 0, 0.5)',
     },
+    keyframes: {
+      rotateImage: {
+        '0%': { transform: 'translate(-50%, -50%) rotate(0deg)' },
+        '100%': { transform: 'translate(-50%, -50%) rotate(360deg)' },
+      },
+    },
+    animation: {
+      rotateImage: 'rotateImage 20s linear infinite',
+    },
   },
   plugins: [],
 };
